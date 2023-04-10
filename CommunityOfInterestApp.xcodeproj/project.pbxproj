@@ -19,6 +19,7 @@
 		270BFF2629E3D69000850009 /* ObserveMenuProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 270BFF2529E3D69000850009 /* ObserveMenuProtocol.swift */; };
 		270BFF2829E3D88400850009 /* HomePageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 270BFF2729E3D88400850009 /* HomePageViewController.swift */; };
 		270BFF2A29E3DA4900850009 /* HorizontalMenuButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 270BFF2929E3DA4900850009 /* HorizontalMenuButton.swift */; };
+		270BFF2C29E4018D00850009 /* HorizontalMenuBarComponent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 270BFF2B29E4018D00850009 /* HorizontalMenuBarComponent.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -36,6 +37,7 @@
 		270BFF2529E3D69000850009 /* ObserveMenuProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ObserveMenuProtocol.swift; sourceTree = "<group>"; };
 		270BFF2729E3D88400850009 /* HomePageViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomePageViewController.swift; sourceTree = "<group>"; };
 		270BFF2929E3DA4900850009 /* HorizontalMenuButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HorizontalMenuButton.swift; sourceTree = "<group>"; };
+		270BFF2B29E4018D00850009 /* HorizontalMenuBarComponent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HorizontalMenuBarComponent.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -113,6 +115,7 @@
 			children = (
 				270BFF2529E3D69000850009 /* ObserveMenuProtocol.swift */,
 				270BFF2929E3DA4900850009 /* HorizontalMenuButton.swift */,
+				270BFF2B29E4018D00850009 /* HorizontalMenuBarComponent.swift */,
 			);
 			path = HorizontalMenuBar;
 			sourceTree = "<group>";
@@ -191,6 +194,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				270BFF2C29E4018D00850009 /* HorizontalMenuBarComponent.swift in Sources */,
 				270BFEF829E3A75000850009 /* ViewController.swift in Sources */,
 				270BFF2629E3D69000850009 /* ObserveMenuProtocol.swift in Sources */,
 				270BFEF429E3A75000850009 /* AppDelegate.swift in Sources */,
