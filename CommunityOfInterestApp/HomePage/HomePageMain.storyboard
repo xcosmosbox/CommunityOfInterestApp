@@ -33,7 +33,13 @@
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                     </view>
-                    <navigationItem key="navigationItem" title="Home" id="aJW-SR-EWF"/>
+                    <navigationItem key="navigationItem" title="Home" id="aJW-SR-EWF">
+                        <barButtonItem key="leftBarButtonItem" title="Item" image="pencil.line" catalog="system" id="NxN-aM-zSk">
+                            <connections>
+                                <segue destination="xtT-vI-vbm" kind="show" id="Pjl-3F-kXt"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
                     <connections>
                         <outlet property="HorizontalMenu" destination="g6K-sx-E4z" id="zoc-8c-vKs"/>
                         <outlet property="HorizontalMenuBar" destination="BeU-Fr-qLw" id="mMx-9j-Ji3"/>
@@ -42,6 +48,78 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="1982.4427480916029" y="-34.507042253521128"/>
+        </scene>
+        <!--TagBox-->
+        <scene sceneID="Gg0-Zl-MAB">
+            <objects>
+                <tableViewController id="xtT-vI-vbm" sceneMemberID="viewController">
+                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="-1" estimatedSectionHeaderHeight="-1" sectionFooterHeight="-1" estimatedSectionFooterHeight="-1" id="93a-Sc-5TC">
+                        <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                        <prototypes>
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" id="qH0-MO-YKw">
+                                <rect key="frame" x="0.0" y="50" width="393" height="43.666667938232422"/>
+                                <autoresizingMask key="autoresizingMask"/>
+                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="qH0-MO-YKw" id="iI6-Ya-zNv">
+                                    <rect key="frame" x="0.0" y="0.0" width="393" height="43.666667938232422"/>
+                                    <autoresizingMask key="autoresizingMask"/>
+                                </tableViewCellContentView>
+                            </tableViewCell>
+                        </prototypes>
+                        <connections>
+                            <outlet property="dataSource" destination="xtT-vI-vbm" id="KiE-56-xL5"/>
+                            <outlet property="delegate" destination="xtT-vI-vbm" id="Wox-Ks-QTB"/>
+                        </connections>
+                    </tableView>
+                    <navigationItem key="navigationItem" title="TagBox" id="6pa-XL-ZNS">
+                        <barButtonItem key="rightBarButtonItem" style="plain" systemItem="add" id="pdx-T1-NWh">
+                            <connections>
+                                <segue destination="Ztx-OJ-FGt" kind="show" id="IbC-xh-9c0"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
+                </tableViewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="0bc-rq-5NJ" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="3037" y="-35"/>
+        </scene>
+        <!--Add Tag-->
+        <scene sceneID="A0M-wC-uMo">
+            <objects>
+                <viewController id="Ztx-OJ-FGt" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="YNd-g3-vcs">
+                        <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Tag Name:" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="nbx-bW-IC2">
+                                <rect key="frame" x="16" y="103" width="361" height="32"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <textField opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="248" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="kaW-D5-Bht">
+                                <rect key="frame" x="16" y="143" width="361" height="34"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <textInputTraits key="textInputTraits"/>
+                            </textField>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ylz-uE-bIM">
+                                <rect key="frame" x="16" y="185" width="361" height="35"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <state key="normal" title="Button"/>
+                                <buttonConfiguration key="configuration" style="filled" title="Save"/>
+                            </button>
+                        </subviews>
+                        <viewLayoutGuide key="safeArea" id="Ho3-5q-gGq"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                    </view>
+                    <navigationItem key="navigationItem" title="Add Tag" id="xPG-x4-Xag"/>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="C7x-MR-TLZ" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="4070.9923664122134" y="-35.211267605633807"/>
         </scene>
         <!--Home-->
         <scene sceneID="ohc-iC-WK3">
@@ -65,6 +143,7 @@
     </scenes>
     <resources>
         <image name="house.circle.fill" catalog="system" width="128" height="123"/>
+        <image name="pencil.line" catalog="system" width="128" height="98"/>
         <systemColor name="secondarySystemBackgroundColor">
             <color red="0.94901960784313721" green="0.94901960784313721" blue="0.96862745098039216" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>
