@@ -3,9 +3,27 @@
     <device id="retina6_12" orientation="portrait" appearance="light"/>
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="21505"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="System colors in document resources" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
+        <!--Person-->
+        <scene sceneID="7OW-Qu-SBn">
+            <objects>
+                <viewController id="2Zp-J1-J5O" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="qS5-Dj-ZGb">
+                        <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <viewLayoutGuide key="safeArea" id="fby-N6-2qp"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                    </view>
+                    <navigationItem key="navigationItem" title="Person" id="dyV-6Z-5cI"/>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="lQC-Rv-ZCp" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1982" y="1590"/>
+        </scene>
         <!--Tab Bar Controller-->
         <scene sceneID="vkA-sA-Krj">
             <objects>
@@ -20,12 +38,31 @@
                     <connections>
                         <segue destination="U4k-I9-XDw" kind="relationship" relationship="viewControllers" id="WQD-xU-HA9"/>
                         <segue destination="G80-JH-rmK" kind="relationship" relationship="viewControllers" id="jC6-ap-6h3"/>
-                        <segue destination="VpX-cl-fp4" kind="relationship" relationship="viewControllers" id="8Lr-Wp-hZi"/>
+                        <segue destination="eYx-RH-VzD" kind="relationship" relationship="viewControllers" id="8Lr-Wp-hZi"/>
                     </connections>
                 </tabBarController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="YkD-Q9-RSG" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="-982" y="1111"/>
+        </scene>
+        <!--Person-->
+        <scene sceneID="tYv-EC-H3S">
+            <objects>
+                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="eYx-RH-VzD" sceneMemberID="viewController">
+                    <tabBarItem key="tabBarItem" title="Person" image="person.circle.fill" catalog="system" selectedImage="person.circle.fill" id="msM-BL-MfQ"/>
+                    <toolbarItems/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="U7B-wV-xIu">
+                        <rect key="frame" x="0.0" y="59" width="393" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                    <nil name="viewControllers"/>
+                    <connections>
+                        <segue destination="2Zp-J1-J5O" kind="relationship" relationship="rootViewController" id="GlD-ne-eaR"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="3DC-7Y-urH" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1056" y="1590"/>
         </scene>
         <!--HomePageMain-->
         <scene sceneID="zNM-fe-P4Q">
@@ -47,15 +84,11 @@
             </objects>
             <point key="canvasLocation" x="1056" y="770"/>
         </scene>
-        <!--PersonPageMain-->
-        <scene sceneID="woH-dC-Jzv">
-            <objects>
-                <viewControllerPlaceholder storyboardName="PersonPageMain" id="VpX-cl-fp4" sceneMemberID="viewController">
-                    <tabBarItem key="tabBarItem" title="Item" id="0Py-vd-peU"/>
-                </viewControllerPlaceholder>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="IIj-ov-J8H" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="1056" y="1590"/>
-        </scene>
     </scenes>
+    <resources>
+        <image name="person.circle.fill" catalog="system" width="128" height="123"/>
+        <systemColor name="systemBackgroundColor">
+            <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+        </systemColor>
+    </resources>
 </document>
