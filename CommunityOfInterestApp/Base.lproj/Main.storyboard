@@ -8,7 +8,7 @@
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
-        <!--View Controller-->
+        <!--Home-->
         <scene sceneID="tne-QT-ifu">
             <objects>
                 <viewController id="BYZ-38-t0r" customClass="ViewController" customModule="CommunityOfInterestApp" customModuleProvider="target" sceneMemberID="viewController">
@@ -18,13 +18,13 @@
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                     </view>
-                    <navigationItem key="navigationItem" id="aJW-SR-EWF"/>
+                    <navigationItem key="navigationItem" title="Home" id="aJW-SR-EWF"/>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="1982.4427480916029" y="-34.507042253521128"/>
         </scene>
-        <!--View Controller-->
+        <!--Sharing-->
         <scene sceneID="Aip-Eb-DfX">
             <objects>
                 <viewController id="TjE-dT-UCr" sceneMemberID="viewController">
@@ -34,13 +34,13 @@
                         <viewLayoutGuide key="safeArea" id="NIP-CU-PPS"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                     </view>
-                    <navigationItem key="navigationItem" id="Ci2-BP-a7c"/>
+                    <navigationItem key="navigationItem" title="Sharing" id="Ci2-BP-a7c"/>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="rix-9U-sx6" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="1982" y="770"/>
         </scene>
-        <!--View Controller-->
+        <!--Person-->
         <scene sceneID="7OW-Qu-SBn">
             <objects>
                 <viewController id="2Zp-J1-J5O" sceneMemberID="viewController">
@@ -50,17 +50,17 @@
                         <viewLayoutGuide key="safeArea" id="fby-N6-2qp"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                     </view>
-                    <navigationItem key="navigationItem" id="dyV-6Z-5cI"/>
+                    <navigationItem key="navigationItem" title="Person" id="dyV-6Z-5cI"/>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="lQC-Rv-ZCp" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="1982" y="1590"/>
         </scene>
-        <!--Item-->
+        <!--Home-->
         <scene sceneID="ohc-iC-WK3">
             <objects>
                 <navigationController automaticallyAdjustsScrollViewInsets="NO" id="gr9-zs-XMX" sceneMemberID="viewController">
-                    <tabBarItem key="tabBarItem" title="Item" id="xpJ-xN-9li"/>
+                    <tabBarItem key="tabBarItem" title="Home" image="house.circle.fill" catalog="system" selectedImage="house.circle.fill" id="xpJ-xN-9li"/>
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="WWK-ro-yOI">
                         <rect key="frame" x="0.0" y="59" width="393" height="44"/>
@@ -81,8 +81,10 @@
                 <tabBarController automaticallyAdjustsScrollViewInsets="NO" id="LZp-o8-IVM" sceneMemberID="viewController">
                     <toolbarItems/>
                     <tabBar key="tabBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="4Qy-ST-cSK">
+                        <rect key="frame" x="0.0" y="0.0" width="1000" height="1000"/>
                         <autoresizingMask key="autoresizingMask"/>
                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <tabBarAppearance key="scrollEdgeAppearance"/>
                     </tabBar>
                     <connections>
                         <segue destination="gr9-zs-XMX" kind="relationship" relationship="viewControllers" id="WQD-xU-HA9"/>
@@ -94,11 +96,11 @@
             </objects>
             <point key="canvasLocation" x="-982" y="1111"/>
         </scene>
-        <!--Item-->
+        <!--Share-->
         <scene sceneID="vhp-Q5-2s4">
             <objects>
                 <navigationController automaticallyAdjustsScrollViewInsets="NO" id="pIm-OH-GPl" sceneMemberID="viewController">
-                    <tabBarItem key="tabBarItem" title="Item" id="0gO-2A-5Sb"/>
+                    <tabBarItem key="tabBarItem" title="Share" image="plus.circle.fill" catalog="system" selectedImage="plus.circle.fill" id="0gO-2A-5Sb"/>
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="0yy-Ax-060">
                         <rect key="frame" x="0.0" y="59" width="393" height="44"/>
@@ -113,11 +115,11 @@
             </objects>
             <point key="canvasLocation" x="1056" y="770"/>
         </scene>
-        <!--Item-->
+        <!--Person-->
         <scene sceneID="tYv-EC-H3S">
             <objects>
                 <navigationController automaticallyAdjustsScrollViewInsets="NO" id="eYx-RH-VzD" sceneMemberID="viewController">
-                    <tabBarItem key="tabBarItem" title="Item" id="msM-BL-MfQ"/>
+                    <tabBarItem key="tabBarItem" title="Person" image="person.circle.fill" catalog="system" selectedImage="person.circle.fill" id="msM-BL-MfQ"/>
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="U7B-wV-xIu">
                         <rect key="frame" x="0.0" y="59" width="393" height="44"/>
@@ -134,6 +136,9 @@
         </scene>
     </scenes>
     <resources>
+        <image name="house.circle.fill" catalog="system" width="128" height="123"/>
+        <image name="person.circle.fill" catalog="system" width="128" height="123"/>
+        <image name="plus.circle.fill" catalog="system" width="128" height="123"/>
         <systemColor name="systemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
         </systemColor>
