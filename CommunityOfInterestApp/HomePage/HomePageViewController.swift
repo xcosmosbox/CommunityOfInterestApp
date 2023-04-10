@@ -7,9 +7,7 @@
 
 import UIKit
 
-class HomePageViewController: UIViewController, ObserverMenu {
-    
-    var HorizontalMenuManager:[HorizontalMenuButton] = []
+class HomePageViewController: UIViewController{
     
     var HorizontalMenuBarComponent:HorizontalMenuComponent?
     
@@ -43,8 +41,7 @@ class HomePageViewController: UIViewController, ObserverMenu {
         // Do any additional setup after loading the view.
         
         self.HorizontalMenuBarComponent = HorizontalMenuComponent(VStackViewMenu: HorizontalMenu, ScrollViewMenuBar: HorizontalMenuBar)
-        
-        setupHorizontalMenuBar()
+
     }
     
 
@@ -58,40 +55,10 @@ class HomePageViewController: UIViewController, ObserverMenu {
     }
     */
     
-    func setupHorizontalMenuBar() {
-        
-        // ONLY TEST
-        TEST_HorizontalMenuBarComponent()
-        self.HorizontalMenuBarComponent?.TEST_setupHorizontalMenuBar(HorizontalMenuManager: self.HorizontalMenuManager)
-        
-        
-        
-    }
+
     
     
     
-    
-    
-    func buttonSelected(button: ObservableButton) {
-        self.HorizontalMenuBarComponent?.updateButtonState(button: button)
-    }
-    
-    
-    
-    
-    
-    
-    /// ONLY TEST
-    func TEST_HorizontalMenuBarComponent(){
-        // ONLY TEST
-        HorizontalMenuManager.append(HorizontalMenuButton(buttonLisenter: self, title: "Title 1"))
-        HorizontalMenuManager.append(HorizontalMenuButton(buttonLisenter: self, title: " Title 2 "))
-        HorizontalMenuManager.append(HorizontalMenuButton(buttonLisenter: self, title: " Title 3 "))
-        HorizontalMenuManager.append(HorizontalMenuButton(buttonLisenter: self, title: " Title 4 djaosijdioa "))
-        HorizontalMenuManager.append(HorizontalMenuButton(buttonLisenter: self, title: " Title 5 "))
-        HorizontalMenuManager.append(HorizontalMenuButton(buttonLisenter: self, title: " Title 6 "))
-        HorizontalMenuManager.append(HorizontalMenuButton(buttonLisenter: self, title: " Title 7 "))
-        HorizontalMenuManager.append(HorizontalMenuButton(buttonLisenter: self, title: " Title 8 "))
-    }
+
 
 }

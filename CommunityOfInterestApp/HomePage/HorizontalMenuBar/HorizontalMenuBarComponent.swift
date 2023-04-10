@@ -9,7 +9,8 @@ import Foundation
 import UIKit
 
 
-class HorizontalMenuComponent {
+class HorizontalMenuComponent: ObserverMenu {
+    
     var HorizontalMenuManager:[HorizontalMenuButton] = []
     
     let VStackViewMenu:UIStackView
@@ -31,19 +32,16 @@ class HorizontalMenuComponent {
         self.ScrollViewMenuBar .contentSize = CGSize(width: self.VStackViewMenu.frame.width + 50, height: self.ScrollViewMenuBar .frame.height)
         self.ScrollViewMenuBar .showsHorizontalScrollIndicator = false
         self.ScrollViewMenuBar .addSubview(self.VStackViewMenu)
+        
+        buildComponent()
     }
     
     
-    
-    
-//    func setupHorizontalMenuBar(){
-//
-//    }
-    
-    
-    public func TEST_setupHorizontalMenuBar(HorizontalMenuManager:[HorizontalMenuButton] ){
-        
-        self.HorizontalMenuManager = HorizontalMenuManager
+    func buildComponent() {
+        let singleton = TagManager.shared
+        for tag in singleton.getAllTag(){
+            HorizontalMenuManager.append(HorizontalMenuButton(buttonLisenter: self, title: tag.getContent()))
+        }
         
         var counter = 1
         self.HorizontalMenuManager.forEach{ oneButton in
@@ -56,8 +54,34 @@ class HorizontalMenuComponent {
         
         refreshComponent()
         
+        
     }
     
+    
+    
+//
+////    func setupHorizontalMenuBar(){
+////
+////    }
+//
+//
+//    public func TEST_setupHorizontalMenuBar(HorizontalMenuManager:[HorizontalMenuButton] ){
+//
+//        self.HorizontalMenuManager = HorizontalMenuManager
+//
+//        var counter = 1
+//        self.HorizontalMenuManager.forEach{ oneButton in
+//            self.VStackViewMenu.addArrangedSubview(oneButton)
+//            if counter == 1{
+//                oneButton.updateButtonState(state: .selected)
+//            }
+//            counter += 1
+//        }
+//
+//        refreshComponent()
+//
+//    }
+//
     
     
     
@@ -77,7 +101,7 @@ class HorizontalMenuComponent {
     
     
     
-    func updateButtonState(button: ObservableButton){
+    func buttonSelected(button: ObservableButton) {
         HorizontalMenuManager.forEach{ oneButton in
             if oneButton == button as! HorizontalMenuButton {
                 oneButton.updateButtonState(state: .selected)
