@@ -15,7 +15,7 @@ class HorizontalMenuButton: UIButton, ObservableButton {
     
     
     init(buttonLisenter: ObserverMenu?, title: String) {
-        super.init(frame: .zero)
+        super.init(frame: .infinite)
         self.buttonLisenter = buttonLisenter
         setupButton(title:title)
     }
@@ -39,9 +39,17 @@ class HorizontalMenuButton: UIButton, ObservableButton {
         // set height?
         
         // disable button title's line wrapping
-        self.titleLabel?.lineBreakMode = .byWordWrapping
-        self.titleLabel?.numberOfLines = 0
-        self.titleLabel?.sizeToFit()
+//        self.titleLabel?.lineBreakMode = .byClipping
+//        self.titleLabel?.numberOfLines = 0
+//        self.titleLabel?.sizeToFit()
+        
+        
+//        self.configuration?.contentInsets = NSDirectionalEdgeInsets(top: 0, leading: 20, bottom: 0, trailing: 20)
+        
+        
+        
+        self.frame.size.width = (self.titleLabel?.frame.width)!
+        
         
         // set button state
         selectedState = .unselected

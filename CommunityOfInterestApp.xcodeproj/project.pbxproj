@@ -16,6 +16,9 @@
 		270BFF1729E3B32300850009 /* HomePageMain.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 270BFF1629E3B32300850009 /* HomePageMain.storyboard */; };
 		270BFF1929E3B33900850009 /* SharingPageMain.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 270BFF1829E3B33900850009 /* SharingPageMain.storyboard */; };
 		270BFF1B29E3B34C00850009 /* PersonPageMain.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 270BFF1A29E3B34C00850009 /* PersonPageMain.storyboard */; };
+		270BFF2629E3D69000850009 /* ObserveMenuProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 270BFF2529E3D69000850009 /* ObserveMenuProtocol.swift */; };
+		270BFF2829E3D88400850009 /* HomePageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 270BFF2729E3D88400850009 /* HomePageViewController.swift */; };
+		270BFF2A29E3DA4900850009 /* HorizontalMenuButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 270BFF2929E3DA4900850009 /* HorizontalMenuButton.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -30,6 +33,9 @@
 		270BFF1629E3B32300850009 /* HomePageMain.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = HomePageMain.storyboard; sourceTree = "<group>"; };
 		270BFF1829E3B33900850009 /* SharingPageMain.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = SharingPageMain.storyboard; sourceTree = "<group>"; };
 		270BFF1A29E3B34C00850009 /* PersonPageMain.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = PersonPageMain.storyboard; sourceTree = "<group>"; };
+		270BFF2529E3D69000850009 /* ObserveMenuProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ObserveMenuProtocol.swift; sourceTree = "<group>"; };
+		270BFF2729E3D88400850009 /* HomePageViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomePageViewController.swift; sourceTree = "<group>"; };
+		270BFF2929E3DA4900850009 /* HorizontalMenuButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HorizontalMenuButton.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -79,7 +85,9 @@
 		270BFF1329E3B2EA00850009 /* HomePage */ = {
 			isa = PBXGroup;
 			children = (
+				270BFF2429E3D64200850009 /* HorizontalMenuBar */,
 				270BFF1629E3B32300850009 /* HomePageMain.storyboard */,
+				270BFF2729E3D88400850009 /* HomePageViewController.swift */,
 			);
 			path = HomePage;
 			sourceTree = "<group>";
@@ -98,6 +106,15 @@
 				270BFF1A29E3B34C00850009 /* PersonPageMain.storyboard */,
 			);
 			path = PersonPage;
+			sourceTree = "<group>";
+		};
+		270BFF2429E3D64200850009 /* HorizontalMenuBar */ = {
+			isa = PBXGroup;
+			children = (
+				270BFF2529E3D69000850009 /* ObserveMenuProtocol.swift */,
+				270BFF2929E3DA4900850009 /* HorizontalMenuButton.swift */,
+			);
+			path = HorizontalMenuBar;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -175,7 +192,10 @@
 			buildActionMask = 2147483647;
 			files = (
 				270BFEF829E3A75000850009 /* ViewController.swift in Sources */,
+				270BFF2629E3D69000850009 /* ObserveMenuProtocol.swift in Sources */,
 				270BFEF429E3A75000850009 /* AppDelegate.swift in Sources */,
+				270BFF2829E3D88400850009 /* HomePageViewController.swift in Sources */,
+				270BFF2A29E3DA4900850009 /* HorizontalMenuButton.swift in Sources */,
 				270BFEF629E3A75000850009 /* SceneDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
