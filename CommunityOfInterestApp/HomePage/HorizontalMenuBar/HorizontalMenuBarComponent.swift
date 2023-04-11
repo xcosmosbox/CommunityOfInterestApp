@@ -38,6 +38,8 @@ class HorizontalMenuComponent: ObserverMenu {
     
     
     func buildComponent() {
+        HorizontalMenuManager = []
+        self.VStackViewMenu.removeAllArrangedSubviews()
         let singleton = TagManager.shared
         for tag in singleton.getAllTag(){
             HorizontalMenuManager.append(HorizontalMenuButton(buttonLisenter: self, title: tag.getContent()))
@@ -116,4 +118,13 @@ class HorizontalMenuComponent: ObserverMenu {
     
     
     
+}
+
+
+extension UIStackView {
+    func removeAllArrangedSubviews() {
+        for arrangedSubview in self.arrangedSubviews {
+            arrangedSubview.removeFromSuperview()
+        }
+    }
 }
