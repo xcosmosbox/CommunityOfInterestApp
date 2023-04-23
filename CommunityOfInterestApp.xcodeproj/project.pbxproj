@@ -27,6 +27,7 @@
 		274F9D4929E57FBC000E174D /* ExploreComponent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 274F9D4629E57FBC000E174D /* ExploreComponent.swift */; };
 		274F9D4A29E57FBC000E174D /* CardFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 274F9D4729E57FBC000E174D /* CardFactory.swift */; };
 		274F9D4B29E57FBC000E174D /* CardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 274F9D4829E57FBC000E174D /* CardView.swift */; };
+		276355C829F51DDD006046AA /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 276355C729F51DDD006046AA /* GoogleService-Info.plist */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -52,6 +53,7 @@
 		274F9D4629E57FBC000E174D /* ExploreComponent.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ExploreComponent.swift; sourceTree = "<group>"; };
 		274F9D4729E57FBC000E174D /* CardFactory.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CardFactory.swift; sourceTree = "<group>"; };
 		274F9D4829E57FBC000E174D /* CardView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CardView.swift; sourceTree = "<group>"; };
+		276355C729F51DDD006046AA /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -84,6 +86,7 @@
 		270BFEF229E3A75000850009 /* CommunityOfInterestApp */ = {
 			isa = PBXGroup;
 			children = (
+				276355C729F51DDD006046AA /* GoogleService-Info.plist */,
 				270BFF1529E3B2FA00850009 /* PersonPage */,
 				270BFF1429E3B2F200850009 /* SharingPage */,
 				270BFF1329E3B2EA00850009 /* HomePage */,
@@ -229,6 +232,7 @@
 				270BFF1729E3B32300850009 /* HomePageMain.storyboard in Resources */,
 				270BFEFD29E3A75000850009 /* Assets.xcassets in Resources */,
 				270BFEFB29E3A75000850009 /* Main.storyboard in Resources */,
+				276355C829F51DDD006046AA /* GoogleService-Info.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
