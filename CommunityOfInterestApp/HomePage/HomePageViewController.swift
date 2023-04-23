@@ -10,7 +10,7 @@ import UIKit
 class HomePageViewController: UIViewController{
     
     var HorizontalMenuBarComponent:HorizontalMenuComponent?
-    
+    var ExploreViewComponent:ExploreComponent?
     
     
     
@@ -24,12 +24,15 @@ class HomePageViewController: UIViewController{
     
     
     
+    @IBOutlet weak var scrollComponent: UIScrollView!
     
     
     
+    @IBOutlet weak var leftCardStack: UIStackView!
     
     
     
+    @IBOutlet weak var rightCardStack: UIStackView!
     
     
     
@@ -41,6 +44,10 @@ class HomePageViewController: UIViewController{
         // Do any additional setup after loading the view.
         
         self.HorizontalMenuBarComponent = HorizontalMenuComponent(VStackViewMenu: HorizontalMenu, ScrollViewMenuBar: HorizontalMenuBar)
+        
+        self.ExploreViewComponent = ExploreComponent(scrollComponent: scrollComponent, leftStack: leftCardStack, rightStack: rightCardStack)
+                
+        self.ExploreViewComponent?.fillNewCards(cards: CardFactory().ONLY_TEST_BUILD_CARD())
 
     }
     
