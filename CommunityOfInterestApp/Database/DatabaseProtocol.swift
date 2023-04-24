@@ -33,7 +33,7 @@ protocol DatabaseProtocol: AnyObject{
     func removeListener(listener: DatabaseListener)
     
     // tags
-    var defaultTag: [Tag] {get}
+    var defaultTags: [Tag] {get}
     func addTag(name: String) -> Tag
     func deleteTag(tag: Tag)
     

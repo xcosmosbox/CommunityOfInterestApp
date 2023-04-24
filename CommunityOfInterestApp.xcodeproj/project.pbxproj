@@ -38,6 +38,7 @@
 		276ECF8429F6CF9E005101B9 /* DatabaseProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 276ECF8329F6CF9E005101B9 /* DatabaseProtocol.swift */; };
 		276ECF8629F6D5A0005101B9 /* Card.swift in Sources */ = {isa = PBXBuildFile; fileRef = 276ECF8529F6D5A0005101B9 /* Card.swift */; };
 		276ECF8829F6D5FB005101B9 /* Tag.swift in Sources */ = {isa = PBXBuildFile; fileRef = 276ECF8729F6D5FB005101B9 /* Tag.swift */; };
+		276ECF8A29F6D719005101B9 /* FirebaseController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 276ECF8929F6D719005101B9 /* FirebaseController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -70,6 +71,7 @@
 		276ECF8329F6CF9E005101B9 /* DatabaseProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DatabaseProtocol.swift; sourceTree = "<group>"; };
 		276ECF8529F6D5A0005101B9 /* Card.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Card.swift; sourceTree = "<group>"; };
 		276ECF8729F6D5FB005101B9 /* Tag.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Tag.swift; sourceTree = "<group>"; };
+		276ECF8929F6D719005101B9 /* FirebaseController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirebaseController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -206,6 +208,7 @@
 			children = (
 				276355D429F53A71006046AA /* MulticastDelegate.swift */,
 				276ECF8329F6CF9E005101B9 /* DatabaseProtocol.swift */,
+				276ECF8929F6D719005101B9 /* FirebaseController.swift */,
 			);
 			path = Database;
 			sourceTree = "<group>";
@@ -309,6 +312,7 @@
 				276ECF8829F6D5FB005101B9 /* Tag.swift in Sources */,
 				270BFF2629E3D69000850009 /* ObserveMenuProtocol.swift in Sources */,
 				270BFF3129E42D7000850009 /* TagManager.swift in Sources */,
+				276ECF8A29F6D719005101B9 /* FirebaseController.swift in Sources */,
 				270BFEF429E3A75000850009 /* AppDelegate.swift in Sources */,
 				270BFF3429E4443600850009 /* TagBoxTableViewController.swift in Sources */,
 				270BFF2829E3D88400850009 /* HomePageViewController.swift in Sources */,
