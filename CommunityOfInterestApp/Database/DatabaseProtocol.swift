@@ -1,0 +1,56 @@
+//
+//  DatabaseProtocol.swift
+//  CommunityOfInterestApp
+//
+//  Created by Yuxiang Feng on 25/4/2023.
+//
+
+import Foundation
+
+enum DatabaseChange {
+    case add
+    case remove
+    case update
+}
+
+
+enum ListenerType{
+    case explore
+    case tag
+    case all
+}
+
+protocol DatabaseListener: AnyObject{
+    var listenerType: ListenerType{get set}
+    func onExploreChange(change: DatabaseChange, cards: [Card])
+    func onTagChange(change: DatabaseChange, tags: [Tag])
+}
+
+protocol DatabaseProtocol: AnyObject{
+    //
+    func cleanup()
+    func addListener(listener: DatabaseListener)
+    func removeListener(listener: DatabaseListener)
+    
+    // tags
+    var defaultTag: [Tag] {get}
+    func addTag(name: String) -> Tag
+    func deleteTag(tag: Tag)
+    
+    // explore
+    var currentCards: [Card] {get}
+    func addCard(card: Card) -> Card
+    func deleteCard(card: Card)
+    
+}
+
+
+
+
+
+
+
+
+
+
+
