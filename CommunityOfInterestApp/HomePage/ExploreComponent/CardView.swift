@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import FirebaseStorage
 
 class CardView: UIStackView {
     
@@ -17,6 +18,11 @@ class CardView: UIStackView {
     static let cardHight = CGFloat(250)
     static let cardWidth = CGFloat(180)
     
+    weak var databaseController: DatabaseProtocol?
+    
+    let appDelegate = UIApplication.shared.delegate as? AppDelegate
+    
+    
     /*
     // Only override draw() if you perform custom drawing.
     // An empty implementation adversely affects performance during animation.
@@ -26,6 +32,8 @@ class CardView: UIStackView {
     */
     
     func build(username:String, title: String, imagePath: String) -> CardView {
+        
+        databaseController = appDelegate?.databaseController
         
         // set itself
         self.axis = .vertical
@@ -74,11 +82,23 @@ class CardView: UIStackView {
         postImageView?.contentMode = .scaleAspectFill
         postImageView?.clipsToBounds = true
         // create the image obj
-        let postImage = UIImage(named: imagePath)
-        // zoom in and out the image
-        let scaledImage = postImage?.scaledImage(toSize: CGSize(width: CardView.cardWidth, height: 200))
-        // set the post image view's image
-        postImageView?.image = scaledImage
+        let gsReference = Storage.storage().reference(forURL: imagePath)
+        gsReference.getData(maxSize: 10 * 1024 * 1024){ data, error in
+            if let error = error{
+                print("error!: \(error)")
+            } else{
+                let postImage = UIImage(data: data!)
+                // zoom in and out the image
+                let scaledImage = postImage?.scaledImage(toSize: CGSize(width: CardView.cardWidth, height: 200))
+                // set the post image view's image
+                self.postImageView?.image = scaledImage
+            }
+        }
+//        let postImage = databaseController?.downloadImage(path: imagePath)
+//        // zoom in and out the image
+//        let scaledImage = postImage?.scaledImage(toSize: CGSize(width: CardView.cardWidth, height: 200))
+//        // set the post image view's image
+//        postImageView?.image = scaledImage
         
         
         // build up it self

@@ -13,6 +13,8 @@ class TagBoxTableViewController: UITableViewController {
     
     var tags = TagManager.shared.getAllTag()
     
+    weak var databaseController: DatabaseProtocol?
+    
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -27,6 +29,11 @@ class TagBoxTableViewController: UITableViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
+        
+        // set databaseController
+        let appDelegate = UIApplication.shared.delegate as? AppDelegate
+        databaseController = appDelegate?.databaseController
+        
         tags = TagManager.shared.getAllTag()
         tableView.reloadData()
     }
@@ -69,9 +76,18 @@ class TagBoxTableViewController: UITableViewController {
     override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
         // we can delete rows
         if editingStyle == .delete {
+            
             let tag = tags[indexPath.row]
+            
             // remove this tag for tags
             _ = TagManager.shared.removeTagInstance(tag: tag)
+            
+            // remove this tag from database
+            var tagForDatabase = Tag()
+            tagForDatabase.name = tag.getName();
+            databaseController?.deleteTag(tag: tagForDatabase)
+            
+            
             refreshTags()
             
         }
