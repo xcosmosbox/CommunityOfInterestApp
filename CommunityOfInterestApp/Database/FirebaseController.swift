@@ -145,6 +145,42 @@ class FirebaseController: NSObject, DatabaseProtocol {
         // milestone 2
     }
     
+    func getCommunityContentByTag(tagNmae: String) {
+        
+        // remove all cards
+        currentCards = []
+        
+        if tagNmae == " Explore "{
+            postRef?.limit(to: 15).getDocuments{ (querySnapshot, error) in
+                
+                guard let querySnapshot = querySnapshot else{
+                    print("Failed to get documents with error on getCommunityContentByTag: \(String(describing: error))")
+                    return
+                }
+                
+                self.parseCardsSnapshotFromNewTag(snapshot: querySnapshot)
+                
+            }
+            
+        } else {
+            let name = tagNmae.trimmingCharacters(in: .whitespacesAndNewlines)
+            // get new cards
+            postRef?.whereField("tags", arrayContains: name).limit(to: 10).getDocuments{ (querySnapshot, error) in
+                if let error = error{
+                    print("error::::\(error)")
+                } else {
+                    
+                    guard let querySnapshot = querySnapshot else{
+                        print("Failed to get documents by tag name with error: \(String(describing: error))")
+                        return
+                    }
+                    self.parseCardsSnapshotFromNewTag(snapshot: querySnapshot)
+                }
+            }
+        }
+        
+    }
+    
     
     
     func setupDefaultTags(){
@@ -278,6 +314,48 @@ class FirebaseController: NSObject, DatabaseProtocol {
             }
             
         }
+        
+    }
+    
+    
+    func parseCardsSnapshotFromNewTag(snapshot: QuerySnapshot){
+        print("hduaishdi!!!!!!!!!1duaishdi!!!!!!")
+        print(snapshot.documentChanges.count)
+        snapshot.documentChanges.forEach{ (change) in
+            
+            var parsedCard: Card?
+            
+            do{
+                parsedCard = try change.document.data(as: Card.self)
+                print(parsedCard?.cover)
+            } catch {
+                print("Unable to decode card. Is the card malformed?")
+                return
+            }
+            
+            guard let card = parsedCard else{
+                print("Document doesn't exits")
+                return
+            }
+            
+            if change.type == .added{
+                print(currentCards)
+                currentCards.insert(card, at: Int(change.newIndex))
+            } else if change.type == .modified{
+                currentCards[Int(change.oldIndex)] = card
+            } else if change.type == .removed {
+                currentCards.remove(at: Int(change.oldIndex))
+            }
+        }
+            
+            
+        listeners.invoke{ (listener) in
+            if listener.listenerType == ListenerType.explore || listener.listenerType == ListenerType.all || listener.listenerType == .tagAndExp{
+                listener.onExploreChange(change: .reload, cards: self.currentCards)
+            }
+                
+        }
+        
         
     }
     
