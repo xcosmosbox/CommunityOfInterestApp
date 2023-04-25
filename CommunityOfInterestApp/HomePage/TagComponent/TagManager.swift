@@ -31,18 +31,22 @@ class TagManager{
         return TagList.remove(at: TagList.firstIndex(where: {$0.getContent() == tag.getContent()})!)
     }
     
+    func removeAllTags(){
+        TagList = []
+    }
+    
     func getAllTag() -> [TagBean] {
         return TagList
     }
     
     private init(){
-        TEST_DATA_FUNCTION()
+//        TEST_DATA_FUNCTION()
     }
     
     
     
     
-    // ONLY TEST
+    // ONLY LOCAL TEST
     func TEST_DATA_FUNCTION(){
         addTagInstance(tag: TagBean(name: "Title 1"))
         addTagInstance(tag: TagBean(name: "Title 2"))

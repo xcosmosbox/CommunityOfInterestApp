@@ -33,7 +33,7 @@ class HorizontalMenuComponent: ObserverMenu {
         self.ScrollViewMenuBar .showsHorizontalScrollIndicator = false
         self.ScrollViewMenuBar .addSubview(self.VStackViewMenu)
         
-        buildComponent()
+//        buildComponent()
     }
     
     
