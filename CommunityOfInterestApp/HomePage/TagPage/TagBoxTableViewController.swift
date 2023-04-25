@@ -34,7 +34,8 @@ class TagBoxTableViewController: UITableViewController {
         let appDelegate = UIApplication.shared.delegate as? AppDelegate
         databaseController = appDelegate?.databaseController
         
-        tags = TagManager.shared.getAllTag()
+//        tags = TagManager.shared.getAllTag()
+        tags = TagManager.shared.getAllTagsWithoutExplore()
         tableView.reloadData()
     }
 
