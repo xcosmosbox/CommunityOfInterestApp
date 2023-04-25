@@ -125,6 +125,7 @@ class FirebaseController: NSObject, DatabaseProtocol {
         
     }
     
+    
     func parseTagsSnapshot(snapshot: QuerySnapshot){
         snapshot.documentChanges.forEach{ (change) in
             

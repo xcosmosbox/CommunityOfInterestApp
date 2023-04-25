@@ -6,9 +6,22 @@
 //
 
 import UIKit
+import FirebaseFirestoreSwift
 
 class Card: NSObject, Codable {
-    var username: String?
+    @DocumentID var id: String?
     var title: String?
-    var imagePath: String?
+    var cover: String?
+    var likes_number: Int?
+    var username: String?
+    
+    
+    enum CodingKeys: String, CodingKey{
+        case id
+        case title
+        case cover
+        case likes_number
+        case username
+    }
+    
 }
