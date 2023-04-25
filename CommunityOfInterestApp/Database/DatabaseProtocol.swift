@@ -12,6 +12,7 @@ enum DatabaseChange {
     case add
     case remove
     case update
+    case reload
 }
 
 
@@ -43,10 +44,13 @@ protocol DatabaseProtocol: AnyObject{
     var currentCards: [Card] {get}
     func addCard(card: Card) -> Card
     func deleteCard(card: Card)
+    func getCommunityContentByTag(tagNmae: String)
     
     
     // download
 //    func downloadImage(path: String) -> Data
+    
+    
     
 }
 

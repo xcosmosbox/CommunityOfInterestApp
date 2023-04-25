@@ -12,12 +12,18 @@ class HorizontalMenuButton: UIButton, ObservableButton {
     
     var buttonLisenter:ObserverMenu?
     var selectedState:ButtonState?
+    weak var databaseController: DatabaseProtocol?
+    var title: String?
     
     
     init(buttonLisenter: ObserverMenu?, title: String) {
         super.init(frame: .infinite)
         self.buttonLisenter = buttonLisenter
+        self.title = title
         setupButton(title:title)
+        
+        let appDelegate = UIApplication.shared.delegate as? AppDelegate
+        databaseController = appDelegate?.databaseController
     }
     
     required init?(coder: NSCoder) {
@@ -66,8 +72,19 @@ class HorizontalMenuButton: UIButton, ObservableButton {
     // when user touch the button, the OS will auto-call this method
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         super.touchesBegan(touches, with: event)
-        
         buttonLisenter?.buttonSelected(button: self)
+        
+        // change the explore component content
+//        if self.title != " Explore " {
+//
+//        } else {
+//
+//        }
+        print("!!!!!!Click!!!!!!")
+        databaseController?.getCommunityContentByTag(tagNmae: self.title!)
+        
+        
+        
     }
     
     

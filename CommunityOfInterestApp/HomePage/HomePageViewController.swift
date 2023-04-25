@@ -39,7 +39,9 @@ class HomePageViewController: UIViewController, DatabaseListener{
     @IBOutlet weak var rightCardStack: UIStackView!
     
     
-    
+    var initialScrollComponentContentSize: CGSize?
+    var initialLeftCardStackFrame: CGRect?
+    var initialRightCardStackFrame: CGRect?
     
 
     override func viewDidLoad() {
@@ -49,6 +51,9 @@ class HomePageViewController: UIViewController, DatabaseListener{
         databaseController = appDelegate?.databaseController
 
         // Do any additional setup after loading the view.
+        initialScrollComponentContentSize = scrollComponent.contentSize
+        initialLeftCardStackFrame = leftCardStack.frame
+        initialRightCardStackFrame = rightCardStack.frame
         
         self.HorizontalMenuBarComponent = HorizontalMenuComponent(VStackViewMenu: HorizontalMenu, ScrollViewMenuBar: HorizontalMenuBar)
         
@@ -89,6 +94,10 @@ class HomePageViewController: UIViewController, DatabaseListener{
             let cardView = CardFactory().buildACardView(username: card.username!, title: card.title!, imagePath: card.cover!)
             
             list.append(cardView)
+        }
+        
+        if change == .reload{
+            self.ExploreViewComponent?.clearAll(initialScrollComponentContentSize: initialScrollComponentContentSize!, initialLeftCardStackFrame: initialLeftCardStackFrame!, initialRightCardStackFrame: initialRightCardStackFrame!)
         }
         
         self.ExploreViewComponent?.fillNewCards(cards: list)

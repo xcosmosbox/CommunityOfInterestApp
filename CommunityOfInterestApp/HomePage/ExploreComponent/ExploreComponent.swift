@@ -74,6 +74,28 @@ class ExploreComponent{
         
     }
     
+    func clearAll(initialScrollComponentContentSize: CGSize, initialLeftCardStackFrame: CGRect, initialRightCardStackFrame: CGRect){
+//        var initialScrollComponentContentSize: CGSize?
+//        var initialLeftCardStackFrame: CGRect?
+//        var initialRightCardStackFrame: CGRect?
+        left_card_list = []
+        right_card_list = []
+        
+        for view in leftStack.subviews{
+            view.removeFromSuperview()
+        }
+        
+        for view in rightStack.subviews{
+            view.removeFromSuperview()
+        }
+        
+        leftStack.frame = initialLeftCardStackFrame
+        rightStack.frame = initialRightCardStackFrame
+        scrollComponent.contentSize = initialScrollComponentContentSize
+        
+        
+    }
+    
     
     
     
