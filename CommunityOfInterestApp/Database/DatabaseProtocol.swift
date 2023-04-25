@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import UIKit
 
 enum DatabaseChange {
     case add
@@ -17,6 +18,7 @@ enum DatabaseChange {
 enum ListenerType{
     case explore
     case tag
+    case tagAndExp
     case all
 }
 
@@ -41,6 +43,10 @@ protocol DatabaseProtocol: AnyObject{
     var currentCards: [Card] {get}
     func addCard(card: Card) -> Card
     func deleteCard(card: Card)
+    
+    
+    // download
+//    func downloadImage(path: String) -> Data
     
 }
 

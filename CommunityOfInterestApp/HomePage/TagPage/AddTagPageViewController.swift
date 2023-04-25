@@ -9,6 +9,7 @@ import UIKit
 
 class AddTagPageViewController: UIViewController {
     
+    weak var databaseController: DatabaseProtocol?
     
     
     @IBOutlet weak var TagName: UITextField!
@@ -17,6 +18,7 @@ class AddTagPageViewController: UIViewController {
     
     @IBAction func addTagAction(_ sender: Any) {
         TagManager.shared.addTag(name: TagName.text!)
+        databaseController?.addTag(name: TagName.text!)
         self.navigationController?.popViewController(animated: true)
     }
     
@@ -24,6 +26,10 @@ class AddTagPageViewController: UIViewController {
         super.viewDidLoad()
 
         // Do any additional setup after loading the view.
+        
+        // set databaseController
+        let appDelegate = UIApplication.shared.delegate as? AppDelegate
+        databaseController = appDelegate?.databaseController
     }
     
 
