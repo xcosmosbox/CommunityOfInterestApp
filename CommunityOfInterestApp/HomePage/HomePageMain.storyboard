@@ -29,6 +29,22 @@
                                 <viewLayoutGuide key="contentLayoutGuide" id="Mo1-1B-1to"/>
                                 <viewLayoutGuide key="frameLayoutGuide" id="kvh-7k-6sq"/>
                             </scrollView>
+                            <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="8Gu-3g-2aQ">
+                                <rect key="frame" x="0.0" y="182" width="393" height="611"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <subviews>
+                                    <stackView opaque="NO" contentMode="scaleToFill" fixedFrame="YES" axis="vertical" distribution="fillEqually" alignment="center" spacing="30" translatesAutoresizingMaskIntoConstraints="NO" id="B6g-x8-U7N">
+                                        <rect key="frame" x="8" y="0.0" width="180" height="611"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                    </stackView>
+                                    <stackView opaque="NO" contentMode="scaleToFill" fixedFrame="YES" axis="vertical" distribution="fillEqually" alignment="center" spacing="30" translatesAutoresizingMaskIntoConstraints="NO" id="fip-HU-RBF">
+                                        <rect key="frame" x="205" y="0.0" width="180" height="611"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                    </stackView>
+                                </subviews>
+                                <viewLayoutGuide key="contentLayoutGuide" id="SXA-qh-kOx"/>
+                                <viewLayoutGuide key="frameLayoutGuide" id="p5c-yD-bve"/>
+                            </scrollView>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
@@ -43,6 +59,9 @@
                     <connections>
                         <outlet property="HorizontalMenu" destination="g6K-sx-E4z" id="zoc-8c-vKs"/>
                         <outlet property="HorizontalMenuBar" destination="BeU-Fr-qLw" id="mMx-9j-Ji3"/>
+                        <outlet property="leftCardStack" destination="B6g-x8-U7N" id="sXW-VA-0s5"/>
+                        <outlet property="rightCardStack" destination="fip-HU-RBF" id="DGl-e0-Fi0"/>
+                        <outlet property="scrollComponent" destination="8Gu-3g-2aQ" id="hrF-kI-x9t"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>

@@ -24,6 +24,9 @@ struct TagBean {
         return self.content
     }
     
+    public func getName() -> String{
+        return self.name
+    }
     
     
 }
