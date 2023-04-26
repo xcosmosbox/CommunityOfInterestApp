@@ -14,6 +14,11 @@ import UIKit
 
 class ExploreComponent{
     
+    /**
+     ExploreComponent has three view
+     There are two VStacks left and right in the scrollComponent
+     These two VStacks will be used to store CardView
+     */
     let scrollComponent: UIScrollView
     let leftStack: UIStackView!
     let rightStack: UIStackView!
@@ -23,6 +28,7 @@ class ExploreComponent{
     
     let STACK_SPACING:CGFloat?
 
+    // init
     init(scrollComponent: UIScrollView, leftStack: UIStackView, rightStack: UIStackView) {
         self.scrollComponent = scrollComponent
         self.leftStack = leftStack
@@ -31,7 +37,10 @@ class ExploreComponent{
     }
     
     
+    // using cardviews to fill stack view
     func fillNewCards(cards:[CardView]) {
+        
+        // Prioritize filling VStack Views with fewer CardViews
         var counter = 0
         if left_card_list.count > right_card_list.count{
             counter = 1
@@ -39,6 +48,7 @@ class ExploreComponent{
             counter = 0
         }
         
+        // fill stack
         for card in cards{
             if counter == 0{
                 left_card_list.append(card)
@@ -55,6 +65,7 @@ class ExploreComponent{
     }
     
     
+    // resize the view frame
     func refresh(){
         var max_height = 0
         
@@ -74,13 +85,18 @@ class ExploreComponent{
         
     }
     
+    // when we goto the new tag
+    // we need to clean all cardview for now stack
     func clearAll(initialScrollComponentContentSize: CGSize, initialLeftCardStackFrame: CGRect, initialRightCardStackFrame: CGRect){
 //        var initialScrollComponentContentSize: CGSize?
 //        var initialLeftCardStackFrame: CGRect?
 //        var initialRightCardStackFrame: CGRect?
+        
+        // remove all cardview
         left_card_list = []
         right_card_list = []
         
+        // remove all subview from stack
         for view in leftStack.subviews{
             view.removeFromSuperview()
         }
@@ -89,6 +105,7 @@ class ExploreComponent{
             view.removeFromSuperview()
         }
         
+        // restore default frame
         leftStack.frame = initialLeftCardStackFrame
         rightStack.frame = initialRightCardStackFrame
         scrollComponent.contentSize = initialScrollComponentContentSize

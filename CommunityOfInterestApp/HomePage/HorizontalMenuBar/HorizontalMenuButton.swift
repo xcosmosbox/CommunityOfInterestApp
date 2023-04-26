@@ -42,7 +42,7 @@ class HorizontalMenuButton: UIButton, ObservableButton {
         // set the button's corner radius
         self.layer.cornerRadius = CGFloat(10)
         
-        // set height?
+        // set height
         
         // disable button title's line wrapping
 //        self.titleLabel?.lineBreakMode = .byClipping
@@ -72,6 +72,8 @@ class HorizontalMenuButton: UIButton, ObservableButton {
     // when user touch the button, the OS will auto-call this method
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         super.touchesBegan(touches, with: event)
+        
+        // change the button menu
         buttonLisenter?.buttonSelected(button: self)
         
         // change the explore component content
@@ -81,6 +83,7 @@ class HorizontalMenuButton: UIButton, ObservableButton {
 //
 //        }
         print("!!!!!!Click!!!!!!")
+        // reload new cards by tag
         databaseController?.getCommunityContentByTag(tagNmae: self.title!)
         
         
