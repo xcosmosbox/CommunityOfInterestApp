@@ -50,6 +50,8 @@ class HorizontalMenuComponent: ObserverMenu {
             self.VStackViewMenu.addArrangedSubview(oneButton)
             if counter == 1{
                 oneButton.updateButtonState(state: .selected)
+            } else {
+                oneButton.updateButtonState(state: .unselected)
             }
             counter += 1
         }
