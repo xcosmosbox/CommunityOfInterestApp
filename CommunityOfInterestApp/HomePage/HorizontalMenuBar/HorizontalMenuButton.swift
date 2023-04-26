@@ -91,9 +91,9 @@ class HorizontalMenuButton: UIButton, ObservableButton {
     func updateButtonState(state:ButtonState){
         self.selectedState = state
         if self.selectedState == .unselected{
-            self.backgroundColor = UIColor(named: "UnSelected")
+            self.backgroundColor = UIColor(named: "unselectedColor")
         } else {
-            self.backgroundColor = UIColor(named: "Selected")
+            self.backgroundColor = UIColor(named: "selectedColor")
         }
     }
     
