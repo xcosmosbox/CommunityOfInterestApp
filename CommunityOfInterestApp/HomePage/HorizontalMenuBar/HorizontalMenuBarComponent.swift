@@ -11,43 +11,52 @@ import UIKit
 
 class HorizontalMenuComponent: ObserverMenu {
     
+    // an empty array to store all button
     var HorizontalMenuManager:[HorizontalMenuButton] = []
     
-    let VStackViewMenu:UIStackView
+    // two important view
+    let HStackViewMenu:UIStackView
     let ScrollViewMenuBar: UIScrollView
     
+    // set the spacing for all button
     let ButtonSpacingNumer = 12
     
+    // init
     init(VStackViewMenu:UIStackView!, ScrollViewMenuBar: UIScrollView!) {
-        self.VStackViewMenu = VStackViewMenu
+        // init HStackViewMenu
+        self.HStackViewMenu = VStackViewMenu
         
-        self.VStackViewMenu.distribution = .fill
-        self.VStackViewMenu.axis = .horizontal
-        self.VStackViewMenu.spacing = CGFloat(ButtonSpacingNumer)
-        self.VStackViewMenu.alignment = .center
+        // set the frame for HStackViewMenu
+        self.HStackViewMenu.distribution = .fill
+        self.HStackViewMenu.axis = .horizontal
+        self.HStackViewMenu.spacing = CGFloat(ButtonSpacingNumer)
+        self.HStackViewMenu.alignment = .center
         
-        
+        // init ScrollViewMenuBar
         self.ScrollViewMenuBar = ScrollViewMenuBar
         
-        self.ScrollViewMenuBar .contentSize = CGSize(width: self.VStackViewMenu.frame.width + 50, height: self.ScrollViewMenuBar .frame.height)
-        self.ScrollViewMenuBar .showsHorizontalScrollIndicator = false
-        self.ScrollViewMenuBar .addSubview(self.VStackViewMenu)
+        // set the frame for ScrollViewMenuBar
+        self.ScrollViewMenuBar.contentSize = CGSize(width: self.HStackViewMenu.frame.width + 50, height: self.ScrollViewMenuBar .frame.height)
+        self.ScrollViewMenuBar.showsHorizontalScrollIndicator = false
+        self.ScrollViewMenuBar.addSubview(self.HStackViewMenu)
         
 //        buildComponent()
     }
     
     
+    // Build the corresponding Button according to the data given by TagManager
     func buildComponent() {
         HorizontalMenuManager = []
-        self.VStackViewMenu.removeAllArrangedSubviews()
+        self.HStackViewMenu.removeAllArrangedSubviews()
         let singleton = TagManager.shared
         for tag in singleton.getAllTag(){
             HorizontalMenuManager.append(HorizontalMenuButton(buttonLisenter: self, title: tag.getContent()))
         }
         
+        // The first Button is selected by default
         var counter = 1
         self.HorizontalMenuManager.forEach{ oneButton in
-            self.VStackViewMenu.addArrangedSubview(oneButton)
+            self.HStackViewMenu.addArrangedSubview(oneButton)
             if counter == 1{
                 oneButton.updateButtonState(state: .selected)
             } else {
@@ -56,6 +65,7 @@ class HorizontalMenuComponent: ObserverMenu {
             counter += 1
         }
         
+        // Resize two views according to the number of Buttons
         refreshComponent()
         
         
@@ -91,20 +101,25 @@ class HorizontalMenuComponent: ObserverMenu {
     
     
     func refreshComponent(){
+        // init variable
         var totalLength: CGFloat = 0.0
         var subviewconter = 0
-        for subview in self.VStackViewMenu.arrangedSubviews {
+        
+        // counter for all views length
+        for subview in self.HStackViewMenu.arrangedSubviews {
             totalLength += subview.frame.size.width
             subviewconter += 1
         }
         
-        self.VStackViewMenu.frame.size.width = totalLength + CGFloat(ButtonSpacingNumer * (subviewconter-1))
+        // fix the frame
+        self.HStackViewMenu.frame.size.width = totalLength + CGFloat(ButtonSpacingNumer * (subviewconter-1))
         
-        self.ScrollViewMenuBar.contentSize = CGSize(width: self.VStackViewMenu.frame.width + 50, height: self.ScrollViewMenuBar.frame.height)
+        // fix the frame
+        self.ScrollViewMenuBar.contentSize = CGSize(width: self.HStackViewMenu.frame.width + 50, height: self.ScrollViewMenuBar.frame.height)
     }
     
     
-    
+    // when a Button is selected, cancel the previously selected Button
     func buttonSelected(button: ObservableButton) {
         HorizontalMenuManager.forEach{ oneButton in
             if oneButton == button as! HorizontalMenuButton {

@@ -8,6 +8,7 @@
 import UIKit
 import FirebaseStorage
 
+// card view
 class CardView: UIStackView {
     
     let usernameStack = UIStackView()
@@ -31,6 +32,13 @@ class CardView: UIStackView {
     }
     */
     
+    /**
+     CardView is composed of many different parts.
+     CardView as a whole is a VStack, in which there are three HStacks from top to bottom.
+     The first HStack stores a UIImageView, and the UIImageView has a scaled image.
+     There is a Label in the second HStack, which is used to stored the title.
+     There are two Views in the third HStack from left to right. On the left is a Label and on the right is a UIImage.
+     */
     func build(username:String, title: String, imagePath: String) -> CardView {
         
         databaseController = appDelegate?.databaseController
@@ -82,6 +90,7 @@ class CardView: UIStackView {
         postImageView?.contentMode = .scaleAspectFill
         postImageView?.clipsToBounds = true
         // create the image obj
+        // download image from firebase Storage
         let gsReference = Storage.storage().reference(forURL: imagePath)
         gsReference.getData(maxSize: 10 * 1024 * 1024){ data, error in
             if let error = error{
@@ -119,6 +128,7 @@ class CardView: UIStackView {
 
 
 extension UIImage {
+    // Use this function to ensure that the images in each card view are the same size
     func scaledImage(toSize newSize: CGSize) -> UIImage? {
         let aspectRatio = self.size.width / self.size.height
         let newHeight = newSize.width / aspectRatio

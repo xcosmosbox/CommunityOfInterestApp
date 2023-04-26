@@ -40,6 +40,7 @@ class TagManager{
     }
     
     func getAllTagsWithoutExplore() -> [TagBean]{
+        // user can manage all tags without explore
         var tags:[TagBean] = []
         TagList.forEach{ tag in
             if tag.getName() != "Explore"{
@@ -52,6 +53,7 @@ class TagManager{
     
     private init(){
 //        TEST_DATA_FUNCTION()
+        // add default tag
         TagList.append(TagBean(name: "Explore"))
         
     }

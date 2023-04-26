@@ -11,6 +11,7 @@ import UIKit
 
 class CardFactory{
     
+    // using factory method to create card
     func buildACardView(username:String, title: String, imagePath: String) -> CardView{
         return CardView().build(username: username, title: title, imagePath: imagePath)
     }

@@ -8,15 +8,16 @@
 import UIKit
 
 class HomePageViewController: UIViewController, DatabaseListener{
+    // init listener type
     var listenerType: ListenerType = .tagAndExp
     
 
     
-    
+    // Variables for two important components
     var HorizontalMenuBarComponent:HorizontalMenuComponent?
     var ExploreViewComponent:ExploreComponent?
     
-    
+    // connection for database
     weak var databaseController: DatabaseProtocol?
     
     
@@ -39,24 +40,30 @@ class HomePageViewController: UIViewController, DatabaseListener{
     @IBOutlet weak var rightCardStack: UIStackView!
     
     
+    // At the beginning of the record, the size and frame of the three Views
     var initialScrollComponentContentSize: CGSize?
     var initialLeftCardStackFrame: CGRect?
     var initialRightCardStackFrame: CGRect?
     
 
+    // home page init
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        // obtain the connection for database controller
         let appDelegate = UIApplication.shared.delegate as? AppDelegate
         databaseController = appDelegate?.databaseController
 
         // Do any additional setup after loading the view.
+        // assign value
         initialScrollComponentContentSize = scrollComponent.contentSize
         initialLeftCardStackFrame = leftCardStack.frame
         initialRightCardStackFrame = rightCardStack.frame
         
+        // init HorizontalMenuComponent
         self.HorizontalMenuBarComponent = HorizontalMenuComponent(VStackViewMenu: HorizontalMenu, ScrollViewMenuBar: HorizontalMenuBar)
         
+        // init ExploreComponent
         self.ExploreViewComponent = ExploreComponent(scrollComponent: scrollComponent, leftStack: leftCardStack, rightStack: rightCardStack)
                 
 //        self.ExploreViewComponent?.fillNewCards(cards: CardFactory().ONLY_TEST_BUILD_CARD())
@@ -75,6 +82,9 @@ class HomePageViewController: UIViewController, DatabaseListener{
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
         databaseController?.removeListener(listener: self)
+        
+        // when we leave this page, we will clean all card for ExploreViewComponent
+        self.ExploreViewComponent?.clearAll(initialScrollComponentContentSize: initialScrollComponentContentSize!, initialLeftCardStackFrame: initialLeftCardStackFrame!, initialRightCardStackFrame: initialRightCardStackFrame!)
     }
     
 
@@ -88,37 +98,46 @@ class HomePageViewController: UIViewController, DatabaseListener{
     }
     */
     func onExploreChange(change: DatabaseChange, cards: [Card]) {
+        // clean list
         var list:[CardView] = []
         
+        // load all card view
         cards.forEach{ card in
             let cardView = CardFactory().buildACardView(username: card.username!, title: card.title!, imagePath: card.cover!)
             
             list.append(cardView)
         }
         
+        // if chang type == reload, means we need to resize the stack view and scroll view length
+        // reload means we change the tag
         if change == .reload{
             self.ExploreViewComponent?.clearAll(initialScrollComponentContentSize: initialScrollComponentContentSize!, initialLeftCardStackFrame: initialLeftCardStackFrame!, initialRightCardStackFrame: initialRightCardStackFrame!)
         }
         
+        // fill cards to ExploreViewComponent, it will fix the view length by numbers of cards
         self.ExploreViewComponent?.fillNewCards(cards: list)
         
-        view.setNeedsLayout()
-        view.layoutIfNeeded()
+//        view.setNeedsLayout()
+//        view.layoutIfNeeded()
         
     }
     
     func onTagChange(change: DatabaseChange, tags: [Tag]) {
+        // using the singleton TagManager
         let singleton = TagManager.shared
+        // remove all without explore
         singleton.removeAllTags()
         
+        // create TagBean throuhg Tag, and store them to TagManager
         tags.forEach{ tag in
             singleton.addTag(name: tag.name!)
         }
         
+        // build HorizontalMenuBarComponent
         self.HorizontalMenuBarComponent?.buildComponent()
         
-        view.setNeedsLayout()
-        view.layoutIfNeeded()
+//        view.setNeedsLayout()
+//        view.layoutIfNeeded()
         
     }
 
