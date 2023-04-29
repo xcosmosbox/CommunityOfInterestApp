@@ -62,11 +62,28 @@
                         <outlet property="leftCardStack" destination="B6g-x8-U7N" id="sXW-VA-0s5"/>
                         <outlet property="rightCardStack" destination="fip-HU-RBF" id="DGl-e0-Fi0"/>
                         <outlet property="scrollComponent" destination="8Gu-3g-2aQ" id="hrF-kI-x9t"/>
+                        <segue destination="kao-de-KUW" kind="show" id="9yl-jE-4NJ"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="1982.4427480916029" y="-34.507042253521128"/>
+        </scene>
+        <!--Detail View Controller-->
+        <scene sceneID="YXR-6B-xSH">
+            <objects>
+                <viewController id="kao-de-KUW" customClass="DetailViewController" customModule="CommunityOfInterestApp" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="7w5-6K-Tdi">
+                        <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <viewLayoutGuide key="safeArea" id="NUD-Sd-crC"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                    </view>
+                    <navigationItem key="navigationItem" id="Sdw-OP-kfL"/>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="xEP-YC-dWG" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1982" y="746"/>
         </scene>
         <!--TagBox-->
         <scene sceneID="Gg0-Zl-MAB">
