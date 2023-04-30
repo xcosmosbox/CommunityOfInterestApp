@@ -21,7 +21,6 @@ class DetailViewController: UIViewController, DatabaseListener {
     @IBOutlet weak var PageContainer: UIView!
     
     
-    @IBOutlet weak var PageBarControl: UIPageControl!
     
     @IBOutlet weak var TitleTextLabel: UILabel!
     
@@ -55,10 +54,6 @@ class DetailViewController: UIViewController, DatabaseListener {
         
         databaseController = appDelegate?.databaseController
         
-        if let viewController = PageContainer.subviews.first?.next as? PageImageViewController{
-            PageBarControl.numberOfPages = viewController.pageNumber
-            PageBarControl.currentPage = 0
-        }
         
 //        TitleTextLabel.numberOfLines = 0
         TitleTextLabel.text = card?.title
@@ -67,7 +62,6 @@ class DetailViewController: UIViewController, DatabaseListener {
         
         var counter = 0.0
         counter += PageContainer.frame.height
-        counter += PageBarControl.frame.height
         counter += TitleTextLabel.frame.height
         counter += ContentTextLabel.frame.height
         
@@ -75,7 +69,6 @@ class DetailViewController: UIViewController, DatabaseListener {
         PageScrollController.contentSize = CGSize(width: 393, height: counter + 100.0)
         PageScrollController.showsVerticalScrollIndicator = false
         PageScrollController.addSubview(PageContainer)
-        PageScrollController.addSubview(PageBarControl)
         PageScrollController.addSubview(TitleTextLabel)
         PageScrollController.addSubview(ContentTextLabel)
         
@@ -112,7 +105,7 @@ class DetailViewController: UIViewController, DatabaseListener {
     }
     
     func onImagePageChange(change: DatabaseChange, pageNumber: Int) {
-        self.PageBarControl.currentPage = pageNumber
+//        self.PageBarControl.currentPage = pageNumber
     }
 
 }
