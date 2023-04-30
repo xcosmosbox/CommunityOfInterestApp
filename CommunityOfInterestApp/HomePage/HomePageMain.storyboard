@@ -62,7 +62,7 @@
                         <outlet property="leftCardStack" destination="B6g-x8-U7N" id="sXW-VA-0s5"/>
                         <outlet property="rightCardStack" destination="fip-HU-RBF" id="DGl-e0-Fi0"/>
                         <outlet property="scrollComponent" destination="8Gu-3g-2aQ" id="hrF-kI-x9t"/>
-                        <segue destination="kao-de-KUW" kind="show" id="9yl-jE-4NJ"/>
+                        <segue destination="kao-de-KUW" kind="show" identifier="showCardDetailPage" id="9yl-jE-4NJ"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
@@ -76,6 +76,12 @@
                     <view key="view" contentMode="scaleToFill" id="7w5-6K-Tdi">
                         <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="RENT_.pic" translatesAutoresizingMaskIntoConstraints="NO" id="HTU-kz-8nK">
+                                <rect key="frame" x="0.0" y="335" width="393" height="483"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            </imageView>
+                        </subviews>
                         <viewLayoutGuide key="safeArea" id="NUD-Sd-crC"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                     </view>
@@ -83,7 +89,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="xEP-YC-dWG" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1982" y="746"/>
+            <point key="canvasLocation" x="1980.916030534351" y="745.77464788732402"/>
         </scene>
         <!--TagBox-->
         <scene sceneID="Gg0-Zl-MAB">
@@ -193,6 +199,7 @@
         </scene>
     </scenes>
     <resources>
+        <image name="RENT_.pic" width="1704" height="1061"/>
         <image name="house.circle.fill" catalog="system" width="128" height="123"/>
         <image name="pencil.line" catalog="system" width="128" height="98"/>
         <systemColor name="secondarySystemBackgroundColor">

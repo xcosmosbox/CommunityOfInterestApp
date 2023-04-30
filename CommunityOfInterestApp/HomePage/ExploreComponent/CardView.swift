@@ -22,6 +22,7 @@ class CardView: UIStackView {
     weak var databaseController: DatabaseProtocol?
     
     let appDelegate = UIApplication.shared.delegate as? AppDelegate
+    weak var homePageController: UIViewController?
     
     
     /*
@@ -39,9 +40,11 @@ class CardView: UIStackView {
      There is a Label in the second HStack, which is used to stored the title.
      There are two Views in the third HStack from left to right. On the left is a Label and on the right is a UIImage.
      */
-    func build(username:String, title: String, imagePath: String) -> CardView {
+    func build(username:String, title: String, imagePath: String, homepageViewControl: UIViewController) -> CardView {
         
         databaseController = appDelegate?.databaseController
+        
+        self.homePageController = homepageViewControl
         
         // set itself
         self.axis = .vertical
@@ -117,10 +120,26 @@ class CardView: UIStackView {
         self.addArrangedSubview(titleLabel)
         self.addArrangedSubview(usernameStack)
         
-        
+        addTapGestureToStackView()
         
         return self
     }
+    
+    
+    
+    func addTapGestureToStackView(){
+        let tapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(stackViewTapped))
+        self.addGestureRecognizer(tapGestureRecognizer)
+        self.isUserInteractionEnabled = true
+    }
+    
+    @objc func stackViewTapped() {
+//        let detailViewController = DetailViewController()
+//        self.homePageController?.navigationController?.pushViewController(detailViewController, animated: true)
+        self.homePageController?.performSegue(withIdentifier: "showCardDetailPage", sender: self)
+    }
+    
+    
     
     
     

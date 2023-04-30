@@ -103,7 +103,7 @@ class HomePageViewController: UIViewController, DatabaseListener{
         
         // load all card view
         cards.forEach{ card in
-            let cardView = CardFactory().buildACardView(username: card.username!, title: card.title!, imagePath: card.cover!)
+            let cardView = CardFactory().buildACardView(username: card.username!, title: card.title!, imagePath: card.cover!, homepageViewControl: self)
             
             list.append(cardView)
         }
