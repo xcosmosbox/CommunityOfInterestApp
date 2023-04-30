@@ -50,6 +50,7 @@ class PicturesViewController: UIViewController {
         imageView.contentMode = .scaleAspectFill
         view.addSubview(imageView)
         
+        imageView.clipsToBounds = true
         imageView.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
                     imageView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
