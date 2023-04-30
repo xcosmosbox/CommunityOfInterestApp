@@ -84,6 +84,9 @@
                                     <containerView opaque="NO" contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="wgG-DG-Msi">
                                         <rect key="frame" x="0.0" y="8" width="393" height="450"/>
                                         <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES"/>
+                                        <connections>
+                                            <segue destination="NTy-Ca-MkH" kind="embed" id="RnX-m2-vhd"/>
+                                        </connections>
                                     </containerView>
                                     <pageControl opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" numberOfPages="3" translatesAutoresizingMaskIntoConstraints="NO" id="cOf-g4-DnH">
                                         <rect key="frame" x="8" y="466" width="377" height="26"/>
