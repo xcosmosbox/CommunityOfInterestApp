@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		270AD1EB29FE6A340034BBD3 /* PageImageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 270AD1EA29FE6A340034BBD3 /* PageImageViewController.swift */; };
+		270AD1ED29FE6AAF0034BBD3 /* PicturesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 270AD1EC29FE6AAF0034BBD3 /* PicturesViewController.swift */; };
 		270BFEF429E3A75000850009 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 270BFEF329E3A75000850009 /* AppDelegate.swift */; };
 		270BFEF629E3A75000850009 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 270BFEF529E3A75000850009 /* SceneDelegate.swift */; };
 		270BFEF829E3A75000850009 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 270BFEF729E3A75000850009 /* ViewController.swift */; };
@@ -43,6 +45,8 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		270AD1EA29FE6A340034BBD3 /* PageImageViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PageImageViewController.swift; sourceTree = "<group>"; };
+		270AD1EC29FE6AAF0034BBD3 /* PicturesViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PicturesViewController.swift; sourceTree = "<group>"; };
 		270BFEF029E3A75000850009 /* CommunityOfInterestApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = CommunityOfInterestApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		270BFEF329E3A75000850009 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		270BFEF529E3A75000850009 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -199,6 +203,8 @@
 			isa = PBXGroup;
 			children = (
 				275E432029FD5B9100A5916D /* DetailViewController.swift */,
+				270AD1EA29FE6A340034BBD3 /* PageImageViewController.swift */,
+				270AD1EC29FE6AAF0034BBD3 /* PicturesViewController.swift */,
 			);
 			path = DetailPage;
 			sourceTree = "<group>";
@@ -309,9 +315,11 @@
 			buildActionMask = 2147483647;
 			files = (
 				274F9D4B29E57FBC000E174D /* CardView.swift in Sources */,
+				270AD1EB29FE6A340034BBD3 /* PageImageViewController.swift in Sources */,
 				270BFF2C29E4018D00850009 /* HorizontalMenuBarComponent.swift in Sources */,
 				276ECF8629F6D5A0005101B9 /* Card.swift in Sources */,
 				276355D529F53A72006046AA /* MulticastDelegate.swift in Sources */,
+				270AD1ED29FE6AAF0034BBD3 /* PicturesViewController.swift in Sources */,
 				270BFEF829E3A75000850009 /* ViewController.swift in Sources */,
 				276355D929F5542B006046AA /* Post.swift in Sources */,
 				276355D729F5505A006046AA /* User.swift in Sources */,
