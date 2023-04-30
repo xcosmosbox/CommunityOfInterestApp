@@ -8,9 +8,15 @@
 import UIKit
 
 class DetailViewController: UIViewController {
+    
+    var card:Card? = nil
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        print("=====")
+        print(card)
+        print("+++++")
 
         // Do any additional setup after loading the view.
     }
