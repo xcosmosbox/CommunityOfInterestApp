@@ -7,8 +7,7 @@
 
 import UIKit
 
-class DetailViewController: UIViewController, DatabaseListener {
-    var listenerType: ListenerType = .postPage
+class DetailViewController: UIViewController{
     
 
     
@@ -35,8 +34,6 @@ class DetailViewController: UIViewController, DatabaseListener {
     
     var card:Card? = nil
     
-    let appDelegate = UIApplication.shared.delegate as? AppDelegate
-    weak var databaseController: DatabaseProtocol?
     
 
     override func viewDidLoad() {
@@ -52,7 +49,6 @@ class DetailViewController: UIViewController, DatabaseListener {
         print("+++++")
         
         
-        databaseController = appDelegate?.databaseController
         
         
 //        TitleTextLabel.numberOfLines = 0
@@ -86,27 +82,9 @@ class DetailViewController: UIViewController, DatabaseListener {
         // Pass the selected object to the new view controller.
     }
     */
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-        databaseController?.addListener(listener: self)
-    }
+
     
-    override func viewWillDisappear(_ animated: Bool) {
-        super.viewWillDisappear(animated)
-        databaseController?.removeListener(listener: self)
-    }
-    
-    func onExploreChange(change: DatabaseChange, cards: [Card]) {
-        // nothing to do
-    }
-    
-    func onTagChange(change: DatabaseChange, tags: [Tag]) {
-        // nothing to do
-    }
-    
-    func onImagePageChange(change: DatabaseChange, pageNumber: Int) {
-//        self.PageBarControl.currentPage = pageNumber
-    }
+
 
 }
 

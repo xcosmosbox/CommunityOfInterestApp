@@ -143,10 +143,7 @@ class HomePageViewController: UIViewController, DatabaseListener, DetailChangeDe
 //        view.layoutIfNeeded()
         
     }
-    
-    func onImagePageChange(change: DatabaseChange, pageNumber: Int) {
-        // nothing to do
-    }
+
     
     func loadCardDetail(_ card: Card) {
         self.performSegue(withIdentifier: "showCardDetailPage", sender: card)
