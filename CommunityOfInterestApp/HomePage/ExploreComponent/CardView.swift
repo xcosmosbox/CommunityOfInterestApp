@@ -15,6 +15,7 @@ class CardView: UIStackView {
     let titleLabel = UILabel(frame: CGRect(x: 0, y: 0, width: 180, height: 30))
     var like: UIImageView! = nil
     var postImageView: UIImageView! = nil
+    var card: Card?
     
     static let cardHight = CGFloat(250)
     static let cardWidth = CGFloat(180)
@@ -40,11 +41,12 @@ class CardView: UIStackView {
      There is a Label in the second HStack, which is used to stored the title.
      There are two Views in the third HStack from left to right. On the left is a Label and on the right is a UIImage.
      */
-    func build(username:String, title: String, imagePath: String, homepageViewControl: UIViewController) -> CardView {
+    func build(username:String, title: String, imagePath: String, homepageViewControl: UIViewController, card: Card) -> CardView {
         
         databaseController = appDelegate?.databaseController
         
         self.homePageController = homepageViewControl
+        self.card = card
         
         // set itself
         self.axis = .vertical
@@ -136,12 +138,18 @@ class CardView: UIStackView {
     @objc func stackViewTapped() {
 //        let detailViewController = DetailViewController()
 //        self.homePageController?.navigationController?.pushViewController(detailViewController, animated: true)
-        self.homePageController?.performSegue(withIdentifier: "showCardDetailPage", sender: self)
+//        self.homePageController?.performSegue(withIdentifier: "showCardDetailPage", sender: self)
+        guard let homeController = homePageController as? HomePageViewController else{
+            print("Card class: Error!!!!! NO CARD!!!!!")
+            return
+        }
+        
+        homeController.loadCardDetail(self.card!)
     }
     
     
     
-    
+
     
 }
 

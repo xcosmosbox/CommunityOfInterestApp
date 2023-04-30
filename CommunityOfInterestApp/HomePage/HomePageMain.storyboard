@@ -69,7 +69,7 @@
             </objects>
             <point key="canvasLocation" x="1982.4427480916029" y="-34.507042253521128"/>
         </scene>
-        <!--Detail View Controller-->
+        <!--Post-->
         <scene sceneID="YXR-6B-xSH">
             <objects>
                 <viewController id="kao-de-KUW" customClass="DetailViewController" customModule="CommunityOfInterestApp" customModuleProvider="target" sceneMemberID="viewController">
@@ -77,19 +77,53 @@
                         <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="RENT_.pic" translatesAutoresizingMaskIntoConstraints="NO" id="HTU-kz-8nK">
-                                <rect key="frame" x="0.0" y="335" width="393" height="483"/>
+                            <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Asy-7s-sgM">
+                                <rect key="frame" x="0.0" y="103" width="393" height="749"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                            </imageView>
+                                <subviews>
+                                    <containerView opaque="NO" contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="wgG-DG-Msi">
+                                        <rect key="frame" x="0.0" y="8" width="393" height="450"/>
+                                        <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES"/>
+                                    </containerView>
+                                    <pageControl opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" numberOfPages="3" translatesAutoresizingMaskIntoConstraints="NO" id="cOf-g4-DnH">
+                                        <rect key="frame" x="8" y="466" width="377" height="26"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                    </pageControl>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Label" textAlignment="natural" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="C0Q-za-xSq">
+                                        <rect key="frame" x="8" y="500" width="377" height="21"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <fontDescription key="fontDescription" style="UICTFontTextStyleTitle0"/>
+                                        <nil key="textColor"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Label" textAlignment="natural" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="INV-0m-ZZn">
+                                        <rect key="frame" x="8" y="529" width="377" height="21"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                        <nil key="textColor"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                </subviews>
+                                <viewLayoutGuide key="contentLayoutGuide" id="xUd-QH-Z2A"/>
+                                <viewLayoutGuide key="frameLayoutGuide" id="G8x-7B-wSD"/>
+                            </scrollView>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="NUD-Sd-crC"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                     </view>
-                    <navigationItem key="navigationItem" id="Sdw-OP-kfL"/>
+                    <navigationItem key="navigationItem" title="Post" id="Sdw-OP-kfL"/>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="xEP-YC-dWG" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="1980.916030534351" y="745.77464788732402"/>
+        </scene>
+        <!--Page View Controller-->
+        <scene sceneID="qqJ-nw-BgP">
+            <objects>
+                <pageViewController autoresizesArchivedViewToFullSize="NO" transitionStyle="scroll" navigationOrientation="horizontal" spineLocation="none" id="NTy-Ca-MkH" sceneMemberID="viewController"/>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="PLe-BM-0n0" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="3051" y="747"/>
         </scene>
         <!--TagBox-->
         <scene sceneID="Gg0-Zl-MAB">
@@ -199,7 +233,6 @@
         </scene>
     </scenes>
     <resources>
-        <image name="RENT_.pic" width="1704" height="1061"/>
         <image name="house.circle.fill" catalog="system" width="128" height="123"/>
         <image name="pencil.line" catalog="system" width="128" height="98"/>
         <systemColor name="secondarySystemBackgroundColor">
