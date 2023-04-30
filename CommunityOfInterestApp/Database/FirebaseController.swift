@@ -32,8 +32,6 @@ class FirebaseController: NSObject, DatabaseProtocol {
     // card cache pool
     var oneCardCache: Card? = nil
     
-    // image page number
-    var postImagePageNumber: Int = 0
     
     override init() {
         FirebaseApp.configure()
@@ -397,21 +395,7 @@ class FirebaseController: NSObject, DatabaseProtocol {
     func getOneCardCache() -> Card {
         return self.oneCardCache!
     }
-    
-    func updateCurrentImagePageNumber(pageNumber: Int) {
-        self.postImagePageNumber = pageNumber
-        
-        listeners.invoke{ (listener) in
-            if listener.listenerType == ListenerType.postPage || listener.listenerType == ListenerType.all{
-                listener.onImagePageChange(change: .update, pageNumber: self.postImagePageNumber)
-            }
-                
-        }
-    }
-    
-    func getCurrentImagePageNumber() -> Int {
-        return self.postImagePageNumber
-    }
+
     
     
     

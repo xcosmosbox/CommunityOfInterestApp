@@ -80,17 +80,11 @@ class PageImageViewController: UIPageViewController, UIPageViewControllerDataSou
             let newIndex = currentIndex + 1
 //            databaseController?.updateCurrentImagePageNumber(pageNumber: newIndex)
             let page = PicturesViewController(imagePath: imagesLoader![newIndex])
-            updateImagePageNumer(viewController: page)
             return page
         }
     }
     
-    func updateImagePageNumer(viewController: PicturesViewController){
-        let index = imagesLoader?.firstIndex(of: viewController.imagePath)
-        
-        databaseController?.updateCurrentImagePageNumber(pageNumber: index!)
-    }
-    
+
 
 }
 

@@ -20,7 +20,6 @@ enum ListenerType{
     case explore
     case tag
     case tagAndExp
-    case postPage
     case all
 }
 
@@ -28,7 +27,6 @@ protocol DatabaseListener: AnyObject{
     var listenerType: ListenerType{get set}
     func onExploreChange(change: DatabaseChange, cards: [Card])
     func onTagChange(change: DatabaseChange, tags: [Tag])
-    func onImagePageChange(change: DatabaseChange, pageNumber:Int)
 }
 
 protocol DatabaseProtocol: AnyObject{
@@ -56,10 +54,6 @@ protocol DatabaseProtocol: AnyObject{
     func setOneCardCache(card: Card)
     func getOneCardCache() -> Card
     
-    
-    // Image page change
-    func updateCurrentImagePageNumber(pageNumber: Int)
-    func getCurrentImagePageNumber() -> Int
     
     
 }
