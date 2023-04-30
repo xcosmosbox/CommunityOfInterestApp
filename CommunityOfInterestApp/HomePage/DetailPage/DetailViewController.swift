@@ -27,3 +27,9 @@ class DetailViewController: UIViewController {
     */
 
 }
+
+
+protocol DetailChangeDelegate {
+    func loadCardDetail(_ card: Card)
+}
+
