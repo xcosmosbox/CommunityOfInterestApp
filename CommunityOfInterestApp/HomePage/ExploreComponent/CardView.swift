@@ -143,7 +143,7 @@ class CardView: UIStackView {
             print("Card class: Error!!!!! NO CARD!!!!!")
             return
         }
-        
+        databaseController?.setOneCardCache(card: self.card!)
         homeController.loadCardDetail(self.card!)
     }
     

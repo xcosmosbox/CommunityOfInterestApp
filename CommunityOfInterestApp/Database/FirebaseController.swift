@@ -11,6 +11,8 @@ import FirebaseFirestoreSwift
 import FirebaseStorage
 
 class FirebaseController: NSObject, DatabaseProtocol {
+
+    
    
     
     var defaultTags: [Tag] = []
@@ -24,6 +26,9 @@ class FirebaseController: NSObject, DatabaseProtocol {
     var postRef: CollectionReference?
     var userRef: CollectionReference?
     var currentUser: FirebaseAuth.User?
+    
+    // card cache pool
+    var oneCardCache: Card
     
     override init() {
         FirebaseApp.configure()
@@ -380,7 +385,13 @@ class FirebaseController: NSObject, DatabaseProtocol {
 //    }
     
     
+    func setOneCardCache(card: Card) {
+        self.oneCardCache = card
+    }
     
+    func getOneCardCache() -> Card {
+        return self.oneCardCache
+    }
     
     
     
