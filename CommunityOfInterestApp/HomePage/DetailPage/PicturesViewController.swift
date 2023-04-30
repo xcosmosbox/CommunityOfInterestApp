@@ -31,7 +31,7 @@ class PicturesViewController: UIViewController {
         
         // download image from firebase Storage
         let gsReference = Storage.storage().reference(forURL: imagePath)
-        gsReference.getData(maxSize: 10 * 1024 * 1024){ data, error in
+        gsReference.getData(maxSize: 100 * 1024 * 1024){ data, error in
             if let error = error{
                 print("error!: \(error)")
             } else{
@@ -40,6 +40,8 @@ class PicturesViewController: UIViewController {
 //                let scaledImage = postImage?.scaledImage(toSize: CGSize(width: CardView.cardWidth, height: 200))
                 // set the post image view's image
                 self.imageView.image = postImage
+                print("page load!!!! YEEEEEE")
+                print(postImage)
             }
         }
         
@@ -47,6 +49,14 @@ class PicturesViewController: UIViewController {
 //        imageView.image = image
         imageView.contentMode = .scaleAspectFill
         view.addSubview(imageView)
+        
+        imageView.translatesAutoresizingMaskIntoConstraints = false
+        NSLayoutConstraint.activate([
+                    imageView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
+                    imageView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
+                    imageView.topAnchor.constraint(equalTo: view.topAnchor),
+                    imageView.bottomAnchor.constraint(equalTo: view.bottomAnchor),
+                ])
     }
     
 

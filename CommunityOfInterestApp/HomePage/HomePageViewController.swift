@@ -9,6 +9,8 @@ import UIKit
 
 class HomePageViewController: UIViewController, DatabaseListener, DetailChangeDelegate{
 
+    
+
     // init listener type
     var listenerType: ListenerType = .tagAndExp
     
@@ -140,6 +142,10 @@ class HomePageViewController: UIViewController, DatabaseListener, DetailChangeDe
 //        view.setNeedsLayout()
 //        view.layoutIfNeeded()
         
+    }
+    
+    func onImagePageChange(change: DatabaseChange, pageNumber: Int) {
+        // nothing to do
     }
     
     func loadCardDetail(_ card: Card) {

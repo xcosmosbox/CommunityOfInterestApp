@@ -11,7 +11,7 @@ class PageImageViewController: UIPageViewController, UIPageViewControllerDataSou
     
     var imagesLoader:[String]?
     
-    public var number = 0
+    public var pageNumber = 0
     
     let appDelegate = UIApplication.shared.delegate as? AppDelegate
     weak var databaseController: DatabaseProtocol?
@@ -20,19 +20,22 @@ class PageImageViewController: UIPageViewController, UIPageViewControllerDataSou
         databaseController = appDelegate?.databaseController
         imagesLoader = databaseController?.getOneCardCache().picture
         
+        print("1")
+        
         super.viewDidLoad()
 
+        print("2")
         // Do any additional setup after loading the view.
         
         
         dataSource = self
         
-        var initialViewImageController = PicturesViewController(imagePath: (imagesLoader?.first)!)
+        let initialViewImageController = PicturesViewController(imagePath: (imagesLoader?.first)!)
         
         
         self.setViewControllers([initialViewImageController], direction: .forward, animated: false, completion: nil)
         
-        self.number = imagesLoader!.count
+        self.pageNumber = imagesLoader!.count
         
         
     }
@@ -60,7 +63,9 @@ class PageImageViewController: UIPageViewController, UIPageViewControllerDataSou
         } else {
             let newIndex = currentIndex - 1
 //            print("before \(newIndex)")
-            return PicturesViewController(imagePath: imagesLoader![newIndex])
+            let page = PicturesViewController(imagePath: imagesLoader![newIndex])
+//            updateImagePageNumer(viewController: page)
+            return page
         }
     }
     
@@ -73,8 +78,17 @@ class PageImageViewController: UIPageViewController, UIPageViewControllerDataSou
             return nil
         } else {
             let newIndex = currentIndex + 1
-            return PicturesViewController(imagePath: imagesLoader![newIndex])
+//            databaseController?.updateCurrentImagePageNumber(pageNumber: newIndex)
+            let page = PicturesViewController(imagePath: imagesLoader![newIndex])
+            updateImagePageNumer(viewController: page)
+            return page
         }
+    }
+    
+    func updateImagePageNumer(viewController: PicturesViewController){
+        let index = imagesLoader?.firstIndex(of: viewController.imagePath)
+        
+        databaseController?.updateCurrentImagePageNumber(pageNumber: index!)
     }
     
 
