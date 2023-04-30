@@ -50,6 +50,10 @@ protocol DatabaseProtocol: AnyObject{
     // download
 //    func downloadImage(path: String) -> Data
     
+    // Card Detail Cache Pool
+    func setOneCardCache(card: Card)
+    func getOneCardCache() -> Card
+    
     
     
 }
