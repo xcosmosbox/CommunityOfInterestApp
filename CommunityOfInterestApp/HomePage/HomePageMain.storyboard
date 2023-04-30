@@ -77,53 +77,85 @@
                         <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Asy-7s-sgM">
+                            <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Asy-7s-sgM">
                                 <rect key="frame" x="0.0" y="103" width="393" height="749"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <subviews>
-                                    <containerView opaque="NO" contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="wgG-DG-Msi">
-                                        <rect key="frame" x="0.0" y="8" width="393" height="450"/>
-                                        <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES"/>
+                                    <containerView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="wgG-DG-Msi">
+                                        <rect key="frame" x="0.0" y="0.0" width="393" height="431"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="431" id="dS3-nJ-Kgk"/>
+                                            <constraint firstAttribute="width" constant="393" id="grt-dK-mEM"/>
+                                        </constraints>
                                         <connections>
                                             <segue destination="NTy-Ca-MkH" kind="embed" id="RnX-m2-vhd"/>
                                         </connections>
                                     </containerView>
-                                    <pageControl opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" numberOfPages="3" translatesAutoresizingMaskIntoConstraints="NO" id="cOf-g4-DnH">
-                                        <rect key="frame" x="8" y="466" width="377" height="26"/>
-                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                    <pageControl opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" numberOfPages="3" translatesAutoresizingMaskIntoConstraints="NO" id="cOf-g4-DnH">
+                                        <rect key="frame" x="0.0" y="439" width="393" height="26"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="26" id="s4h-pS-3bv"/>
+                                        </constraints>
+                                        <color key="pageIndicatorTintColor" systemColor="secondaryLabelColor"/>
+                                        <color key="currentPageIndicatorTintColor" systemColor="systemGreenColor"/>
                                     </pageControl>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Label" textAlignment="natural" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="C0Q-za-xSq">
-                                        <rect key="frame" x="8" y="500" width="377" height="21"/>
-                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="C0Q-za-xSq">
+                                        <rect key="frame" x="0.0" y="473" width="393" height="40.666666666666629"/>
                                         <fontDescription key="fontDescription" style="UICTFontTextStyleTitle0"/>
                                         <nil key="textColor"/>
                                         <nil key="highlightedColor"/>
                                     </label>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Label" textAlignment="natural" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="INV-0m-ZZn">
-                                        <rect key="frame" x="8" y="529" width="377" height="21"/>
-                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="Label" textAlignment="natural" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="INV-0m-ZZn">
+                                        <rect key="frame" x="0.0" y="522" width="393" height="158"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                         <nil key="textColor"/>
                                         <nil key="highlightedColor"/>
                                     </label>
                                 </subviews>
+                                <constraints>
+                                    <constraint firstItem="INV-0m-ZZn" firstAttribute="top" secondItem="C0Q-za-xSq" secondAttribute="bottom" constant="7.9999999999998863" id="3An-Fp-qyM"/>
+                                    <constraint firstItem="wgG-DG-Msi" firstAttribute="top" secondItem="Asy-7s-sgM" secondAttribute="top" id="GHl-OE-I0g"/>
+                                    <constraint firstItem="C0Q-za-xSq" firstAttribute="top" secondItem="cOf-g4-DnH" secondAttribute="bottom" constant="8" symbolic="YES" id="M2Q-sR-sgK"/>
+                                    <constraint firstItem="C0Q-za-xSq" firstAttribute="leading" secondItem="INV-0m-ZZn" secondAttribute="leading" id="Ock-3Y-GZb"/>
+                                    <constraint firstItem="wgG-DG-Msi" firstAttribute="leading" secondItem="Asy-7s-sgM" secondAttribute="leading" id="RBb-bC-lrQ"/>
+                                    <constraint firstItem="cOf-g4-DnH" firstAttribute="leading" secondItem="C0Q-za-xSq" secondAttribute="leading" id="T05-yy-1eV"/>
+                                    <constraint firstItem="cOf-g4-DnH" firstAttribute="top" secondItem="wgG-DG-Msi" secondAttribute="bottom" constant="8" symbolic="YES" id="UqH-QL-hyt"/>
+                                    <constraint firstItem="wgG-DG-Msi" firstAttribute="trailing" secondItem="cOf-g4-DnH" secondAttribute="trailing" id="Yxg-2s-Kyk"/>
+                                    <constraint firstItem="cOf-g4-DnH" firstAttribute="trailing" secondItem="C0Q-za-xSq" secondAttribute="trailing" id="ZfU-aX-HLb"/>
+                                    <constraint firstAttribute="trailing" secondItem="wgG-DG-Msi" secondAttribute="trailing" id="pNK-Qn-ubE"/>
+                                    <constraint firstItem="wgG-DG-Msi" firstAttribute="leading" secondItem="cOf-g4-DnH" secondAttribute="leading" id="uzt-rI-1Qi"/>
+                                    <constraint firstAttribute="bottom" secondItem="INV-0m-ZZn" secondAttribute="bottom" constant="69" id="w66-rt-e5b"/>
+                                    <constraint firstItem="C0Q-za-xSq" firstAttribute="trailing" secondItem="INV-0m-ZZn" secondAttribute="trailing" id="wre-zj-VGI"/>
+                                </constraints>
                                 <viewLayoutGuide key="contentLayoutGuide" id="xUd-QH-Z2A"/>
                                 <viewLayoutGuide key="frameLayoutGuide" id="G8x-7B-wSD"/>
                             </scrollView>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="NUD-Sd-crC"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                        <constraints>
+                            <constraint firstItem="Asy-7s-sgM" firstAttribute="top" secondItem="NUD-Sd-crC" secondAttribute="top" id="HVG-5i-C7U"/>
+                            <constraint firstItem="Asy-7s-sgM" firstAttribute="leading" secondItem="7w5-6K-Tdi" secondAttribute="leading" id="eJZ-JT-Zri"/>
+                            <constraint firstAttribute="bottom" secondItem="Asy-7s-sgM" secondAttribute="bottom" id="nQl-Dd-IoH"/>
+                            <constraint firstAttribute="trailing" secondItem="Asy-7s-sgM" secondAttribute="trailing" id="v6D-X0-3pa"/>
+                        </constraints>
                     </view>
                     <navigationItem key="navigationItem" title="Post" id="Sdw-OP-kfL"/>
+                    <connections>
+                        <outlet property="ContentTextLabel" destination="INV-0m-ZZn" id="TeI-Hj-NLq"/>
+                        <outlet property="PageBarControl" destination="cOf-g4-DnH" id="Wjg-x5-9Vf"/>
+                        <outlet property="PageContainer" destination="wgG-DG-Msi" id="iPq-C3-C3h"/>
+                        <outlet property="PageScrollController" destination="Asy-7s-sgM" id="5ZC-rz-vni"/>
+                        <outlet property="TitleTextLabel" destination="C0Q-za-xSq" id="m8l-nF-vQN"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="xEP-YC-dWG" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="1980.916030534351" y="745.77464788732402"/>
         </scene>
-        <!--Page View Controller-->
+        <!--Page Image View Controller-->
         <scene sceneID="qqJ-nw-BgP">
             <objects>
-                <pageViewController autoresizesArchivedViewToFullSize="NO" transitionStyle="scroll" navigationOrientation="horizontal" spineLocation="none" id="NTy-Ca-MkH" sceneMemberID="viewController"/>
+                <pageViewController autoresizesArchivedViewToFullSize="NO" transitionStyle="scroll" navigationOrientation="horizontal" spineLocation="none" id="NTy-Ca-MkH" customClass="PageImageViewController" customModule="CommunityOfInterestApp" customModuleProvider="target" sceneMemberID="viewController"/>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="PLe-BM-0n0" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="3051" y="747"/>
@@ -238,11 +270,17 @@
     <resources>
         <image name="house.circle.fill" catalog="system" width="128" height="123"/>
         <image name="pencil.line" catalog="system" width="128" height="98"/>
+        <systemColor name="secondaryLabelColor">
+            <color red="0.23529411764705882" green="0.23529411764705882" blue="0.2627450980392157" alpha="0.59999999999999998" colorSpace="custom" customColorSpace="sRGB"/>
+        </systemColor>
         <systemColor name="secondarySystemBackgroundColor">
             <color red="0.94901960784313721" green="0.94901960784313721" blue="0.96862745098039216" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>
         <systemColor name="systemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+        </systemColor>
+        <systemColor name="systemGreenColor">
+            <color red="0.20392156862745098" green="0.7803921568627451" blue="0.34901960784313724" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>
     </resources>
 </document>
