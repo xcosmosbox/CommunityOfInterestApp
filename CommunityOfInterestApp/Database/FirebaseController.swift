@@ -12,6 +12,9 @@ import FirebaseStorage
 
 class FirebaseController: NSObject, DatabaseProtocol {
 
+
+    
+
     
 
     
@@ -32,44 +35,48 @@ class FirebaseController: NSObject, DatabaseProtocol {
     // card cache pool
     var oneCardCache: Card? = nil
     
+    // user login state
+    var userLoginState: Bool
+    
     
     override init() {
         FirebaseApp.configure()
         authController = Auth.auth()
         database = Firestore.firestore()
+        userLoginState = false
         
         super.init()
         
         // anonymous sign in
-        Task{
-            do {
-                let authDataResult = try await authController.signInAnonymously()
-                currentUser = authDataResult.user
-                
-                // create corresponding user document
-                try await database.collection("user").document(currentUser!.uid).setData([
-                    "name": "username",
-                    
-                ])
-            }
-            catch {
-                // sign in failed
-                fatalError("Firebase Authentication Failed with Error \(String(describing: error))")
-            }
-            
-            // sign in success
-            self.setupDefaultTags()
-            
-            // init user's tags list
-//            do{
-//                print("=====hahahahahahaha====")
-//                try await database.collection("user").document(currentUser!.uid).updateData([
-//                    "tags": FieldValue.arrayUnion(defaultTags)
+//        Task{
+//            do {
+//                let authDataResult = try await authController.signInAnonymously()
+//                currentUser = authDataResult.user
+//
+//                // create corresponding user document
+//                try await database.collection("user").document(currentUser!.uid).setData([
+//                    "name": "username",
+//
 //                ])
-//                print("=====hahahahahahaha====")
 //            }
-            
-        }
+//            catch {
+//                // sign in failed
+//                fatalError("Firebase Authentication Failed with Error \(String(describing: error))")
+//            }
+//
+//            // sign in success
+//            self.setupDefaultTags()
+//
+//            // init user's tags list
+////            do{
+////                print("=====hahahahahahaha====")
+////                try await database.collection("user").document(currentUser!.uid).updateData([
+////                    "tags": FieldValue.arrayUnion(defaultTags)
+////                ])
+////                print("=====hahahahahahaha====")
+////            }
+//
+//        }
     }
 
     
@@ -89,6 +96,9 @@ class FirebaseController: NSObject, DatabaseProtocol {
             listener.onExploreChange(change: .update, cards: self.currentCards)
         }
         
+        if listener.listenerType == .auth || listener.listenerType == .all{
+            listener.onAuthChange(change: .update, userIsLoggedIn: userLoginState, error: "")
+        }
         
     }
     
@@ -191,27 +201,27 @@ class FirebaseController: NSObject, DatabaseProtocol {
     
     
     
-    func setupDefaultTags(){
-        
-        deafultTagRef = database.collection("default_tag")
-        deafultTagRef?.addSnapshotListener(){
-            (querySnapshot, error) in
-            
-            guard let querySnapshot = querySnapshot else{
-                print("Failed to fetch documents with error: \(String(describing: error))")
-                return
-            }
-            
-            self.parseTagsSnapshot(snapshot: querySnapshot)
-            
-            if self.postRef == nil{
-                self.setupCurrentCards()
-            }
-            
-            
-        }
-        
-    }
+//    func setupDefaultTags(){
+//
+//        deafultTagRef = database.collection("default_tag")
+//        deafultTagRef?.addSnapshotListener(){
+//            (querySnapshot, error) in
+//
+//            guard let querySnapshot = querySnapshot else{
+//                print("Failed to fetch documents with error: \(String(describing: error))")
+//                return
+//            }
+//
+//            self.parseTagsSnapshot(snapshot: querySnapshot)
+//
+//            if self.postRef == nil{
+//                self.setupCurrentCards()
+//            }
+//
+//
+//        }
+//
+//    }
     
     
     func setupCurrentCards() {
@@ -398,6 +408,164 @@ class FirebaseController: NSObject, DatabaseProtocol {
 
     
     
+    func login(email: String, password: String) {
+        Task{
+            do{
+                // using authController.signIn function to login firebase auth
+                let authDataResult = try await authController.signIn(withEmail: email, password: password)
+                // get user data
+                currentUser = authDataResult.user
+                userLoginState = true
+                
+                let userDocRef = database.collection("user").document(currentUser!.uid)
+                userDocRef.getDocument{ (document, error) in
+                    if let document = document, document.exists{
+                        let data = document.data()
+                        let userTags = data?["tags"] as? [String] ?? []
+                        userTags.forEach{ tag in
+                            let oneTag = Tag()
+                            oneTag.name = tag
+                            self.defaultTags.append(oneTag)
+                        }
+                        
+                    } else{
+                        print("Document does not exist: setupUserSelectedTags")
+                    }
+                    
+                }
+
+                listeners.invoke{ (listener) in
+                    if listener.listenerType == ListenerType.tag || listener.listenerType == ListenerType.all || listener.listenerType == .tagAndExp{
+                        listener.onTagChange(change: .update, tags: self.defaultTags)
+                    }
+                    
+                }
+                
+                listeners.invoke{ (listener) in
+                    if listener.listenerType == ListenerType.auth || listener.listenerType == ListenerType.all{
+                        listener.onAuthChange(change: .update, userIsLoggedIn: userLoginState, error: "")
+                    }
+                    
+                }
+                
+                
+                
+            } catch{
+                // login failed
+                print("Firebase Authentication Failed with Error \(String(describing: error))")
+            }
+        }
+        
+        
+        
+        
+    }
+    
+    func signup(newEmail: String, newPassword: String) {
+        Task{
+            do{
+                // using createUser function to signup account
+                let authDataResult = try await authController.createUser(withEmail: newEmail, password: newPassword)
+                
+                // get user data
+                currentUser = authDataResult.user
+                
+                // using user id to create the user document
+                // we need to set the document ID == user id
+                print("doahduoahsduoad")
+                print("\(currentUser?.uid)")
+//                try await database.collection("user").document(currentUser!.uid).setData([
+//                    "name": "username",
+//                    "profile":"everything you love is here",
+//                    "profile_image":"gs://fit3178-final-ci-app.appspot.com/WechatIMG88.jpeg"
+//                ])
+//                let name = "usernmae"
+//                try await database.collection("user").document(currentUser!.uid).setData([
+//                    "name": name,
+//                ])
+                
+                // init
+                
+                // set user login state
+                userLoginState = true
+                
+                
+            } catch {
+                print("set user tags failed with error: \(error)")
+            }
+        }
+    }
+    
+    func setupUserSelectedTags(tags: [String]) -> Bool {
+        do{
+            database.collection("user").document(currentUser!.uid).setData([
+                "name": "username",
+                "profile":"everything you love is here",
+                "profile_image":"gs://fit3178-final-ci-app.appspot.com/WechatIMG88.jpeg",
+                "collections":[],
+                "follower":[],
+                "following":[],
+                "likes":[],
+                "posts":[],
+                "tags":tags
+            ])
+            
+            userLoginState = true
+            
+            print("set user tag success")
+            
+            let userDocRef = database.collection("user").document(currentUser!.uid)
+            userDocRef.getDocument{ (document, error) in
+                if let document = document, document.exists{
+                    let data = document.data()
+                    let userTags = data?["tags"] as? [String] ?? []
+                    userTags.forEach{ tag in
+                        let oneTag = Tag()
+                        oneTag.name = tag
+                        self.defaultTags.append(oneTag)
+                    }
+                    
+                } else{
+                    print("Document does not exist: setupUserSelectedTags")
+                }
+                
+            }
+//            userDocRef?.addSnapshotListener(){
+//                (querySnapshot, error) in
+//
+//                guard let querySnapshot = querySnapshot else{
+//                    print("Failed to fetch documents with error: \(String(describing: error))")
+//                    return
+//                }
+//
+//                self.parseTagsSnapshot(snapshot: querySnapshot)
+//
+//                if self.postRef == nil{
+//                    self.setupCurrentCards()
+//                }
+//
+//
+//            }
+            listeners.invoke{ (listener) in
+                if listener.listenerType == ListenerType.tag || listener.listenerType == ListenerType.all || listener.listenerType == .tagAndExp{
+                    listener.onTagChange(change: .update, tags: self.defaultTags)
+                }
+                
+            }
+            
+            
+            if self.postRef == nil{
+                self.setupCurrentCards()
+            }
+            
+            
+            return true
+            
+        } catch {
+            print("set user tags failed with error: \(error)")
+            return false
+        }
+    }
     
     
     
