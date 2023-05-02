@@ -7,7 +7,12 @@
 
 import UIKit
 
-class HomePageViewController: UIViewController, DatabaseListener{
+class HomePageViewController: UIViewController, DatabaseListener, DetailChangeDelegate{
+
+    
+
+    
+
     // init listener type
     var listenerType: ListenerType = .tagAndExp
     
@@ -103,7 +108,7 @@ class HomePageViewController: UIViewController, DatabaseListener{
         
         // load all card view
         cards.forEach{ card in
-            let cardView = CardFactory().buildACardView(username: card.username!, title: card.title!, imagePath: card.cover!)
+            let cardView = CardFactory().buildACardView(username: card.username!, title: card.title!, imagePath: card.cover!, homepageViewControl: self, card: card)
             
             list.append(cardView)
         }
@@ -140,6 +145,28 @@ class HomePageViewController: UIViewController, DatabaseListener{
 //        view.layoutIfNeeded()
         
     }
+    
+    func onAuthChange(change: DatabaseChange, userIsLoggedIn: Bool, error: String) {
+        // nothing to do
+    }
+    
+    func onPersonChange(change: DatabaseChange, postsCards: [Card], likesCards: [Card], collectionsCards: [Card]) {
+        // nothing to do
+    }
+
+    
+    func loadCardDetail(_ card: Card) {
+        self.performSegue(withIdentifier: "showCardDetailPage", sender: card)
+    }
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if segue.identifier == "showCardDetailPage", let detailView = segue.destination as? DetailViewController, let data = sender as? Card{
+            detailView.card = data
+        }
+    }
+    
+    
+    
 
     
     

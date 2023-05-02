@@ -11,6 +11,13 @@ import FirebaseFirestoreSwift
 import FirebaseStorage
 
 class FirebaseController: NSObject, DatabaseProtocol {
+
+
+    
+
+    
+
+    
    
     
     var defaultTags: [Tag] = []
@@ -25,43 +32,54 @@ class FirebaseController: NSObject, DatabaseProtocol {
     var userRef: CollectionReference?
     var currentUser: FirebaseAuth.User?
     
+    // card cache pool
+    var oneCardCache: Card? = nil
+    
+    // user login state
+    var userLoginState: Bool
+    var currentUserLikesList: [Card] = []
+    var currentUserCollectionsList: [Card] = []
+    var currentUserPostsList: [Card] = []
+    
+    
     override init() {
         FirebaseApp.configure()
         authController = Auth.auth()
         database = Firestore.firestore()
+        userLoginState = false
         
         super.init()
         
         // anonymous sign in
-        Task{
-            do {
-                let authDataResult = try await authController.signInAnonymously()
-                currentUser = authDataResult.user
-                
-                // create corresponding user document
-                try await database.collection("user").document(currentUser!.uid).setData([
-                    "name": "username",
-                    
-                ])
-            }
-            catch {
-                // sign in failed
-                fatalError("Firebase Authentication Failed with Error \(String(describing: error))")
-            }
-            
-            // sign in success
-            self.setupDefaultTags()
-            
-            // init user's tags list
-//            do{
-//                print("=====hahahahahahaha====")
-//                try await database.collection("user").document(currentUser!.uid).updateData([
-//                    "tags": FieldValue.arrayUnion(defaultTags)
+//        Task{
+//            do {
+//                let authDataResult = try await authController.signInAnonymously()
+//                currentUser = authDataResult.user
+//
+//                // create corresponding user document
+//                try await database.collection("user").document(currentUser!.uid).setData([
+//                    "name": "username",
+//
 //                ])
-//                print("=====hahahahahahaha====")
 //            }
-            
-        }
+//            catch {
+//                // sign in failed
+//                fatalError("Firebase Authentication Failed with Error \(String(describing: error))")
+//            }
+//
+//            // sign in success
+//            self.setupDefaultTags()
+//
+//            // init user's tags list
+////            do{
+////                print("=====hahahahahahaha====")
+////                try await database.collection("user").document(currentUser!.uid).updateData([
+////                    "tags": FieldValue.arrayUnion(defaultTags)
+////                ])
+////                print("=====hahahahahahaha====")
+////            }
+//
+//        }
     }
 
     
@@ -74,6 +92,8 @@ class FirebaseController: NSObject, DatabaseProtocol {
         listeners.addDelegate(listener)
         
         if listener.listenerType == .tag || listener.listenerType == .all || listener.listenerType == .tagAndExp{
+            print("appear HOME")
+            print(defaultTags)
             listener.onTagChange(change: .update, tags: self.defaultTags)
         }
         
@@ -81,6 +101,13 @@ class FirebaseController: NSObject, DatabaseProtocol {
             listener.onExploreChange(change: .update, cards: self.currentCards)
         }
         
+        if listener.listenerType == .auth || listener.listenerType == .all{
+            listener.onAuthChange(change: .update, userIsLoggedIn: userLoginState, error: "")
+        }
+        
+        if listener.listenerType == .person || listener.listenerType == .all{
+            listener.onPersonChange(change: .update, postsCards: self.currentUserPostsList, likesCards: self.currentUserLikesList, collectionsCards: self.currentUserCollectionsList)
+        }
         
     }
     
@@ -183,27 +210,27 @@ class FirebaseController: NSObject, DatabaseProtocol {
     
     
     
-    func setupDefaultTags(){
-        
-        deafultTagRef = database.collection("default_tag")
-        deafultTagRef?.addSnapshotListener(){
-            (querySnapshot, error) in
-            
-            guard let querySnapshot = querySnapshot else{
-                print("Failed to fetch documents with error: \(String(describing: error))")
-                return
-            }
-            
-            self.parseTagsSnapshot(snapshot: querySnapshot)
-            
-            if self.postRef == nil{
-                self.setupCurrentCards()
-            }
-            
-            
-        }
-        
-    }
+//    func setupDefaultTags(){
+//
+//        deafultTagRef = database.collection("default_tag")
+//        deafultTagRef?.addSnapshotListener(){
+//            (querySnapshot, error) in
+//
+//            guard let querySnapshot = querySnapshot else{
+//                print("Failed to fetch documents with error: \(String(describing: error))")
+//                return
+//            }
+//
+//            self.parseTagsSnapshot(snapshot: querySnapshot)
+//
+//            if self.postRef == nil{
+//                self.setupCurrentCards()
+//            }
+//
+//
+//        }
+//
+//    }
     
     
     func setupCurrentCards() {
@@ -378,6 +405,469 @@ class FirebaseController: NSObject, DatabaseProtocol {
 ////        return image
 //
 //    }
+    
+    
+    func setOneCardCache(card: Card) {
+        self.oneCardCache = card
+    }
+    
+    func getOneCardCache() -> Card {
+        return self.oneCardCache!
+    }
+
+    
+    
+    func login(email: String, password: String) {
+        Task{
+            do{
+                // using authController.signIn function to login firebase auth
+                let authDataResult = try await authController.signIn(withEmail: email, password: password)
+                // get user data
+                currentUser = authDataResult.user
+                userLoginState = true
+                
+                let userDocRef = database.collection("user").document(currentUser!.uid)
+                userDocRef.getDocument{ (document, error) in
+                    if let document = document, document.exists{
+                        let data = document.data()
+                        let userTags = data?["tags"] as? [String] ?? []
+                        userTags.forEach{ tag in
+                            let oneTag = Tag()
+                            oneTag.name = tag
+                            self.defaultTags.append(oneTag)
+                        }
+                        
+                        self.listeners.invoke{ (listener) in
+                            if listener.listenerType == ListenerType.tag || listener.listenerType == ListenerType.all || listener.listenerType == .tagAndExp{
+                                listener.onTagChange(change: .update, tags: self.defaultTags)
+                            }
+                            
+                        }
+                        
+                        if self.postRef == nil{
+                            self.setupCurrentCards()
+                        }
+                        
+                        self.listeners.invoke{ (listener) in
+                            if listener.listenerType == ListenerType.auth || listener.listenerType == ListenerType.all{
+                                listener.onAuthChange(change: .update, userIsLoggedIn: self.userLoginState, error: "")
+                            }
+                            
+                        }
+                        
+                        self.parseUserCardViewList()
+                        
+                    } else{
+                        print("Document does not exist: setupUserSelectedTags")
+                    }
+                    
+                }
+
+                
+                
+                
+                
+            } catch{
+                // login failed
+                print("Firebase Authentication Failed with Error \(String(describing: error))")
+            }
+        }
+        
+        
+        
+        
+    }
+    
+    func signup(newEmail: String, newPassword: String) {
+        Task{
+            do{
+                // using createUser function to signup account
+                let authDataResult = try await authController.createUser(withEmail: newEmail, password: newPassword)
+                
+                // get user data
+                currentUser = authDataResult.user
+                
+                // using user id to create the user document
+                // we need to set the document ID == user id
+                print("doahduoahsduoad")
+                print("\(currentUser?.uid)")
+//                try await database.collection("user").document(currentUser!.uid).setData([
+//                    "name": "username",
+//                    "profile":"everything you love is here",
+//                    "profile_image":"gs://fit3178-final-ci-app.appspot.com/WechatIMG88.jpeg"
+//                ])
+//                let name = "usernmae"
+//                try await database.collection("user").document(currentUser!.uid).setData([
+//                    "name": name,
+//                ])
+                
+                // init
+                
+                // set user login state
+                userLoginState = true
+                
+                
+            } catch {
+                print("set user tags failed with error: \(error)")
+            }
+        }
+    }
+    
+    func setupUserSelectedTags(tags: [String]) -> Bool {
+        do{
+            database.collection("user").document(currentUser!.uid).setData([
+                "name": "username",
+                "profile":"everything you love is here",
+                "profile_image":"gs://fit3178-final-ci-app.appspot.com/WechatIMG88.jpeg",
+                "collections":[],
+                "follower":[],
+                "following":[],
+                "likes":[],
+                "posts":[],
+                "tags":tags
+            ])
+            
+            userLoginState = true
+            
+            print("set user tag success")
+            
+            let userDocRef = database.collection("user").document(currentUser!.uid).addSnapshotListener{
+                (querySnapshot, error) in
+                print("dhoashdoasuhduaoshdouashdouashd")
+                
+                guard let querySnapshot = querySnapshot else {
+                    print("Failed to get documet for this user --> \(error!)")
+                    return
+                }
+                
+                if querySnapshot.data() == nil{
+                    print("Failed to get documet for this user")
+                    return
+                }
+                
+                if let userTagsFromDatabase = querySnapshot.data()!["tags"] as? [String]{
+                    print("hihiiiiiiaisdiasidasidais")
+                    for userOneTag in userTagsFromDatabase{
+                        let oneTag = Tag()
+                        oneTag.name = userOneTag
+                        self.defaultTags.append(oneTag)
+                        print(userOneTag)
+                        print(oneTag)
+                    }
+                    
+                    print("=========================================================================")
+                    print(self.defaultTags)
+                    print("=========================================================================")
+                    self.listeners.invoke{ (listener) in
+                        if listener.listenerType == ListenerType.tag || listener.listenerType == ListenerType.all || listener.listenerType == .tagAndExp{
+                            print("test for tag change on signup")
+                            listener.onTagChange(change: .update, tags: self.defaultTags)
+                        }
+                        
+                    }
+                    
+                    
+                    if self.postRef == nil{
+                        self.setupCurrentCards()
+                    }
+                    
+                    
+                }else{
+                    print("Document does not exist: setupUserSelectedTags")
+                }
+                
+                
+                
+            }
+
+            
+            
+            return true
+            
+        } catch {
+            print("set user tags failed with error: \(error)")
+            return false
+        }
+    }
+    
+    
+//    func getUserModel() -> User {
+//        var userModel = User()
+//        let userDocRef = database.collection("user").document(currentUser!.uid).addSnapshotListener{
+//            (querySnapshot, error) in
+//
+//            guard let querySnapshot = querySnapshot else {
+//                print("Failed to get documet for this user --> \(error!)")
+//                return
+//            }
+//
+//            if querySnapshot.data() == nil{
+//                print("Failed to get documet for this user")
+//                return
+//            }
+//
+//
+//            if let name = querySnapshot.data()!["name"] as? String {
+//                userModel.name = name
+//            }
+//
+//            if let profile = querySnapshot.data()!["profile"] as? String {
+//                userModel.profile = profile
+//            }
+//
+//            print("()()()()())(()()()()())(()()()()())(()()()()())(()()()()())(")
+//            if let profile_image = querySnapshot.data()!["profile_image"] as? String {
+//                userModel.profile_image = profile_image
+//                print(profile_image)
+//                print("()()()()())(()()()()())(()()()()())(()()()()())(()()()()())(")
+//            }
+//
+//            if let tags = querySnapshot.data()!["tags"] as? [String] {
+//                userModel.tags = tags
+//            }
+//
+//            if let collections = querySnapshot.data()!["collections"] as? [DocumentReference] {
+//                userModel.collections = collections
+//            }
+//
+//            if let follower = querySnapshot.data()!["follower"] as? [DocumentReference] {
+//                userModel.follower = follower
+//            }
+//
+//            if let following = querySnapshot.data()!["following"] as? [DocumentReference] {
+//                userModel.following = following
+//            }
+//
+//            if let likes = querySnapshot.data()!["likes"] as? [DocumentReference] {
+//                userModel.likes = likes
+//            }
+//
+//            if let posts = querySnapshot.data()!["posts"] as? [DocumentReference] {
+//                userModel.posts = posts
+//            }
+//
+//
+//
+//        }
+//
+//        return userModel
+//
+//
+//
+//
+//    }
+    
+    
+    func getUserModel(completion: @escaping (User) -> Void) {
+        var userModel = User()
+        let userDocRef = database.collection("user").document(currentUser!.uid).addSnapshotListener {
+            (querySnapshot, error) in
+            
+            guard let querySnapshot = querySnapshot else {
+                print("Failed to get documet for this user --> \(error!)")
+                return
+            }
+            
+            if querySnapshot.data() == nil{
+                print("Failed to get documet for this user")
+                return
+            }
+        
+            
+            if let name = querySnapshot.data()!["name"] as? String {
+                userModel.name = name
+            }
+            
+            if let profile = querySnapshot.data()!["profile"] as? String {
+                userModel.profile = profile
+            }
+            
+            if let profile_image = querySnapshot.data()!["profile_image"] as? String {
+                userModel.profile_image = profile_image
+            }
+        
+            if let tags = querySnapshot.data()!["tags"] as? [String] {
+                userModel.tags = tags
+            }
+        
+            if let collections = querySnapshot.data()!["collections"] as? [DocumentReference] {
+                userModel.collections = collections
+            }
+            
+            if let follower = querySnapshot.data()!["follower"] as? [DocumentReference] {
+                userModel.follower = follower
+            }
+            
+            if let following = querySnapshot.data()!["following"] as? [DocumentReference] {
+                userModel.following = following
+            }
+            
+            if let likes = querySnapshot.data()!["likes"] as? [DocumentReference] {
+                userModel.likes = likes
+            }
+            
+            if let posts = querySnapshot.data()!["posts"] as? [DocumentReference] {
+                userModel.posts = posts
+            }
+            
+            completion(userModel)
+        }
+    }
+
+    
+    
+    func parseUserCardViewList(){
+        Task{
+            do{
+                getUserModel{ userModel in
+                    self.parsePostsList(referencesList: userModel.posts!)
+                    self.parseLikesList(referencesList: userModel.likes!)
+                    self.parseCollectionsList(referencesList: userModel.collections!)
+                }
+            }
+        }
+        
+        
+//
+//        var cardsList:[Card]?
+//
+//        referencesList.forEach{ eachReference in
+//            eachReference.addSnapshotListener{ (querySnapshot, error) in
+//                // check
+//                guard let querySnapshot = querySnapshot else {
+//                    print("Failed to get documet for this user --> \(error!)")
+//                    return
+//                }
+//
+//                // check
+//                if querySnapshot.data() == nil{
+//                    print("Failed to get documet for this user")
+//                    return
+//                }
+//
+//                // add card into list
+//                do{
+//                    let card = try querySnapshot.data(as: Card.self)
+//                    cardsList?.append(card)
+//                } catch {
+//                    print("Unable to decod card: parseUserCardViewList")
+//                    return
+//                }
+//
+//
+//
+//            }
+//
+//        }
+//
+//        return cardsList!
+    }
+    
+    func parsePostsList(referencesList: [DocumentReference]){
+        do{
+            referencesList.forEach{ referenceDoc in
+                referenceDoc.getDocument{ (document, error) in
+                    if let error = error{
+                        print("error parsePostsList:\(error)")
+                    } else if let document = document{
+                        do{
+                            let card = try document.data(as: Card.self)
+                            if card == nil{
+                                print("Failed to parse card")
+                            }else{
+//                                print("=================(((((((^^^^^^^^^^^")
+//                                print(card)
+//                                print("=================(((((((^^^^^^^^^^^")
+                                self.currentUserPostsList.append(card)
+                            }
+                            
+                            self.listeners.invoke{ (listener) in
+                                if listener.listenerType == ListenerType.person || listener.listenerType == ListenerType.all{
+                                    listener.onPersonChange(change: .update, postsCards: self.currentUserPostsList, likesCards: self.currentUserLikesList, collectionsCards: self.currentUserCollectionsList)
+                                }
+                                
+                            }
+                            
+                        }catch{
+                            print("error parsePostsList catch:\(error)")
+                        }
+                    }
+                    
+                }
+                
+            }
+        }
+    }
+    func parseLikesList(referencesList: [DocumentReference]){
+        do{
+            referencesList.forEach{ referenceDoc in
+                referenceDoc.getDocument{ (document, error) in
+                    if let error = error{
+                        print("error parsePostsList:\(error)")
+                    } else if let document = document{
+                        do{
+                            let card = try document.data(as: Card.self)
+                            if card == nil{
+                                print("Failed to parse card")
+                            }else{
+//                                print("=================(((((((^^^^^^^^^^^")
+//                                print(card)
+//                                print("=================(((((((^^^^^^^^^^^")
+                                self.currentUserLikesList.append(card)
+                            }
+                            
+                            self.listeners.invoke{ (listener) in
+                                if listener.listenerType == ListenerType.person || listener.listenerType == ListenerType.all{
+                                    listener.onPersonChange(change: .update, postsCards: self.currentUserPostsList, likesCards: self.currentUserLikesList, collectionsCards: self.currentUserCollectionsList)
+                                }
+                                
+                            }
+                            
+                        }catch{
+                            print("error parsePostsList catch:\(error)")
+                        }
+                    }
+                    
+                }
+                
+            }
+        }
+    }
+    func parseCollectionsList(referencesList: [DocumentReference]){
+        do{
+            referencesList.forEach{ referenceDoc in
+                referenceDoc.getDocument{ (document, error) in
+                    if let error = error{
+                        print("error parsePostsList:\(error)")
+                    } else if let document = document{
+                        do{
+                            let card = try document.data(as: Card.self)
+                            if card == nil{
+                                print("Failed to parse card")
+                            }else{
+//                                print("=================(((((((^^^^^^^^^^^")
+//                                print(card)
+//                                print("=================(((((((^^^^^^^^^^^")
+                                self.currentUserCollectionsList.append(card)
+                            }
+                            
+                            self.listeners.invoke{ (listener) in
+                                if listener.listenerType == ListenerType.person || listener.listenerType == ListenerType.all{
+                                    listener.onPersonChange(change: .update, postsCards: self.currentUserPostsList, likesCards: self.currentUserLikesList, collectionsCards: self.currentUserCollectionsList)
+                                }
+                                
+                            }
+                            
+                        }catch{
+                            print("error parsePostsList catch:\(error)")
+                        }
+                    }
+                    
+                }
+                
+            }
+        }
+    }
     
     
     

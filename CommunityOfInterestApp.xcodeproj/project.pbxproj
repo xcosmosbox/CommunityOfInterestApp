@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		270AD1EB29FE6A340034BBD3 /* PageImageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 270AD1EA29FE6A340034BBD3 /* PageImageViewController.swift */; };
+		270AD1ED29FE6AAF0034BBD3 /* PicturesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 270AD1EC29FE6AAF0034BBD3 /* PicturesViewController.swift */; };
 		270BFEF429E3A75000850009 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 270BFEF329E3A75000850009 /* AppDelegate.swift */; };
 		270BFEF629E3A75000850009 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 270BFEF529E3A75000850009 /* SceneDelegate.swift */; };
 		270BFEF829E3A75000850009 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 270BFEF729E3A75000850009 /* ViewController.swift */; };
@@ -24,24 +26,31 @@
 		270BFF3129E42D7000850009 /* TagManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 270BFF3029E42D7000850009 /* TagManager.swift */; };
 		270BFF3429E4443600850009 /* TagBoxTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 270BFF3329E4443600850009 /* TagBoxTableViewController.swift */; };
 		272C806229E44B8C004924F7 /* AddTagPageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 272C806129E44B8C004924F7 /* AddTagPageViewController.swift */; };
+		274DF89F2A00AB670030A1B2 /* LoginPageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 274DF89E2A00AB670030A1B2 /* LoginPageViewController.swift */; };
+		274DF8A12A00B3370030A1B2 /* SelectTagsPageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 274DF8A02A00B3370030A1B2 /* SelectTagsPageViewController.swift */; };
+		274DF8AF2A00DD3A0030A1B2 /* CouldSelectedButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 274DF8AE2A00DD3A0030A1B2 /* CouldSelectedButton.swift */; };
 		274F9D4929E57FBC000E174D /* ExploreComponent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 274F9D4629E57FBC000E174D /* ExploreComponent.swift */; };
 		274F9D4A29E57FBC000E174D /* CardFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 274F9D4729E57FBC000E174D /* CardFactory.swift */; };
 		274F9D4B29E57FBC000E174D /* CardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 274F9D4829E57FBC000E174D /* CardView.swift */; };
+		275E432129FD5B9100A5916D /* DetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 275E432029FD5B9100A5916D /* DetailViewController.swift */; };
 		276355C829F51DDD006046AA /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 276355C729F51DDD006046AA /* GoogleService-Info.plist */; };
 		276355CD29F539B7006046AA /* FirebaseAuth in Frameworks */ = {isa = PBXBuildFile; productRef = 276355CC29F539B7006046AA /* FirebaseAuth */; };
 		276355CF29F539B7006046AA /* FirebaseFirestore in Frameworks */ = {isa = PBXBuildFile; productRef = 276355CE29F539B7006046AA /* FirebaseFirestore */; };
 		276355D129F539B7006046AA /* FirebaseFirestoreSwift in Frameworks */ = {isa = PBXBuildFile; productRef = 276355D029F539B7006046AA /* FirebaseFirestoreSwift */; };
 		276355D329F539B7006046AA /* FirebaseStorage in Frameworks */ = {isa = PBXBuildFile; productRef = 276355D229F539B7006046AA /* FirebaseStorage */; };
 		276355D529F53A72006046AA /* MulticastDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 276355D429F53A71006046AA /* MulticastDelegate.swift */; };
-		276355D729F5505A006046AA /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = 276355D629F5505A006046AA /* User.swift */; };
 		276355D929F5542B006046AA /* Post.swift in Sources */ = {isa = PBXBuildFile; fileRef = 276355D829F5542B006046AA /* Post.swift */; };
 		276ECF8429F6CF9E005101B9 /* DatabaseProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 276ECF8329F6CF9E005101B9 /* DatabaseProtocol.swift */; };
 		276ECF8629F6D5A0005101B9 /* Card.swift in Sources */ = {isa = PBXBuildFile; fileRef = 276ECF8529F6D5A0005101B9 /* Card.swift */; };
 		276ECF8829F6D5FB005101B9 /* Tag.swift in Sources */ = {isa = PBXBuildFile; fileRef = 276ECF8729F6D5FB005101B9 /* Tag.swift */; };
 		276ECF8A29F6D719005101B9 /* FirebaseController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 276ECF8929F6D719005101B9 /* FirebaseController.swift */; };
+		27A981612A01346000829C39 /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27A981602A01346000829C39 /* User.swift */; };
+		27B63E552A01168800BCE0CA /* PersonPageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27B63E542A01168800BCE0CA /* PersonPageViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		270AD1EA29FE6A340034BBD3 /* PageImageViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PageImageViewController.swift; sourceTree = "<group>"; };
+		270AD1EC29FE6AAF0034BBD3 /* PicturesViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PicturesViewController.swift; sourceTree = "<group>"; };
 		270BFEF029E3A75000850009 /* CommunityOfInterestApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = CommunityOfInterestApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		270BFEF329E3A75000850009 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		270BFEF529E3A75000850009 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -61,17 +70,22 @@
 		270BFF3029E42D7000850009 /* TagManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TagManager.swift; sourceTree = "<group>"; };
 		270BFF3329E4443600850009 /* TagBoxTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TagBoxTableViewController.swift; sourceTree = "<group>"; };
 		272C806129E44B8C004924F7 /* AddTagPageViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddTagPageViewController.swift; sourceTree = "<group>"; };
+		274DF89E2A00AB670030A1B2 /* LoginPageViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginPageViewController.swift; sourceTree = "<group>"; };
+		274DF8A02A00B3370030A1B2 /* SelectTagsPageViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectTagsPageViewController.swift; sourceTree = "<group>"; };
+		274DF8AE2A00DD3A0030A1B2 /* CouldSelectedButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CouldSelectedButton.swift; sourceTree = "<group>"; };
 		274F9D4629E57FBC000E174D /* ExploreComponent.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ExploreComponent.swift; sourceTree = "<group>"; };
 		274F9D4729E57FBC000E174D /* CardFactory.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CardFactory.swift; sourceTree = "<group>"; };
 		274F9D4829E57FBC000E174D /* CardView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CardView.swift; sourceTree = "<group>"; };
+		275E432029FD5B9100A5916D /* DetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailViewController.swift; sourceTree = "<group>"; };
 		276355C729F51DDD006046AA /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		276355D429F53A71006046AA /* MulticastDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MulticastDelegate.swift; sourceTree = "<group>"; };
-		276355D629F5505A006046AA /* User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
 		276355D829F5542B006046AA /* Post.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Post.swift; sourceTree = "<group>"; };
 		276ECF8329F6CF9E005101B9 /* DatabaseProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DatabaseProtocol.swift; sourceTree = "<group>"; };
 		276ECF8529F6D5A0005101B9 /* Card.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Card.swift; sourceTree = "<group>"; };
 		276ECF8729F6D5FB005101B9 /* Tag.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Tag.swift; sourceTree = "<group>"; };
 		276ECF8929F6D719005101B9 /* FirebaseController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirebaseController.swift; sourceTree = "<group>"; };
+		27A981602A01346000829C39 /* User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
+		27B63E542A01168800BCE0CA /* PersonPageViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PersonPageViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -108,6 +122,7 @@
 		270BFEF229E3A75000850009 /* CommunityOfInterestApp */ = {
 			isa = PBXGroup;
 			children = (
+				274DF89D2A00AB520030A1B2 /* LoginPage */,
 				276355CA29F537C9006046AA /* Database */,
 				276355C929F537BA006046AA /* DataModel */,
 				276355C729F51DDD006046AA /* GoogleService-Info.plist */,
@@ -128,6 +143,7 @@
 		270BFF1329E3B2EA00850009 /* HomePage */ = {
 			isa = PBXGroup;
 			children = (
+				275E431F29FD5B6600A5916D /* DetailPage */,
 				274F9D4529E57F88000E174D /* ExploreComponent */,
 				270BFF3229E4441200850009 /* TagPage */,
 				270BFF2D29E42BB800850009 /* TagComponent */,
@@ -150,6 +166,7 @@
 			isa = PBXGroup;
 			children = (
 				270BFF1A29E3B34C00850009 /* PersonPageMain.storyboard */,
+				27B63E542A01168800BCE0CA /* PersonPageViewController.swift */,
 			);
 			path = PersonPage;
 			sourceTree = "<group>";
@@ -182,6 +199,16 @@
 			path = TagPage;
 			sourceTree = "<group>";
 		};
+		274DF89D2A00AB520030A1B2 /* LoginPage */ = {
+			isa = PBXGroup;
+			children = (
+				274DF89E2A00AB670030A1B2 /* LoginPageViewController.swift */,
+				274DF8A02A00B3370030A1B2 /* SelectTagsPageViewController.swift */,
+				274DF8AE2A00DD3A0030A1B2 /* CouldSelectedButton.swift */,
+			);
+			path = LoginPage;
+			sourceTree = "<group>";
+		};
 		274F9D4529E57F88000E174D /* ExploreComponent */ = {
 			isa = PBXGroup;
 			children = (
@@ -192,13 +219,23 @@
 			path = ExploreComponent;
 			sourceTree = "<group>";
 		};
+		275E431F29FD5B6600A5916D /* DetailPage */ = {
+			isa = PBXGroup;
+			children = (
+				275E432029FD5B9100A5916D /* DetailViewController.swift */,
+				270AD1EA29FE6A340034BBD3 /* PageImageViewController.swift */,
+				270AD1EC29FE6AAF0034BBD3 /* PicturesViewController.swift */,
+			);
+			path = DetailPage;
+			sourceTree = "<group>";
+		};
 		276355C929F537BA006046AA /* DataModel */ = {
 			isa = PBXGroup;
 			children = (
-				276355D629F5505A006046AA /* User.swift */,
 				276355D829F5542B006046AA /* Post.swift */,
 				276ECF8529F6D5A0005101B9 /* Card.swift */,
 				276ECF8729F6D5FB005101B9 /* Tag.swift */,
+				27A981602A01346000829C39 /* User.swift */,
 			);
 			path = DataModel;
 			sourceTree = "<group>";
@@ -298,19 +335,26 @@
 			buildActionMask = 2147483647;
 			files = (
 				274F9D4B29E57FBC000E174D /* CardView.swift in Sources */,
+				270AD1EB29FE6A340034BBD3 /* PageImageViewController.swift in Sources */,
 				270BFF2C29E4018D00850009 /* HorizontalMenuBarComponent.swift in Sources */,
 				276ECF8629F6D5A0005101B9 /* Card.swift in Sources */,
 				276355D529F53A72006046AA /* MulticastDelegate.swift in Sources */,
+				270AD1ED29FE6AAF0034BBD3 /* PicturesViewController.swift in Sources */,
 				270BFEF829E3A75000850009 /* ViewController.swift in Sources */,
 				276355D929F5542B006046AA /* Post.swift in Sources */,
-				276355D729F5505A006046AA /* User.swift in Sources */,
+				274DF89F2A00AB670030A1B2 /* LoginPageViewController.swift in Sources */,
 				270BFF2F29E42C7700850009 /* TagBean.swift in Sources */,
 				274F9D4929E57FBC000E174D /* ExploreComponent.swift in Sources */,
 				276ECF8429F6CF9E005101B9 /* DatabaseProtocol.swift in Sources */,
 				274F9D4A29E57FBC000E174D /* CardFactory.swift in Sources */,
+				275E432129FD5B9100A5916D /* DetailViewController.swift in Sources */,
 				272C806229E44B8C004924F7 /* AddTagPageViewController.swift in Sources */,
+				27B63E552A01168800BCE0CA /* PersonPageViewController.swift in Sources */,
+				274DF8A12A00B3370030A1B2 /* SelectTagsPageViewController.swift in Sources */,
+				274DF8AF2A00DD3A0030A1B2 /* CouldSelectedButton.swift in Sources */,
 				276ECF8829F6D5FB005101B9 /* Tag.swift in Sources */,
 				270BFF2629E3D69000850009 /* ObserveMenuProtocol.swift in Sources */,
+				27A981612A01346000829C39 /* User.swift in Sources */,
 				270BFF3129E42D7000850009 /* TagManager.swift in Sources */,
 				276ECF8A29F6D719005101B9 /* FirebaseController.swift in Sources */,
 				270BFEF429E3A75000850009 /* AppDelegate.swift in Sources */,
