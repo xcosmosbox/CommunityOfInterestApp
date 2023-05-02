@@ -149,6 +149,10 @@ class HomePageViewController: UIViewController, DatabaseListener, DetailChangeDe
     func onAuthChange(change: DatabaseChange, userIsLoggedIn: Bool, error: String) {
         // nothing to do
     }
+    
+    func onPersonChange(change: DatabaseChange, postsCards: [Card], likesCards: [Card], collectionsCards: [Card]) {
+        // nothing to do
+    }
 
     
     func loadCardDetail(_ card: Card) {
