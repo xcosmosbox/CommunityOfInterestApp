@@ -39,12 +39,13 @@
 		276355D129F539B7006046AA /* FirebaseFirestoreSwift in Frameworks */ = {isa = PBXBuildFile; productRef = 276355D029F539B7006046AA /* FirebaseFirestoreSwift */; };
 		276355D329F539B7006046AA /* FirebaseStorage in Frameworks */ = {isa = PBXBuildFile; productRef = 276355D229F539B7006046AA /* FirebaseStorage */; };
 		276355D529F53A72006046AA /* MulticastDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 276355D429F53A71006046AA /* MulticastDelegate.swift */; };
-		276355D729F5505A006046AA /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = 276355D629F5505A006046AA /* User.swift */; };
 		276355D929F5542B006046AA /* Post.swift in Sources */ = {isa = PBXBuildFile; fileRef = 276355D829F5542B006046AA /* Post.swift */; };
 		276ECF8429F6CF9E005101B9 /* DatabaseProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 276ECF8329F6CF9E005101B9 /* DatabaseProtocol.swift */; };
 		276ECF8629F6D5A0005101B9 /* Card.swift in Sources */ = {isa = PBXBuildFile; fileRef = 276ECF8529F6D5A0005101B9 /* Card.swift */; };
 		276ECF8829F6D5FB005101B9 /* Tag.swift in Sources */ = {isa = PBXBuildFile; fileRef = 276ECF8729F6D5FB005101B9 /* Tag.swift */; };
 		276ECF8A29F6D719005101B9 /* FirebaseController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 276ECF8929F6D719005101B9 /* FirebaseController.swift */; };
+		27A981612A01346000829C39 /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27A981602A01346000829C39 /* User.swift */; };
+		27B63E552A01168800BCE0CA /* PersonPageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27B63E542A01168800BCE0CA /* PersonPageViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -78,12 +79,13 @@
 		275E432029FD5B9100A5916D /* DetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailViewController.swift; sourceTree = "<group>"; };
 		276355C729F51DDD006046AA /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		276355D429F53A71006046AA /* MulticastDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MulticastDelegate.swift; sourceTree = "<group>"; };
-		276355D629F5505A006046AA /* User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
 		276355D829F5542B006046AA /* Post.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Post.swift; sourceTree = "<group>"; };
 		276ECF8329F6CF9E005101B9 /* DatabaseProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DatabaseProtocol.swift; sourceTree = "<group>"; };
 		276ECF8529F6D5A0005101B9 /* Card.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Card.swift; sourceTree = "<group>"; };
 		276ECF8729F6D5FB005101B9 /* Tag.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Tag.swift; sourceTree = "<group>"; };
 		276ECF8929F6D719005101B9 /* FirebaseController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirebaseController.swift; sourceTree = "<group>"; };
+		27A981602A01346000829C39 /* User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
+		27B63E542A01168800BCE0CA /* PersonPageViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PersonPageViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -164,6 +166,7 @@
 			isa = PBXGroup;
 			children = (
 				270BFF1A29E3B34C00850009 /* PersonPageMain.storyboard */,
+				27B63E542A01168800BCE0CA /* PersonPageViewController.swift */,
 			);
 			path = PersonPage;
 			sourceTree = "<group>";
@@ -229,10 +232,10 @@
 		276355C929F537BA006046AA /* DataModel */ = {
 			isa = PBXGroup;
 			children = (
-				276355D629F5505A006046AA /* User.swift */,
 				276355D829F5542B006046AA /* Post.swift */,
 				276ECF8529F6D5A0005101B9 /* Card.swift */,
 				276ECF8729F6D5FB005101B9 /* Tag.swift */,
+				27A981602A01346000829C39 /* User.swift */,
 			);
 			path = DataModel;
 			sourceTree = "<group>";
@@ -340,17 +343,18 @@
 				270BFEF829E3A75000850009 /* ViewController.swift in Sources */,
 				276355D929F5542B006046AA /* Post.swift in Sources */,
 				274DF89F2A00AB670030A1B2 /* LoginPageViewController.swift in Sources */,
-				276355D729F5505A006046AA /* User.swift in Sources */,
 				270BFF2F29E42C7700850009 /* TagBean.swift in Sources */,
 				274F9D4929E57FBC000E174D /* ExploreComponent.swift in Sources */,
 				276ECF8429F6CF9E005101B9 /* DatabaseProtocol.swift in Sources */,
 				274F9D4A29E57FBC000E174D /* CardFactory.swift in Sources */,
 				275E432129FD5B9100A5916D /* DetailViewController.swift in Sources */,
 				272C806229E44B8C004924F7 /* AddTagPageViewController.swift in Sources */,
+				27B63E552A01168800BCE0CA /* PersonPageViewController.swift in Sources */,
 				274DF8A12A00B3370030A1B2 /* SelectTagsPageViewController.swift in Sources */,
 				274DF8AF2A00DD3A0030A1B2 /* CouldSelectedButton.swift in Sources */,
 				276ECF8829F6D5FB005101B9 /* Tag.swift in Sources */,
 				270BFF2629E3D69000850009 /* ObserveMenuProtocol.swift in Sources */,
+				27A981612A01346000829C39 /* User.swift in Sources */,
 				270BFF3129E42D7000850009 /* TagManager.swift in Sources */,
 				276ECF8A29F6D719005101B9 /* FirebaseController.swift in Sources */,
 				270BFEF429E3A75000850009 /* AppDelegate.swift in Sources */,

@@ -2,34 +2,23 @@
 //  User.swift
 //  CommunityOfInterestApp
 //
-//  Created by Yuxiang Feng on 23/4/2023.
+//  Created by Yuxiang Feng on 2/5/2023.
 //
 
 import UIKit
 import FirebaseFirestoreSwift
+import Firebase
 
-// A NSobject for user document
-class User: NSObject, Codable{
-    
-    // fields
-    @DocumentID var id: String?
+class User: NSObject {
+    @DocumentID var id:String?
     var name: String?
     var profile: String?
     var profile_image: String?
+    var tags: [String]?
+    var collections: [DocumentReference]?
+    var follower: [DocumentReference]?
+    var following: [DocumentReference]?
+    var likes: [DocumentReference]?
+    var posts: [DocumentReference]?
     
-    var tags: [TagBean] = []
-    
-    var posts: [Post] = []
-    var likes: [Post] = []
-    var collections: [Post] = []
-    
-    // encode and decode
-    enum CodingKeys: String, CodingKey {
-        case id
-        case name
-        case profile
-        case profile_image
-    }
-    
-
 }
