@@ -430,25 +430,31 @@ class FirebaseController: NSObject, DatabaseProtocol {
                             self.defaultTags.append(oneTag)
                         }
                         
+                        self.listeners.invoke{ (listener) in
+                            if listener.listenerType == ListenerType.tag || listener.listenerType == ListenerType.all || listener.listenerType == .tagAndExp{
+                                listener.onTagChange(change: .update, tags: self.defaultTags)
+                            }
+                            
+                        }
+                        
+                        if self.postRef == nil{
+                            self.setupCurrentCards()
+                        }
+                        
+                        self.listeners.invoke{ (listener) in
+                            if listener.listenerType == ListenerType.auth || listener.listenerType == ListenerType.all{
+                                listener.onAuthChange(change: .update, userIsLoggedIn: self.userLoginState, error: "")
+                            }
+                            
+                        }
+                        
                     } else{
                         print("Document does not exist: setupUserSelectedTags")
                     }
                     
                 }
 
-                listeners.invoke{ (listener) in
-                    if listener.listenerType == ListenerType.tag || listener.listenerType == ListenerType.all || listener.listenerType == .tagAndExp{
-                        listener.onTagChange(change: .update, tags: self.defaultTags)
-                    }
-                    
-                }
                 
-                listeners.invoke{ (listener) in
-                    if listener.listenerType == ListenerType.auth || listener.listenerType == ListenerType.all{
-                        listener.onAuthChange(change: .update, userIsLoggedIn: userLoginState, error: "")
-                    }
-                    
-                }
                 
                 
                 
