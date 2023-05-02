@@ -83,26 +83,43 @@ class PersonPageViewController: UIViewController, DatabaseListener {
         let appDelegate = UIApplication.shared.delegate as? AppDelegate
         databaseController = appDelegate?.databaseController
         
-        currentUser = databaseController?.getUserModel()
-        
-        
-        userNameLabel.text = currentUser?.name
-        userProfileLabel.text = currentUser?.profile
-        let gsReference = Storage.storage().reference(forURL: (currentUser?.profile_image)!)
-        gsReference.getData(maxSize: 10 * 1024 * 1024){ data, error in
-            if let error = error{
-                print("error!: \(error)")
-            } else{
-                let userProfileImage = UIImage(data: data!)
-                self.userProfileImageView.image = userProfileImage
+        Task{
+            do{
+                databaseController?.getUserModel{ userModel in
+                    self.currentUser = userModel
+                    print("********************************************************************")
+                    print(self.currentUser)
+                    print(self.currentUser?.name)
+                    print(self.currentUser?.profile)
+                    print(self.currentUser?.profile_image)
+                    print("********************************************************************")
+                    
+                    DispatchQueue.main.async {
+                        self.userNameLabel.text = self.currentUser?.name
+                        self.userProfileLabel.text = self.currentUser?.profile
+                        let gsReference = Storage.storage().reference(forURL: (self.currentUser?.profile_image)!)
+                        gsReference.getData(maxSize: 10 * 1024 * 1024){ data, error in
+                            if let error = error{
+                                print("error!: \(error)")
+                            } else{
+                                let userProfileImage = UIImage(data: data!)
+                                self.userProfileImageView.image = userProfileImage
+                            }
+                        }
+                        self.userFollowingNumber.text = "\(Int((self.currentUser?.following!.count)!))"
+                        self.userFollowerLabel.text = "\(Int((self.currentUser?.follower!.count)!))"
+                    }
+                    
+                    
+                    
+                }
+                
+               
+                
+            }catch{
+                print("error in PersonPageViewController\(error)")
             }
         }
-        userFollowingNumber.text = String(describing: currentUser?.following?.count)
-        userFollowerLabel.text = String(describing: currentUser?.follower?.count)
-        
-        
-        
-        
         
         
 
@@ -110,15 +127,37 @@ class PersonPageViewController: UIViewController, DatabaseListener {
     
     
     func showPostsView(){
+        self.showCardViewComponent?.clearAll(initialScrollComponentContentSize: initialScrollComponentContentSize!, initialLeftCardStackFrame: initialLeftCardStackFrame!, initialRightCardStackFrame: initialRightCardStackFrame!)
+        let cardList = databaseController?.parseUserCardViewList(referencesList: (currentUser?.posts)!)
+        var cards:[CardView] = []
+        cardList?.forEach{ card in
+            let cardView = CardFactory().buildACardView(username: card.username!, title: card.title!, imagePath: card.cover!, homepageViewControl: self, card: card)
+            cards.append(cardView)
+        }
+        showCardViewComponent?.fillNewCards(cards: cards)
         
     }
     
     func showCollectionsView(){
-        
+        self.showCardViewComponent?.clearAll(initialScrollComponentContentSize: initialScrollComponentContentSize!, initialLeftCardStackFrame: initialLeftCardStackFrame!, initialRightCardStackFrame: initialRightCardStackFrame!)
+        let cardList = databaseController?.parseUserCardViewList(referencesList: (currentUser?.collections)!)
+        var cards:[CardView] = []
+        cardList?.forEach{ card in
+            let cardView = CardFactory().buildACardView(username: card.username!, title: card.title!, imagePath: card.cover!, homepageViewControl: self, card: card)
+            cards.append(cardView)
+        }
+        showCardViewComponent?.fillNewCards(cards: cards)
     }
     
     func showLikesView(){
-        
+        self.showCardViewComponent?.clearAll(initialScrollComponentContentSize: initialScrollComponentContentSize!, initialLeftCardStackFrame: initialLeftCardStackFrame!, initialRightCardStackFrame: initialRightCardStackFrame!)
+        let cardList = databaseController?.parseUserCardViewList(referencesList: (currentUser?.likes)!)
+        var cards:[CardView] = []
+        cardList?.forEach{ card in
+            let cardView = CardFactory().buildACardView(username: card.username!, title: card.title!, imagePath: card.cover!, homepageViewControl: self, card: card)
+            cards.append(cardView)
+        }
+        showCardViewComponent?.fillNewCards(cards: cards)
     }
     
     
@@ -147,15 +186,15 @@ class PersonPageViewController: UIViewController, DatabaseListener {
     
     
     func onExploreChange(change: DatabaseChange, cards: [Card]) {
-        <#code#>
+        // nothing to do
     }
     
     func onTagChange(change: DatabaseChange, tags: [Tag]) {
-        <#code#>
+        // nothing to do
     }
     
     func onAuthChange(change: DatabaseChange, userIsLoggedIn: Bool, error: String) {
-        <#code#>
+        // nothing to do
     }
 
 }
