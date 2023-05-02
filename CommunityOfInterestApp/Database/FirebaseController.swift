@@ -642,4 +642,11 @@ class FirebaseController: NSObject, DatabaseProtocol {
     }
     
     
+    func parseUserCardViewList(referencesList: [DocumentReference]) -> [Card] {
+        
+    }
+    
+    
+    
+    
 }

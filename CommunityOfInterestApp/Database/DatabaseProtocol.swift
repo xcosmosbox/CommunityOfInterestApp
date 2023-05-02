@@ -7,6 +7,7 @@
 
 import Foundation
 import UIKit
+import Firebase
 
 enum DatabaseChange {
     case add
@@ -21,6 +22,7 @@ enum ListenerType{
     case explore
     case tag
     case tagAndExp
+    case person
     case all
 }
 
@@ -64,6 +66,7 @@ protocol DatabaseProtocol: AnyObject{
     
     // person page data init
     func getUserModel() -> User
+    func parseUserCardViewList(referencesList: [DocumentReference]) -> [Card]
     
     
     

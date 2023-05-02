@@ -67,6 +67,9 @@
                                     <segment title="Collections"/>
                                     <segment title="Likes"/>
                                 </segments>
+                                <connections>
+                                    <action selector="showDifferCardAction:" destination="2Zp-J1-J5O" eventType="valueChanged" id="oXD-7I-F3B"/>
+                                </connections>
                             </segmentedControl>
                             <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="CZQ-FJ-Vmc">
                                 <rect key="frame" x="16" y="420" width="352" height="398"/>
@@ -96,6 +99,17 @@
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                     </view>
                     <navigationItem key="navigationItem" title="Person" id="dyV-6Z-5cI"/>
+                    <connections>
+                        <outlet property="cardScrollView" destination="CZQ-FJ-Vmc" id="GKV-Gr-J4l"/>
+                        <outlet property="leftStackView" destination="die-go-uPH" id="ajZ-aO-h2y"/>
+                        <outlet property="rightStackView" destination="VZQ-8r-Bwk" id="2by-6N-Mac"/>
+                        <outlet property="showDifferCardSegmentedControl" destination="n3F-SC-rqt" id="zf5-ss-302"/>
+                        <outlet property="userFollowerLabel" destination="Aer-8D-cxl" id="3MH-7U-FYq"/>
+                        <outlet property="userFollowingNumber" destination="mai-nU-3lu" id="19r-Iu-FeH"/>
+                        <outlet property="userNameLabel" destination="fFH-Zl-o4q" id="32X-rj-G4s"/>
+                        <outlet property="userProfileImageView" destination="7O9-9j-2KA" id="Jhw-Kx-l1B"/>
+                        <outlet property="userProfileLabel" destination="f82-pl-mvx" id="OPQ-Uo-eii"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="lQC-Rv-ZCp" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
