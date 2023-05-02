@@ -89,6 +89,8 @@ class FirebaseController: NSObject, DatabaseProtocol {
         listeners.addDelegate(listener)
         
         if listener.listenerType == .tag || listener.listenerType == .all || listener.listenerType == .tagAndExp{
+            print("appear HOME")
+            print(defaultTags)
             listener.onTagChange(change: .update, tags: self.defaultTags)
         }
         
@@ -514,49 +516,55 @@ class FirebaseController: NSObject, DatabaseProtocol {
             
             print("set user tag success")
             
-            let userDocRef = database.collection("user").document(currentUser!.uid)
-            userDocRef.getDocument{ (document, error) in
-                if let document = document, document.exists{
-                    let data = document.data()
-                    let userTags = data?["tags"] as? [String] ?? []
-                    userTags.forEach{ tag in
+            let userDocRef = database.collection("user").document(currentUser!.uid).addSnapshotListener{
+                (querySnapshot, error) in
+                print("dhoashdoasuhduaoshdouashdouashd")
+                
+                guard let querySnapshot = querySnapshot else {
+                    print("Failed to get documet for this user --> \(error!)")
+                    return
+                }
+                
+                if querySnapshot.data() == nil{
+                    print("Failed to get documet for this user")
+                    return
+                }
+                
+                if let userTagsFromDatabase = querySnapshot.data()!["tags"] as? [String]{
+                    print("hihiiiiiiaisdiasidasidais")
+                    for userOneTag in userTagsFromDatabase{
                         let oneTag = Tag()
-                        oneTag.name = tag
+                        oneTag.name = userOneTag
                         self.defaultTags.append(oneTag)
+                        print(userOneTag)
+                        print(oneTag)
                     }
                     
-                } else{
+                    print("=========================================================================")
+                    print(self.defaultTags)
+                    print("=========================================================================")
+                    self.listeners.invoke{ (listener) in
+                        if listener.listenerType == ListenerType.tag || listener.listenerType == ListenerType.all || listener.listenerType == .tagAndExp{
+                            print("test for tag change on signup")
+                            listener.onTagChange(change: .update, tags: self.defaultTags)
+                        }
+                        
+                    }
+                    
+                    
+                    if self.postRef == nil{
+                        self.setupCurrentCards()
+                    }
+                    
+                    
+                }else{
                     print("Document does not exist: setupUserSelectedTags")
                 }
                 
-            }
-//            userDocRef?.addSnapshotListener(){
-//                (querySnapshot, error) in
-//
-//                guard let querySnapshot = querySnapshot else{
-//                    print("Failed to fetch documents with error: \(String(describing: error))")
-//                    return
-//                }
-//
-//                self.parseTagsSnapshot(snapshot: querySnapshot)
-//
-//                if self.postRef == nil{
-//                    self.setupCurrentCards()
-//                }
-//
-//
-//            }
-            listeners.invoke{ (listener) in
-                if listener.listenerType == ListenerType.tag || listener.listenerType == ListenerType.all || listener.listenerType == .tagAndExp{
-                    listener.onTagChange(change: .update, tags: self.defaultTags)
-                }
+                
                 
             }
-            
-            
-            if self.postRef == nil{
-                self.setupCurrentCards()
-            }
+
             
             
             return true
