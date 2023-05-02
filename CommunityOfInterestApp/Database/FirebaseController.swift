@@ -582,5 +582,64 @@ class FirebaseController: NSObject, DatabaseProtocol {
     }
     
     
+    func getUserModel() -> User {
+        var userModel = User()
+        let userDocRef = database.collection("user").document(currentUser!.uid).addSnapshotListener{
+            (querySnapshot, error) in
+            
+            guard let querySnapshot = querySnapshot else {
+                print("Failed to get documet for this user --> \(error!)")
+                return
+            }
+            
+            if querySnapshot.data() == nil{
+                print("Failed to get documet for this user")
+                return
+            }
+            
+            
+            if let name = querySnapshot.data()!["name"] as? String {
+                userModel.name = name
+            }
+            
+            if let profile = querySnapshot.data()!["profile"] as? String {
+                userModel.profile = profile
+            }
+            
+            if let profile_image = querySnapshot.data()!["profile_image"] as? String {
+                userModel.profile_image = profile_image
+            }
+            
+            if let tags = querySnapshot.data()!["tags"] as? [String] {
+                userModel.tags = tags
+            }
+            
+            if let collections = querySnapshot.data()!["collections"] as? [DocumentReference] {
+                userModel.collections = collections
+            }
+            
+            if let follower = querySnapshot.data()!["follower"] as? [DocumentReference] {
+                userModel.follower = follower
+            }
+            
+            if let following = querySnapshot.data()!["following"] as? [DocumentReference] {
+                userModel.following = following
+            }
+            
+            if let likes = querySnapshot.data()!["likes"] as? [DocumentReference] {
+                userModel.likes = likes
+            }
+            
+            if let posts = querySnapshot.data()!["posts"] as? [DocumentReference] {
+                userModel.posts = posts
+            }
+            
+        }
+        
+        
+        return userModel
+        
+    }
+    
     
 }

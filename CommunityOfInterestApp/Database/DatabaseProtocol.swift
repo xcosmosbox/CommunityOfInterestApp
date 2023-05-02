@@ -62,6 +62,9 @@ protocol DatabaseProtocol: AnyObject{
     func signup(newEmail:String, newPassword:String)
     func setupUserSelectedTags(tags: [String]) -> Bool
     
+    // person page data init
+    func getUserModel() -> User
+    
     
     
 }
