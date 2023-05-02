@@ -37,6 +37,9 @@ class FirebaseController: NSObject, DatabaseProtocol {
     
     // user login state
     var userLoginState: Bool
+    var currentUserLikesList: [Card] = []
+    var currentUserCollectionsList: [Card] = []
+    var currentUserPostsList: [Card] = []
     
     
     override init() {
@@ -100,6 +103,10 @@ class FirebaseController: NSObject, DatabaseProtocol {
         
         if listener.listenerType == .auth || listener.listenerType == .all{
             listener.onAuthChange(change: .update, userIsLoggedIn: userLoginState, error: "")
+        }
+        
+        if listener.listenerType == .person || listener.listenerType == .all{
+            listener.onPersonChange(change: .update, postsCards: self.currentUserPostsList, likesCards: self.currentUserLikesList, collectionsCards: self.currentUserCollectionsList)
         }
         
     }
@@ -448,6 +455,8 @@ class FirebaseController: NSObject, DatabaseProtocol {
                             
                         }
                         
+                        self.parseUserCardViewList()
+                        
                     } else{
                         print("Document does not exist: setupUserSelectedTags")
                     }
@@ -608,7 +617,6 @@ class FirebaseController: NSObject, DatabaseProtocol {
 //
 //            print("()()()()())(()()()()())(()()()()())(()()()()())(()()()()())(")
 //            if let profile_image = querySnapshot.data()!["profile_image"] as? String {
-//                print("yuxingfeng99@gmail.com")
 //                userModel.profile_image = profile_image
 //                print(profile_image)
 //                print("()()()()())(()()()()())(()()()()())(()()()()())(()()()()())(")
@@ -674,12 +682,8 @@ class FirebaseController: NSObject, DatabaseProtocol {
                 userModel.profile = profile
             }
             
-            print("()()()()())(()()()()())(()()()()())(()()()()())(()()()()())(")
             if let profile_image = querySnapshot.data()!["profile_image"] as? String {
-                print("yuxingfeng99@gmail.com")
                 userModel.profile_image = profile_image
-                print(profile_image)
-                print("()()()()())(()()()()())(()()()()())(()()()()())(()()()()())(")
             }
         
             if let tags = querySnapshot.data()!["tags"] as? [String] {
@@ -712,40 +716,160 @@ class FirebaseController: NSObject, DatabaseProtocol {
 
     
     
-    func parseUserCardViewList(referencesList: [DocumentReference]) -> [Card] {
-        var cardsList:[Card]?
-        
-        referencesList.forEach{ eachReference in
-            eachReference.addSnapshotListener{ (querySnapshot, error) in
-                // check
-                guard let querySnapshot = querySnapshot else {
-                    print("Failed to get documet for this user --> \(error!)")
-                    return
+    func parseUserCardViewList(){
+        Task{
+            do{
+                getUserModel{ userModel in
+                    self.parsePostsList(referencesList: userModel.posts!)
+                    self.parseLikesList(referencesList: userModel.likes!)
+                    self.parseCollectionsList(referencesList: userModel.collections!)
                 }
-                
-                // check
-                if querySnapshot.data() == nil{
-                    print("Failed to get documet for this user")
-                    return
-                }
-                
-                // add card into list
-                do{
-                    let card = try querySnapshot.data(as: Card.self)
-                    cardsList?.append(card)
-                } catch {
-                    print("Unable to decod card: parseUserCardViewList")
-                    return
-                }
-                
-                
-                
             }
-            
         }
         
-        return cardsList!
+        
+//
+//        var cardsList:[Card]?
+//
+//        referencesList.forEach{ eachReference in
+//            eachReference.addSnapshotListener{ (querySnapshot, error) in
+//                // check
+//                guard let querySnapshot = querySnapshot else {
+//                    print("Failed to get documet for this user --> \(error!)")
+//                    return
+//                }
+//
+//                // check
+//                if querySnapshot.data() == nil{
+//                    print("Failed to get documet for this user")
+//                    return
+//                }
+//
+//                // add card into list
+//                do{
+//                    let card = try querySnapshot.data(as: Card.self)
+//                    cardsList?.append(card)
+//                } catch {
+//                    print("Unable to decod card: parseUserCardViewList")
+//                    return
+//                }
+//
+//
+//
+//            }
+//
+//        }
+//
+//        return cardsList!
     }
+    
+    func parsePostsList(referencesList: [DocumentReference]){
+        do{
+            referencesList.forEach{ referenceDoc in
+                referenceDoc.getDocument{ (document, error) in
+                    if let error = error{
+                        print("error parsePostsList:\(error)")
+                    } else if let document = document{
+                        do{
+                            let card = try document.data(as: Card.self)
+                            if card == nil{
+                                print("Failed to parse card")
+                            }else{
+//                                print("=================(((((((^^^^^^^^^^^")
+//                                print(card)
+//                                print("=================(((((((^^^^^^^^^^^")
+                                self.currentUserPostsList.append(card)
+                            }
+                            
+                            self.listeners.invoke{ (listener) in
+                                if listener.listenerType == ListenerType.person || listener.listenerType == ListenerType.all{
+                                    listener.onPersonChange(change: .update, postsCards: self.currentUserPostsList, likesCards: self.currentUserLikesList, collectionsCards: self.currentUserCollectionsList)
+                                }
+                                
+                            }
+                            
+                        }catch{
+                            print("error parsePostsList catch:\(error)")
+                        }
+                    }
+                    
+                }
+                
+            }
+        }
+    }
+    func parseLikesList(referencesList: [DocumentReference]){
+        do{
+            referencesList.forEach{ referenceDoc in
+                referenceDoc.getDocument{ (document, error) in
+                    if let error = error{
+                        print("error parsePostsList:\(error)")
+                    } else if let document = document{
+                        do{
+                            let card = try document.data(as: Card.self)
+                            if card == nil{
+                                print("Failed to parse card")
+                            }else{
+//                                print("=================(((((((^^^^^^^^^^^")
+//                                print(card)
+//                                print("=================(((((((^^^^^^^^^^^")
+                                self.currentUserLikesList.append(card)
+                            }
+                            
+                            self.listeners.invoke{ (listener) in
+                                if listener.listenerType == ListenerType.person || listener.listenerType == ListenerType.all{
+                                    listener.onPersonChange(change: .update, postsCards: self.currentUserPostsList, likesCards: self.currentUserLikesList, collectionsCards: self.currentUserCollectionsList)
+                                }
+                                
+                            }
+                            
+                        }catch{
+                            print("error parsePostsList catch:\(error)")
+                        }
+                    }
+                    
+                }
+                
+            }
+        }
+    }
+    func parseCollectionsList(referencesList: [DocumentReference]){
+        do{
+            referencesList.forEach{ referenceDoc in
+                referenceDoc.getDocument{ (document, error) in
+                    if let error = error{
+                        print("error parsePostsList:\(error)")
+                    } else if let document = document{
+                        do{
+                            let card = try document.data(as: Card.self)
+                            if card == nil{
+                                print("Failed to parse card")
+                            }else{
+//                                print("=================(((((((^^^^^^^^^^^")
+//                                print(card)
+//                                print("=================(((((((^^^^^^^^^^^")
+                                self.currentUserCollectionsList.append(card)
+                            }
+                            
+                            self.listeners.invoke{ (listener) in
+                                if listener.listenerType == ListenerType.person || listener.listenerType == ListenerType.all{
+                                    listener.onPersonChange(change: .update, postsCards: self.currentUserPostsList, likesCards: self.currentUserLikesList, collectionsCards: self.currentUserCollectionsList)
+                                }
+                                
+                            }
+                            
+                        }catch{
+                            print("error parsePostsList catch:\(error)")
+                        }
+                    }
+                    
+                }
+                
+            }
+        }
+    }
+    
+    
     
     
     

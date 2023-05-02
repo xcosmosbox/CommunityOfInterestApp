@@ -126,6 +126,10 @@ class LoginPageViewController: UIViewController, DatabaseListener {
         }
     }
     
+    func onPersonChange(change: DatabaseChange, postsCards: [Card], likesCards: [Card], collectionsCards: [Card]) {
+        // nothing to do
+    }
+    
     
     
     func displayMessage(title: String, message: String){

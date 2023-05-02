@@ -15,6 +15,10 @@ class PersonPageViewController: UIViewController, DatabaseListener {
     
     var currentUser: User?
     
+    var currentUserLikesList: [Card]?
+    var currentUserCollectionsList: [Card]?
+    var currentUserPostsList: [Card]?
+    
     var showCardViewComponent:ExploreComponent?
     // At the beginning of the record, the size and frame of the three Views
     var initialScrollComponentContentSize: CGSize?
@@ -87,13 +91,6 @@ class PersonPageViewController: UIViewController, DatabaseListener {
             do{
                 databaseController?.getUserModel{ userModel in
                     self.currentUser = userModel
-                    print("********************************************************************")
-                    print(self.currentUser)
-                    print(self.currentUser?.name)
-                    print(self.currentUser?.profile)
-                    print(self.currentUser?.profile_image)
-                    print("********************************************************************")
-                    
                     DispatchQueue.main.async {
                         self.userNameLabel.text = self.currentUser?.name
                         self.userProfileLabel.text = self.currentUser?.profile
@@ -108,6 +105,7 @@ class PersonPageViewController: UIViewController, DatabaseListener {
                         }
                         self.userFollowingNumber.text = "\(Int((self.currentUser?.following!.count)!))"
                         self.userFollowerLabel.text = "\(Int((self.currentUser?.follower!.count)!))"
+                        
                     }
                     
                     
@@ -127,10 +125,17 @@ class PersonPageViewController: UIViewController, DatabaseListener {
     
     
     func showPostsView(){
+//        self.showCardViewComponent?.clearAll(initialScrollComponentContentSize: initialScrollComponentContentSize!, initialLeftCardStackFrame: initialLeftCardStackFrame!, initialRightCardStackFrame: initialRightCardStackFrame!)
+//        let cardList = databaseController?.parseUserCardViewList(referencesList: (currentUser?.posts)!)
+//        var cards:[CardView] = []
+//        cardList?.forEach{ card in
+//            let cardView = CardFactory().buildACardView(username: card.username!, title: card.title!, imagePath: card.cover!, homepageViewControl: self, card: card)
+//            cards.append(cardView)
+//        }
+//        showCardViewComponent?.fillNewCards(cards: cards)
         self.showCardViewComponent?.clearAll(initialScrollComponentContentSize: initialScrollComponentContentSize!, initialLeftCardStackFrame: initialLeftCardStackFrame!, initialRightCardStackFrame: initialRightCardStackFrame!)
-        let cardList = databaseController?.parseUserCardViewList(referencesList: (currentUser?.posts)!)
         var cards:[CardView] = []
-        cardList?.forEach{ card in
+        self.currentUserPostsList?.forEach{ card in
             let cardView = CardFactory().buildACardView(username: card.username!, title: card.title!, imagePath: card.cover!, homepageViewControl: self, card: card)
             cards.append(cardView)
         }
@@ -139,10 +144,18 @@ class PersonPageViewController: UIViewController, DatabaseListener {
     }
     
     func showCollectionsView(){
+//        self.showCardViewComponent?.clearAll(initialScrollComponentContentSize: initialScrollComponentContentSize!, initialLeftCardStackFrame: initialLeftCardStackFrame!, initialRightCardStackFrame: initialRightCardStackFrame!)
+//        let cardList = databaseController?.parseUserCardViewList(referencesList: (currentUser?.collections)!)
+//        var cards:[CardView] = []
+//        cardList?.forEach{ card in
+//            let cardView = CardFactory().buildACardView(username: card.username!, title: card.title!, imagePath: card.cover!, homepageViewControl: self, card: card)
+//            cards.append(cardView)
+//        }
+//        showCardViewComponent?.fillNewCards(cards: cards)
+        
         self.showCardViewComponent?.clearAll(initialScrollComponentContentSize: initialScrollComponentContentSize!, initialLeftCardStackFrame: initialLeftCardStackFrame!, initialRightCardStackFrame: initialRightCardStackFrame!)
-        let cardList = databaseController?.parseUserCardViewList(referencesList: (currentUser?.collections)!)
         var cards:[CardView] = []
-        cardList?.forEach{ card in
+        self.currentUserCollectionsList?.forEach{ card in
             let cardView = CardFactory().buildACardView(username: card.username!, title: card.title!, imagePath: card.cover!, homepageViewControl: self, card: card)
             cards.append(cardView)
         }
@@ -150,10 +163,18 @@ class PersonPageViewController: UIViewController, DatabaseListener {
     }
     
     func showLikesView(){
+//        self.showCardViewComponent?.clearAll(initialScrollComponentContentSize: initialScrollComponentContentSize!, initialLeftCardStackFrame: initialLeftCardStackFrame!, initialRightCardStackFrame: initialRightCardStackFrame!)
+//        let cardList = databaseController?.parseUserCardViewList(referencesList: (currentUser?.likes)!)
+//        var cards:[CardView] = []
+//        cardList?.forEach{ card in
+//            let cardView = CardFactory().buildACardView(username: card.username!, title: card.title!, imagePath: card.cover!, homepageViewControl: self, card: card)
+//            cards.append(cardView)
+//        }
+//        showCardViewComponent?.fillNewCards(cards: cards)
+        
         self.showCardViewComponent?.clearAll(initialScrollComponentContentSize: initialScrollComponentContentSize!, initialLeftCardStackFrame: initialLeftCardStackFrame!, initialRightCardStackFrame: initialRightCardStackFrame!)
-        let cardList = databaseController?.parseUserCardViewList(referencesList: (currentUser?.likes)!)
         var cards:[CardView] = []
-        cardList?.forEach{ card in
+        self.currentUserLikesList?.forEach{ card in
             let cardView = CardFactory().buildACardView(username: card.username!, title: card.title!, imagePath: card.cover!, homepageViewControl: self, card: card)
             cards.append(cardView)
         }
@@ -175,6 +196,8 @@ class PersonPageViewController: UIViewController, DatabaseListener {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         databaseController?.addListener(listener: self)
+        self.showDifferCardSegmentedControl.selectedSegmentIndex = 0
+        self.showPostsView()
     }
     
     override func viewWillDisappear(_ animated: Bool) {
@@ -195,6 +218,12 @@ class PersonPageViewController: UIViewController, DatabaseListener {
     
     func onAuthChange(change: DatabaseChange, userIsLoggedIn: Bool, error: String) {
         // nothing to do
+    }
+    
+    func onPersonChange(change: DatabaseChange, postsCards: [Card], likesCards: [Card], collectionsCards: [Card]) {
+        self.currentUserPostsList = postsCards
+        self.currentUserLikesList = likesCards
+        self.currentUserCollectionsList = collectionsCards
     }
 
 }

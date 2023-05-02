@@ -31,6 +31,7 @@ protocol DatabaseListener: AnyObject{
     func onExploreChange(change: DatabaseChange, cards: [Card])
     func onTagChange(change: DatabaseChange, tags: [Tag])
     func onAuthChange(change: DatabaseChange, userIsLoggedIn: Bool, error: String)
+    func onPersonChange(change: DatabaseChange, postsCards:[Card], likesCards:[Card], collectionsCards:[Card])
 }
 
 protocol DatabaseProtocol: AnyObject{
@@ -66,7 +67,6 @@ protocol DatabaseProtocol: AnyObject{
     
     // person page data init
 //    func getUserModel() -> User
-    func parseUserCardViewList(referencesList: [DocumentReference]) -> [Card]
     func getUserModel(completion: @escaping (User) -> Void)
     
     
