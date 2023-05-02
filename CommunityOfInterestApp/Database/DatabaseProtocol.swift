@@ -65,8 +65,9 @@ protocol DatabaseProtocol: AnyObject{
     func setupUserSelectedTags(tags: [String]) -> Bool
     
     // person page data init
-    func getUserModel() -> User
+//    func getUserModel() -> User
     func parseUserCardViewList(referencesList: [DocumentReference]) -> [Card]
+    func getUserModel(completion: @escaping (User) -> Void)
     
     
     
