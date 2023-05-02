@@ -11,6 +11,8 @@ class HomePageViewController: UIViewController, DatabaseListener, DetailChangeDe
 
     
 
+    
+
     // init listener type
     var listenerType: ListenerType = .tagAndExp
     
@@ -143,6 +145,10 @@ class HomePageViewController: UIViewController, DatabaseListener, DetailChangeDe
 //        view.layoutIfNeeded()
         
     }
+    
+    func onAuthChange(change: DatabaseChange, userIsLoggedIn: Bool, error: String) {
+        // nothing to do
+    }
 
     
     func loadCardDetail(_ card: Card) {
@@ -154,6 +160,8 @@ class HomePageViewController: UIViewController, DatabaseListener, DetailChangeDe
             detailView.card = data
         }
     }
+    
+    
     
 
     
