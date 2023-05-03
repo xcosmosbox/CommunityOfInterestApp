@@ -89,7 +89,7 @@ class TagBoxTableViewController: UITableViewController {
             databaseController?.deleteTag(tag: tagForDatabase)
             
             
-            refreshTags()
+//            refreshTags()
             
         }
     }
