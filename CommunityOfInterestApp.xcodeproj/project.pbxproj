@@ -46,6 +46,7 @@
 		276ECF8A29F6D719005101B9 /* FirebaseController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 276ECF8929F6D719005101B9 /* FirebaseController.swift */; };
 		27A981612A01346000829C39 /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27A981602A01346000829C39 /* User.swift */; };
 		27B63E552A01168800BCE0CA /* PersonPageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27B63E542A01168800BCE0CA /* PersonPageViewController.swift */; };
+		27BC74E72A05FCAB009550B2 /* MultiSelectImagePageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27BC74E62A05FCAB009550B2 /* MultiSelectImagePageViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -86,6 +87,7 @@
 		276ECF8929F6D719005101B9 /* FirebaseController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirebaseController.swift; sourceTree = "<group>"; };
 		27A981602A01346000829C39 /* User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
 		27B63E542A01168800BCE0CA /* PersonPageViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PersonPageViewController.swift; sourceTree = "<group>"; };
+		27BC74E62A05FCAB009550B2 /* MultiSelectImagePageViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MultiSelectImagePageViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -158,6 +160,7 @@
 			isa = PBXGroup;
 			children = (
 				270BFF1829E3B33900850009 /* SharingPageMain.storyboard */,
+				27BC74E62A05FCAB009550B2 /* MultiSelectImagePageViewController.swift */,
 			);
 			path = SharingPage;
 			sourceTree = "<group>";
@@ -345,6 +348,7 @@
 				274DF89F2A00AB670030A1B2 /* LoginPageViewController.swift in Sources */,
 				270BFF2F29E42C7700850009 /* TagBean.swift in Sources */,
 				274F9D4929E57FBC000E174D /* ExploreComponent.swift in Sources */,
+				27BC74E72A05FCAB009550B2 /* MultiSelectImagePageViewController.swift in Sources */,
 				276ECF8429F6CF9E005101B9 /* DatabaseProtocol.swift in Sources */,
 				274F9D4A29E57FBC000E174D /* CardFactory.swift in Sources */,
 				275E432129FD5B9100A5916D /* DetailViewController.swift in Sources */,
