@@ -4,13 +4,17 @@
 //
 //  Created by Yuxiang Feng on 25/4/2023.
 //
-
+import Foundation
 import UIKit
 import Firebase
 import FirebaseFirestoreSwift
 import FirebaseStorage
 
 class FirebaseController: NSObject, DatabaseProtocol {
+ 
+    
+
+    
 
 
     
@@ -27,6 +31,7 @@ class FirebaseController: NSObject, DatabaseProtocol {
     // reference to firebase
     var authController: Auth
     var database: Firestore
+    var fireStorage: Storage
     var deafultTagRef: CollectionReference?
     var postRef: CollectionReference?
     var userRef: CollectionReference?
@@ -41,11 +46,16 @@ class FirebaseController: NSObject, DatabaseProtocol {
     var currentUserCollectionsList: [Card] = []
     var currentUserPostsList: [Card] = []
     
+    // edit and push post
+    var currentImages: [UIImage] = []
+    var currentImagesCounter: Int = 0
+    
     
     override init() {
         FirebaseApp.configure()
         authController = Auth.auth()
         database = Firestore.firestore()
+        fireStorage = Storage.storage()
         userLoginState = false
         
         super.init()
@@ -672,7 +682,6 @@ class FirebaseController: NSObject, DatabaseProtocol {
                 print("Failed to get documet for this user")
                 return
             }
-        
             
             if let name = querySnapshot.data()!["name"] as? String {
                 userModel.name = name
@@ -868,6 +877,172 @@ class FirebaseController: NSObject, DatabaseProtocol {
             }
         }
     }
+    
+    
+    
+    // edit and push post
+    func saveCurrentImagesAsDraft(images: [UIImage]) {
+        for image in images{
+            self.currentImages.append(image)
+        }
+    }
+    
+    func clearCurrentImages() {
+        self.currentImages.removeAll()
+    }
+    
+    func uploadCurrentImagesForCard(title: String, content: String, selectedTags: [String], completion: @escaping (DocumentReference) -> Void) {
+        self.currentImagesCounter = 0
+        
+        Task{
+            let folderPath = "images/\(self.currentUser?.uid ?? "hFeuyISsXUWxdOUV5LynsgIH4lC2")/"
+            do{
+                self.createPostCardForFirebase(title: title, content: content, selectedTags: selectedTags){ createdPostCardRef in
+                    for image in self.currentImages{
+                        DispatchQueue.main.async {
+                            self.uploadImageToStorage(folderPath: folderPath, image: image){ storageLocationStr in
+                                DispatchQueue.main.async {
+                                    if self.currentImagesCounter == 0{
+                                        createdPostCardRef.setData([
+                                            "cover":storageLocationStr
+                                        ])
+                                        self.currentImagesCounter += 1
+                                    }
+                                    createdPostCardRef.updateData([
+                                        "picture": FieldValue.arrayUnion([storageLocationStr])
+                                    ])
+                                    self.currentImagesCounter += 1
+                                    
+                                    if self.currentImagesCounter == self.currentImages.count{
+                                        completion(createdPostCardRef)
+                                    }
+                                }
+                            }
+                        }
+                    }
+                    
+                    
+                }
+            }
+        }
+        
+        
+    }
+    
+    func createPostCardForFirebase(title: String, content: String, selectedTags: [String], completion: @escaping (DocumentReference) -> Void){
+        
+        Task{
+            do{
+                self.getUserModel{ userModel in
+                    DispatchQueue.main.async {
+                        let documentRef = self.database.collection("post").document()
+                        documentRef.setData([
+                            "audio":[],
+                            "content":content,
+                            "cover":"",
+                            "likes_number":0,
+                            "picture":[],
+                            "publisher":"/user/\(self.currentUser?.uid ?? "EmC39aVeVaJSDWojZAsY")",
+                            "tags":selectedTags,
+                            "title":title,
+                            "username":userModel.name!,
+                            "video":[]
+                        ])
+                        completion(documentRef)
+                        
+                    }
+                }
+                
+               
+            }catch{
+                print("can not get the usermodel in firebase\(error)")
+            }
+        }
+        
+    }
+    
+    func uploadImageToStorage(folderPath: String, image:UIImage, completion: @escaping (String) -> Void){
+        Task{
+            // build the storage reference
+            let path = folderPath + "imageName_\(Int(Date().timeIntervalSince1970))_\(UUID().uuidString).jpeg"
+            let storageRef = self.fireStorage.reference(withPath: path)
+            
+            // build the imageData
+            guard let imageData = image.jpegData(compressionQuality: 0.8) else {
+                // image transfer to data faild
+                return
+            }
+            
+            // upload image
+            do{
+                // create a uploadTask by using await key word and putData function
+                let uploadTask = try await storageRef.putData(imageData)
+                
+                try await uploadTask.observe(.progress){ storageTaskSnapshot in
+                    
+                    let progress = storageTaskSnapshot.progress
+                    
+                    let percentComplete = 100.0 * Double(progress!.completedUnitCount) / Double(progress!.totalUnitCount)
+                    print("upload process：\(percentComplete)%")
+                    
+                    if percentComplete == 100.0{
+                        // using guard to check and get storage location
+                        
+//                        guard let storageLocation =  else{
+//                            print("error for upload task: no location")
+//                            return
+//                        }
+                        if storageTaskSnapshot.reference.fullPath != nil{
+                            print(storageTaskSnapshot.reference.fullPath)
+                            completion(storageTaskSnapshot.reference.fullPath)
+                        }
+                        
+                    }
+                    
+                    
+                }
+                
+                
+//                DispatchQueue.main.async {
+//                    // using guard to check and get storage location
+//                    guard let storageLocation = uploadTask.snapshot.metadata?.storageReference?.fullPath else{
+//                        print("error for upload task: no location")
+//                        return
+//                    }
+//                    completion(storageLocation)
+//                }
+                
+                
+//                try await storageRef.putData(imageData){ (metaData, error) in
+//
+//                    if error != nil{
+//                        print("error for putData: \(error)")
+//                    }
+//
+//                    print("=======")
+//                    print(metaData)
+//                    print("=======")
+//
+//                    DispatchQueue.main.async {
+//                        // using guard to check and get storage location
+//                        guard let storageLocation = metaData?.storageReference?.fullPath else{
+//                            print("error for upload task: no location")
+//                            return
+//                        }
+//                        completion(storageLocation)
+//                    }
+//                }
+            } catch{
+                print("error for upload task: error")
+            }
+            
+        }
+    }
+        
+        
+   
+       
+        
     
     
     

@@ -19,10 +19,29 @@
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                     </view>
                     <navigationItem key="navigationItem" title="Sharing" id="Ci2-BP-a7c"/>
+                    <connections>
+                        <segue destination="73Y-Q1-DQr" kind="show" identifier="toEditPostCardPage" id="X9u-Uh-GT2"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="rix-9U-sx6" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="1982" y="770"/>
+        </scene>
+        <!--View Controller-->
+        <scene sceneID="pDo-Nf-Pdv">
+            <objects>
+                <viewController id="73Y-Q1-DQr" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="qwE-u7-vNr">
+                        <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <viewLayoutGuide key="safeArea" id="J7x-X9-eaO"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                    </view>
+                    <navigationItem key="navigationItem" id="huf-tr-IJ7"/>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="Yf1-nR-yH9" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="2891" y="770"/>
         </scene>
         <!--Share-->
         <scene sceneID="vhp-Q5-2s4">
