@@ -683,6 +683,10 @@ class FirebaseController: NSObject, DatabaseProtocol {
                 return
             }
             
+            if let id = querySnapshot.documentID as? String{
+                userModel.id = id
+            }
+            
             if let name = querySnapshot.data()!["name"] as? String {
                 userModel.name = name
             }
@@ -854,9 +858,6 @@ class FirebaseController: NSObject, DatabaseProtocol {
                             if card == nil{
                                 print("Failed to parse card")
                             }else{
-//                                print("=================(((((((^^^^^^^^^^^")
-//                                print(card)
-//                                print("=================(((((((^^^^^^^^^^^")
                                 self.currentUserCollectionsList.append(card)
                             }
                             
@@ -942,7 +943,7 @@ class FirebaseController: NSObject, DatabaseProtocol {
                             "cover":"",
                             "likes_number":0,
                             "picture":[],
-                            "publisher":"/user/\(self.currentUser?.uid ?? "EmC39aVeVaJSDWojZAsY")",
+                            "publisher":self.database.collection("user").document(userModel.id!),
                             "tags":selectedTags,
                             "title":title,
                             "username":userModel.name!,
@@ -983,17 +984,10 @@ class FirebaseController: NSObject, DatabaseProtocol {
                     let progress = storageTaskSnapshot.progress
                     
                     let percentComplete = 100.0 * Double(progress!.completedUnitCount) / Double(progress!.totalUnitCount)
-                    print("upload process：\(percentComplete)%")
                     
                     if percentComplete == 100.0{
-                        // using guard to check and get storage location
-                        
-//                        guard let storageLocation =  else{
-//                            print("error for upload task: no location")
-//                            return
-//                        }
+                        // check and get storage location
                         if storageTaskSnapshot.reference.fullPath != nil{
-                            print(storageTaskSnapshot.reference.fullPath)
                             completion(storageTaskSnapshot.reference.fullPath)
                         }
                         
@@ -1003,35 +997,6 @@ class FirebaseController: NSObject, DatabaseProtocol {
                 }
                 
                 
-//                DispatchQueue.main.async {
-//                    // using guard to check and get storage location
-//                    guard let storageLocation = uploadTask.snapshot.metadata?.storageReference?.fullPath else{
-//                        print("error for upload task: no location")
-//                        return
-//                    }
-//                    completion(storageLocation)
-//                }
-                
-                
-//                try await storageRef.putData(imageData){ (metaData, error) in
-//
-//                    if error != nil{
-//                        print("error for putData: \(error)")
-//                    }
-//
-//                    print("=======")
-//                    print(metaData)
-//                    print("=======")
-//
-//                    DispatchQueue.main.async {
-//                        // using guard to check and get storage location
-//                        guard let storageLocation = metaData?.storageReference?.fullPath else{
-//                            print("error for upload task: no location")
-//                            return
-//                        }
-//                        completion(storageLocation)
-//                    }
-//                }
             } catch{
                 print("error for upload task: error")
             }
