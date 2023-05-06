@@ -12,6 +12,7 @@ class MultiSelectImagePageViewController: UIViewController,  PHPickerViewControl
     
     var configuration:PHPickerConfiguration?
     var pickerViewController: PHPickerViewController?
+    weak var databaseController: DatabaseProtocol?
     
 
     
@@ -20,11 +21,15 @@ class MultiSelectImagePageViewController: UIViewController,  PHPickerViewControl
         super.viewDidLoad()
 
         // Do any additional setup after loading the view.
+        let appDelegate = UIApplication.shared.delegate as? AppDelegate
+        databaseController = appDelegate?.databaseController
     }
     
     
     
     override func viewWillAppear(_ animated: Bool) {
+        databaseController?.clearCurrentImages()
+        
         configuration = PHPickerConfiguration()
         configuration?.filter = .images
         configuration?.selectionLimit = 9
@@ -55,19 +60,42 @@ class MultiSelectImagePageViewController: UIViewController,  PHPickerViewControl
     func picker(_ picker: PHPickerViewController, didFinishPicking results: [PHPickerResult]) {
         picker.dismiss(animated: true, completion: nil)
         
+        var imagesArray:[UIImage] = []
+        
         for result in results {
             result.itemProvider.loadObject(ofClass: UIImage.self) { (object, error) in
+                
                 if let error = error {
                     print("load photo error: \(error.localizedDescription)")
                 } else if let image = object as? UIImage {
                     // process selected image
                     print("select photo: \(image)")
+                    imagesArray.append(image)
                     
                 }
             }
         }
+//        databaseController?.saveCurrentImagesAsDraft(images: imagesArray)
         
-        performSegue(withIdentifier: "goToNextPage", sender: self)
+        self.JUSTTOTESTFUNCTION()
+        
+        performSegue(withIdentifier: "toEditPostCardPage", sender: self)
+    }
+    
+    func JUSTTOTESTFUNCTION(){
+        var temp:[UIImage] = []
+        temp.append(UIImage(named: "food_0.pic")!)
+        temp.append(UIImage(named: "food_3.pic")!)
+        databaseController?.saveCurrentImagesAsDraft(images: temp)
+        Task{
+            do{
+                databaseController?.uploadCurrentImagesForCard(title: "title_title", content: "this is contentcontentcontentcontentcontentcontentcontentcontentcontentcontentcontentcontentcontentcontent", selectedTags: ["Food","Pet"]){ result in
+                    DispatchQueue.main.async {
+                        print("TEST SUCCESS")
+                    }
+                }
+            }
+        }
     }
     
     

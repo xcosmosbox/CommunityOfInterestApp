@@ -70,6 +70,13 @@ protocol DatabaseProtocol: AnyObject{
     func getUserModel(completion: @escaping (User) -> Void)
     
     
+    // image
+    var currentImages:[UIImage] {get}
+    var currentImagesCounter:Int {get}
+    func saveCurrentImagesAsDraft(images:[UIImage])
+    func clearCurrentImages()
+    func uploadCurrentImagesForCard(title: String, content: String, selectedTags: [String], completion: @escaping (DocumentReference) -> Void) 
+    
     
 }
 
