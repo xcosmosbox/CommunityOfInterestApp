@@ -903,13 +903,13 @@ class FirebaseController: NSObject, DatabaseProtocol {
                             self.uploadImageToStorage(folderPath: folderPath, image: image){ storageLocationStr in
                                 DispatchQueue.main.async {
                                     if self.currentImagesCounter == 0{
-                                        createdPostCardRef.setData([
-                                            "cover":storageLocationStr
+                                        createdPostCardRef.updateData([
+                                            "cover":"gs://fit3178-final-ci-app.appspot.com/\(storageLocationStr)"
                                         ])
                                         self.currentImagesCounter += 1
                                     }
                                     createdPostCardRef.updateData([
-                                        "picture": FieldValue.arrayUnion([storageLocationStr])
+                                        "picture": FieldValue.arrayUnion(["gs://fit3178-final-ci-app.appspot.com/\(storageLocationStr)"])
                                     ])
                                     self.currentImagesCounter += 1
                                     
