@@ -16,7 +16,8 @@ class EditPostCardPageViewController: UIViewController, UICollectionViewDataSour
     var contentTextView: UITextView!
     var tagButtons: [UIButton] = []
     
-    let tags = ["Food", "Pet", "Travel"] // tags
+//    let tags = ["Food", "Pet", "Travel"] // tags
+    let tags = ["Travel"] // tags
     
     weak var databaseController: DatabaseProtocol?
 
@@ -122,6 +123,13 @@ class EditPostCardPageViewController: UIViewController, UICollectionViewDataSour
             tagsStackView.addArrangedSubview(button)
         }
         
+        // Add “Add Tag” button
+        let addTagButton = UIButton()
+        addTagButton.setTitle("+ Add Tag", for: .normal)
+        addTagButton.setTitleColor(.blue, for: .normal)
+        addTagButton.addTarget(self, action: #selector(addTagButtonTapped), for: .touchUpInside)
+        tagsStackView.addArrangedSubview(addTagButton)
+        
         stackView.addArrangedSubview(tagsStackView)
         
         view.addSubview(stackView)
@@ -158,6 +166,60 @@ class EditPostCardPageViewController: UIViewController, UICollectionViewDataSour
             sender.setTitleColor(.white, for: .normal)
         }
     }
+    
+    @objc func addTagButtonTapped() {
+        let alertController = UIAlertController(title: "Add New Tag", message: "Please type new tag", preferredStyle: .alert)
+        
+        alertController.addTextField { (textField) in
+            textField.placeholder = "New Tag"
+        }
+        
+        let addAction = UIAlertAction(title: "Add", style: .default) { [weak self] _ in
+            guard let self = self else { return }
+            if let textField = alertController.textFields?.first, let newTag = textField.text, !newTag.isEmpty {
+                self.addNewTag(tag: newTag)
+            }
+        }
+        
+        let cancelAction = UIAlertAction(title: "Cancel", style: .cancel, handler: nil)
+        
+        alertController.addAction(addAction)
+        alertController.addAction(cancelAction)
+        
+        present(alertController, animated: true, completion: nil)
+    }
+
+    
+//    func addNewTag(tag: String) {
+//        let button = UIButton()
+//        button.setTitle(tag, for: .normal)
+//        button.setTitleColor(.white, for: .normal)
+//        button.backgroundColor = .lightGray
+//        button.layer.borderWidth = 1
+//        button.layer.borderColor = UIColor.black.cgColor
+//        button.addTarget(self, action: #selector(tagButtonTapped(_:)), for: .touchUpInside)
+//        tagButtons.append(button)
+//
+//        if let tagsStackView = tagButtons.last?.superview as? UIStackView {
+//            tagsStackView.insertArrangedSubview(button, at: tagButtons.count - 1)
+//        }
+//    }
+    func addNewTag(tag: String) {
+        let button = UIButton()
+        button.setTitle(tag, for: .normal)
+        button.setTitleColor(.white, for: .normal)
+        button.backgroundColor = .lightGray
+        button.layer.borderWidth = 1
+        button.layer.borderColor = UIColor.black.cgColor
+        button.addTarget(self, action: #selector(tagButtonTapped(_:)), for: .touchUpInside)
+        tagButtons.append(button)
+        
+        if let tagsStackView = tagButtons.first?.superview as? UIStackView {
+            tagsStackView.insertArrangedSubview(button, at: tagButtons.count - 2)
+        }
+    }
+
+
 
 
     
