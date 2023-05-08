@@ -17,8 +17,7 @@ class EditPostCardPageViewController: UIViewController, UICollectionViewDataSour
     var uploadButton = UIButton()
     var tagButtons: [UIButton] = []
     
-    let tags = ["Food", "Pet", "Travel", "Nature"] // tags
-//    let tags = ["Travel"] // tags
+    let tags = ["Food", "Pet", "Travel", "Nature", "Game", "Sport", "Music"] // tags
     
     weak var databaseController: DatabaseProtocol?
 
@@ -104,7 +103,6 @@ class EditPostCardPageViewController: UIViewController, UICollectionViewDataSour
             button.backgroundColor = .gray
             button.setTitle(tag, for: .normal)
             button.setTitleColor(.white, for: .normal)
-//            button.setTitleColor(.black, for: .normal)
             button.layer.borderWidth = 1
             button.layer.borderColor = UIColor.black.cgColor
             button.addTarget(self, action: #selector(tagButtonTapped(_:)), for: .touchUpInside)
@@ -140,10 +138,10 @@ class EditPostCardPageViewController: UIViewController, UICollectionViewDataSour
         tagsScrollView.showsHorizontalScrollIndicator = false
         tagsScrollView.addSubview(tagsStackView)
         
-//        stackView.addArrangedSubview(tagsStackView)
+
         stackView.addArrangedSubview(tagsScrollView)
         
-//        let uploadButton = UIButton()
+
         uploadButton.setTitle("POST", for: .normal)
         uploadButton.setTitleColor(.white, for: .normal)
         uploadButton.backgroundColor = .gray
@@ -175,16 +173,15 @@ class EditPostCardPageViewController: UIViewController, UICollectionViewDataSour
     func updateUploadButtonState() {
         let isTitleFilled = !(titleTextField.text?.isEmpty ?? true)
         let isContentFilled = !contentTextView.text.isEmpty
-//        let isTagSelected = tagButtons.contains(where: { $0.isSelected })
         let isTagSelected = tagButtons.contains(where: { $0.isSelected })
         let hasImages = collectionView.numberOfItems(inSection: 0) > 0
         
-        print("=========")
-        print("isTitleFilled: \(isTitleFilled)")
-        print("isContentFilled: \(isContentFilled)")
-        print("isTagSelected: \(isTagSelected)")
-        print("hasImages: \(hasImages)")
-        print("=========")
+//        print("=========")
+//        print("isTitleFilled: \(isTitleFilled)")
+//        print("isContentFilled: \(isContentFilled)")
+//        print("isTagSelected: \(isTagSelected)")
+//        print("hasImages: \(hasImages)")
+//        print("=========")
 
         if isTitleFilled && isContentFilled && isTagSelected && hasImages {
             uploadButton.isEnabled = true
@@ -234,32 +231,6 @@ class EditPostCardPageViewController: UIViewController, UICollectionViewDataSour
     }
 
     
-//    @objc func tagButtonTapped(_ sender: UIButton) {
-//        if sender.backgroundColor == .lightGray {
-//            sender.backgroundColor = .white
-//            sender.setTitleColor(.black, for: .normal)
-//            sender.isSelected = true
-//        } else {
-//            sender.backgroundColor = .lightGray
-//            sender.setTitleColor(.white, for: .normal)
-//            sender.isSelected = false
-//        }
-//        updateUploadButtonState()
-//    }
-    
-//    @objc func tagButtonTapped(_ sender: UIButton) {
-//        if sender.backgroundColor == .white {
-//            sender.backgroundColor = .lightGray
-//            sender.setTitleColor(.white, for: .normal)
-//            sender.isSelected = true
-//        } else {
-//            sender.backgroundColor = .white
-//            sender.setTitleColor(.black, for: .normal)
-//            sender.isSelected = false
-//        }
-//        updateUploadButtonState()
-//    }
-    
     @objc func tagButtonTapped(_ sender: UIButton) {
         if sender.backgroundColor == .gray {
             sender.backgroundColor = .systemBlue
@@ -306,19 +277,11 @@ class EditPostCardPageViewController: UIViewController, UICollectionViewDataSour
         button.backgroundColor = .systemBlue
         button.setTitle(tag, for: .normal)
         button.setTitleColor(.white, for: .normal)
-//            button.setTitleColor(.black, for: .normal)
         button.layer.borderWidth = 1
         button.layer.borderColor = UIColor.black.cgColor
         button.addTarget(self, action: #selector(tagButtonTapped(_:)), for: .touchUpInside)
         button.isSelected = true
         
-//        let button = UIButton()
-//        button.setTitle(tag, for: .normal)
-//        button.setTitleColor(.white, for: .normal)
-//        button.backgroundColor = .lightGray
-//        button.layer.borderWidth = 1
-//        button.layer.borderColor = UIColor.black.cgColor
-//        button.addTarget(self, action: #selector(tagButtonTapped(_:)), for: .touchUpInside)
         tagButtons.append(button)
         
         if let tagsStackView = tagButtons.first?.superview as? UIStackView {
