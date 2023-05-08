@@ -27,10 +27,10 @@
             </objects>
             <point key="canvasLocation" x="1982" y="770"/>
         </scene>
-        <!--View Controller-->
+        <!--Edit Post Card Page View Controller-->
         <scene sceneID="pDo-Nf-Pdv">
             <objects>
-                <viewController id="73Y-Q1-DQr" sceneMemberID="viewController">
+                <viewController id="73Y-Q1-DQr" customClass="EditPostCardPageViewController" customModule="CommunityOfInterestApp" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="qwE-u7-vNr">
                         <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
