@@ -57,8 +57,24 @@ class MultiSelectImagePageViewController: UIViewController,  PHPickerViewControl
     }
     */
     
+    func handleCancelAction() {
+//        let storyboard = UIStoryboard(name: "HomePageMain", bundle: nil)
+//        let destinationViewController = storyboard.instantiateViewController(withIdentifier: "homePageStoryboardEntry")
+//        navigationController?.pushViewController(destinationViewController, animated: true)
+        if let tabBarController = self.tabBarController {
+                tabBarController.selectedIndex = 0
+        }
+    }
+
+    
     func picker(_ picker: PHPickerViewController, didFinishPicking results: [PHPickerResult]) {
         picker.dismiss(animated: true, completion: nil)
+        
+        // if results is empty, means user doesnot want to upload the iamge, then return to the last view page
+        if results.isEmpty {
+            handleCancelAction()
+            return
+        }
         
         var imagesArray:[UIImage] = []
         
