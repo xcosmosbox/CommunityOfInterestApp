@@ -986,7 +986,7 @@ class FirebaseController: NSObject, DatabaseProtocol {
                     let percentComplete = 100.0 * Double(progress!.completedUnitCount) / Double(progress!.totalUnitCount)
                     
                     
-                    print("progress: \(percentComplete)")
+//                    print("progress: \(percentComplete)")
                     
                     if percentComplete == 100.0{
                         // check and get storage location
