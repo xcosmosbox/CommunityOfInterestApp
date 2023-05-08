@@ -16,8 +16,8 @@ class EditPostCardPageViewController: UIViewController, UICollectionViewDataSour
     var contentTextView: UITextView!
     var tagButtons: [UIButton] = []
     
-//    let tags = ["Food", "Pet", "Travel"] // tags
-    let tags = ["Travel"] // tags
+    let tags = ["Food", "Pet", "Travel", "Nature"] // tags
+//    let tags = ["Travel"] // tags
     
     weak var databaseController: DatabaseProtocol?
 
@@ -128,9 +128,15 @@ class EditPostCardPageViewController: UIViewController, UICollectionViewDataSour
         addTagButton.setTitle("+ Add Tag", for: .normal)
         addTagButton.setTitleColor(.blue, for: .normal)
         addTagButton.addTarget(self, action: #selector(addTagButtonTapped), for: .touchUpInside)
+        addTagButton.widthAnchor.constraint(equalToConstant: 120).isActive = true
         tagsStackView.addArrangedSubview(addTagButton)
         
-        stackView.addArrangedSubview(tagsStackView)
+        let tagsScrollView = UIScrollView()
+        tagsScrollView.showsHorizontalScrollIndicator = false
+        tagsScrollView.addSubview(tagsStackView)
+        
+//        stackView.addArrangedSubview(tagsStackView)
+        stackView.addArrangedSubview(tagsScrollView)
         
         view.addSubview(stackView)
         stackView.translatesAutoresizingMaskIntoConstraints = false
@@ -139,6 +145,16 @@ class EditPostCardPageViewController: UIViewController, UICollectionViewDataSour
             stackView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -20),
             stackView.topAnchor.constraint(equalTo: collectionView.bottomAnchor, constant: 20)
         ])
+        
+        tagsStackView.translatesAutoresizingMaskIntoConstraints = false
+        NSLayoutConstraint.activate([
+            tagsStackView.leadingAnchor.constraint(equalTo: tagsScrollView.leadingAnchor),
+            tagsStackView.trailingAnchor.constraint(equalTo: tagsScrollView.trailingAnchor),
+            tagsStackView.topAnchor.constraint(equalTo: tagsScrollView.topAnchor),
+            tagsStackView.bottomAnchor.constraint(equalTo: tagsScrollView.bottomAnchor),
+            tagsStackView.heightAnchor.constraint(equalTo: tagsScrollView.heightAnchor)
+        ])
+        
     }
 
     
@@ -189,21 +205,7 @@ class EditPostCardPageViewController: UIViewController, UICollectionViewDataSour
         present(alertController, animated: true, completion: nil)
     }
 
-    
-//    func addNewTag(tag: String) {
-//        let button = UIButton()
-//        button.setTitle(tag, for: .normal)
-//        button.setTitleColor(.white, for: .normal)
-//        button.backgroundColor = .lightGray
-//        button.layer.borderWidth = 1
-//        button.layer.borderColor = UIColor.black.cgColor
-//        button.addTarget(self, action: #selector(tagButtonTapped(_:)), for: .touchUpInside)
-//        tagButtons.append(button)
-//
-//        if let tagsStackView = tagButtons.last?.superview as? UIStackView {
-//            tagsStackView.insertArrangedSubview(button, at: tagButtons.count - 1)
-//        }
-//    }
+ 
     func addNewTag(tag: String) {
         let button = UIButton()
         button.setTitle(tag, for: .normal)
