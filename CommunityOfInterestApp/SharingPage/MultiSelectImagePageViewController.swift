@@ -78,31 +78,51 @@ class MultiSelectImagePageViewController: UIViewController,  PHPickerViewControl
         
         var imagesArray:[UIImage] = []
         
+        var loadImageConter = 0
+        
         for result in results {
             result.itemProvider.loadObject(ofClass: UIImage.self) { (object, error) in
                 
-                if let error = error {
-                    print("load photo error: \(error.localizedDescription)")
-                } else if let image = object as? UIImage {
-                    // process selected image
-                    print("select photo: \(image)")
-                    imagesArray.append(image)
-                    
+                DispatchQueue.main.async {
+                    if let error = error {
+                        print("load photo error: \(error.localizedDescription)")
+                    } else if let image = object as? UIImage {
+                        // process selected image
+                        print("select photo: \(image)")
+                        imagesArray.append(image)
+                        
+                        loadImageConter += 1
+                        
+                        if loadImageConter == results.count{
+//                            self.JUSTTOTESTFUNCTION(imagesArray)
+                            
+                            // save image to the draft box
+                            self.databaseController?.saveCurrentImagesAsDraft(images: imagesArray)
+
+                            self.performSegue(withIdentifier: "toEditPostCardPage", sender: self)
+                        }
+                        
+                    }
                 }
+                
             }
         }
+     
 //        databaseController?.saveCurrentImagesAsDraft(images: imagesArray)
         
-        self.JUSTTOTESTFUNCTION()
-        
-        performSegue(withIdentifier: "toEditPostCardPage", sender: self)
+//        self.JUSTTOTESTFUNCTION(imagesArray)
+//
+//        performSegue(withIdentifier: "toEditPostCardPage", sender: self)
     }
     
-    func JUSTTOTESTFUNCTION(){
-        var temp:[UIImage] = []
-        temp.append(UIImage(named: "food_0.pic")!)
-        temp.append(UIImage(named: "food_3.pic")!)
-        databaseController?.saveCurrentImagesAsDraft(images: temp)
+    func JUSTTOTESTFUNCTION(_ images: [UIImage]){
+//        var temp:[UIImage] = []
+//        temp.append(UIImage(named: "food_0.pic")!)
+//        temp.append(UIImage(named: "food_3.pic")!)
+//        databaseController?.saveCurrentImagesAsDraft(images: temp)
+        databaseController?.saveCurrentImagesAsDraft(images: images)
+        print("lengthImage: \(images.count)")
+        print(images)
         Task{
             do{
                 databaseController?.uploadCurrentImagesForCard(title: "title_title", content: "this is contentcontentcontentcontentcontentcontentcontentcontentcontentcontentcontentcontentcontentcontent", selectedTags: ["Food","Pet"]){ result in
