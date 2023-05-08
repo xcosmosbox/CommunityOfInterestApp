@@ -86,6 +86,7 @@ class MultiSelectImagePageViewController: UIViewController,  PHPickerViewControl
                 DispatchQueue.main.async {
                     if let error = error {
                         print("load photo error: \(error.localizedDescription)")
+                        loadImageConter += 1
                     } else if let image = object as? UIImage {
                         // process selected image
                         print("select photo: \(image)")
