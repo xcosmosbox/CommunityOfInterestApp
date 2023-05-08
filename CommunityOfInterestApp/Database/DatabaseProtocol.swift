@@ -75,7 +75,7 @@ protocol DatabaseProtocol: AnyObject{
     var currentImagesCounter:Int {get}
     func saveCurrentImagesAsDraft(images:[UIImage])
     func clearCurrentImages()
-    func uploadCurrentImagesForCard(title: String, content: String, selectedTags: [String], completion: @escaping (DocumentReference) -> Void) 
+    func uploadCurrentImagesForCard(title: String, content: String, selectedTags: [String], completion: @escaping (DocumentReference, Card) -> Void)
     
     
 }
