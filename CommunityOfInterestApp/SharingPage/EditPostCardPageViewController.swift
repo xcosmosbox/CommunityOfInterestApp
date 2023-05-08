@@ -109,7 +109,7 @@ class EditPostCardPageViewController: UIViewController, UICollectionViewDataSour
         
         let stackView = UIStackView()
         stackView.axis = .vertical
-        stackView.spacing = 10
+        stackView.spacing = 3
         
         stackView.addArrangedSubview(titleTextField)
         stackView.addArrangedSubview(contentTextView)
@@ -128,7 +128,7 @@ class EditPostCardPageViewController: UIViewController, UICollectionViewDataSour
         addTagButton.setTitle("+ Add Tag", for: .normal)
         addTagButton.setTitleColor(.blue, for: .normal)
         addTagButton.addTarget(self, action: #selector(addTagButtonTapped), for: .touchUpInside)
-        addTagButton.widthAnchor.constraint(equalToConstant: 120).isActive = true
+        addTagButton.widthAnchor.constraint(equalToConstant: 100).isActive = true
         tagsStackView.addArrangedSubview(addTagButton)
         
         let tagsScrollView = UIScrollView()
