@@ -19,6 +19,8 @@ class EditPostCardPageViewController: UIViewController, UICollectionViewDataSour
     
     let tags = ["Food", "Pet", "Travel", "Nature", "Game", "Sport", "Music"] // tags
     
+    var selectedCard: Card?
+    
     weak var databaseController: DatabaseProtocol?
 
     override func viewDidLoad() {
@@ -195,11 +197,92 @@ class EditPostCardPageViewController: UIViewController, UICollectionViewDataSour
     @objc func uploadButtonTapped() {
         let selectedTags = tagButtons.filter { $0.isSelected }.map { $0.title(for: .normal)! }
 
-        databaseController?.uploadCurrentImagesForCard(title: titleTextField.text!, content: contentTextView.text, selectedTags: selectedTags) { documentReference in
-            print("upload success")
+        databaseController?.uploadCurrentImagesForCard(title: titleTextField.text!, content: contentTextView.text, selectedTags: selectedTags) { (documentReference, createdCard) in
+            
+            print(createdCard.id)
+            print(createdCard.picture)
+            print(createdCard.cover)
+            print(createdCard.username)
+            print(createdCard.title)
+            print(createdCard.content)
+            
             // process the upload success content, such as go to the detail page
+            print("upload success")
+            // Save the created card object
+            self.selectedCard = createdCard
+            // Navigate to DetailViewController
+            self.navigateToDetailViewController()
+            
         }
     }
+    
+//    func navigateToDetailViewController() {
+//        let detailViewController = DetailViewController()
+//        detailViewController.card = self.selectedCard
+//
+//        // Call setOneCardCache(card: Card) from FirebaseController
+//        databaseController?.setOneCardCache(card: self.selectedCard!)
+//
+//        // Find the tabBarController and navigate to the first tab
+//        if let tabBarController = self.navigationController?.tabBarController {
+//            tabBarController.selectedIndex = 0
+//            self.navigationController?.popToRootViewController(animated: false)
+//        }
+//
+//        // Present the DetailViewController
+//        tabBarController?.selectedViewController?.present(detailViewController, animated: true, completion: nil)
+//    }
+    
+    
+//    func navigateToDetailViewController() {
+//        let detailViewController = DetailViewController()
+//        detailViewController.card = self.selectedCard
+//
+//        // Call setOneCardCache(card: Card) from FirebaseController
+//        databaseController?.setOneCardCache(card: self.selectedCard!)
+//
+//        // Find the tabBarController and navigate to the first tab
+//        if let tabBarController = self.navigationController?.tabBarController {
+//            tabBarController.selectedIndex = 0
+//
+//            // Get the HomePageViewController and its navigationController
+//            if let homePageNavigationController = tabBarController.viewControllers?.first as? UINavigationController,
+//               let homePageViewController = homePageNavigationController.topViewController as? HomePageViewController {
+//                self.navigationController?.popToRootViewController(animated: false)
+//
+//                // Push the DetailViewController onto HomePageViewController's navigationController
+//                homePageNavigationController.pushViewController(detailViewController, animated: true)
+//            }
+//        }
+//    }
+    
+    func navigateToDetailViewController() {
+        if let detailViewController = UIStoryboard(name: "HomePageMain", bundle: nil).instantiateViewController(withIdentifier: "DetailViewController") as? DetailViewController {
+            
+            // Call setOneCardCache(card: Card) from FirebaseController
+            databaseController?.setOneCardCache(card: self.selectedCard!)
+            
+            detailViewController.card = self.selectedCard
+
+            
+            // Find the tabBarController and navigate to the first tab
+            if let tabBarController = self.navigationController?.tabBarController {
+                tabBarController.selectedIndex = 0
+
+                // Get the HomePageViewController and its navigationController
+                if let homePageNavigationController = tabBarController.viewControllers?.first as? UINavigationController,
+                    let homePageViewController = homePageNavigationController.topViewController as? HomePageViewController {
+                    self.navigationController?.popToRootViewController(animated: false)
+
+                    // Push the DetailViewController onto HomePageViewController's navigationController
+                    homePageNavigationController.pushViewController(detailViewController, animated: true)
+                }
+            }
+        }
+    }
+
+
+
 
 
     

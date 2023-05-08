@@ -46,6 +46,12 @@ class DetailViewController: UIViewController{
         
         print("=====")
         print(card)
+        print(card?.id)
+        print(card?.username)
+        print(card?.content)
+        print(card?.title)
+        print(card?.cover)
+        print(card?.picture)
         print("+++++")
         
         

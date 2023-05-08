@@ -892,13 +892,13 @@ class FirebaseController: NSObject, DatabaseProtocol {
         self.currentImages.removeAll()
     }
     
-    func uploadCurrentImagesForCard(title: String, content: String, selectedTags: [String], completion: @escaping (DocumentReference) -> Void) {
+    func uploadCurrentImagesForCard(title: String, content: String, selectedTags: [String], completion: @escaping (DocumentReference, Card) -> Void) {
         self.currentImagesCounter = 0
         
         Task{
             let folderPath = "images/\(self.currentUser?.uid ?? "hFeuyISsXUWxdOUV5LynsgIH4lC2")/"
             do{
-                self.createPostCardForFirebase(title: title, content: content, selectedTags: selectedTags){ createdPostCardRef in
+                self.createPostCardForFirebase(title: title, content: content, selectedTags: selectedTags){ (createdPostCardRef, createdCard) in
                     for image in self.currentImages{
                         DispatchQueue.main.async {
                             self.uploadImageToStorage(folderPath: folderPath, image: image){ storageLocationStr in
@@ -907,15 +907,17 @@ class FirebaseController: NSObject, DatabaseProtocol {
                                         createdPostCardRef.updateData([
                                             "cover":"gs://fit3178-final-ci-app.appspot.com/\(storageLocationStr)"
                                         ])
+                                        createdCard.cover = "gs://fit3178-final-ci-app.appspot.com/\(storageLocationStr)"
                                         self.currentImagesCounter += 1
                                     }
                                     createdPostCardRef.updateData([
                                         "picture": FieldValue.arrayUnion(["gs://fit3178-final-ci-app.appspot.com/\(storageLocationStr)"])
                                     ])
+                                    createdCard.picture?.append("gs://fit3178-final-ci-app.appspot.com/\(storageLocationStr)")
                                     self.currentImagesCounter += 1
                                     
                                     if self.currentImagesCounter == self.currentImages.count{
-                                        completion(createdPostCardRef)
+                                        completion(createdPostCardRef, createdCard)
                                     }
                                 }
                             }
@@ -930,12 +932,19 @@ class FirebaseController: NSObject, DatabaseProtocol {
         
     }
     
-    func createPostCardForFirebase(title: String, content: String, selectedTags: [String], completion: @escaping (DocumentReference) -> Void){
+    func createPostCardForFirebase(title: String, content: String, selectedTags: [String], completion: @escaping (DocumentReference, Card) -> Void){
         
         Task{
             do{
                 self.getUserModel{ userModel in
+                    
                     DispatchQueue.main.async {
+                        var postedCard = Card()
+                        postedCard.title = title
+                        postedCard.content = content
+                        postedCard.likes_number = 0
+                        postedCard.username = userModel.name!
+                        
                         let documentRef = self.database.collection("post").document()
                         documentRef.setData([
                             "audio":[],
@@ -949,7 +958,9 @@ class FirebaseController: NSObject, DatabaseProtocol {
                             "username":userModel.name!,
                             "video":[]
                         ])
-                        completion(documentRef)
+                        postedCard.id = documentRef.documentID
+                        
+                        completion(documentRef, postedCard)
                         
                     }
                 }

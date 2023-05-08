@@ -30,6 +30,11 @@ class PageImageViewController: UIPageViewController, UIPageViewControllerDataSou
         
         dataSource = self
         
+        print("+++****+++++********")
+        print(imagesLoader)
+        print((imagesLoader?.first)!)
+        print("+++****+++++********")
+        
         let initialViewImageController = PicturesViewController(imagePath: (imagesLoader?.first)!)
         
         
