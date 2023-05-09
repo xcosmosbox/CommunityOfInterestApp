@@ -256,10 +256,21 @@ class PersonPageViewController: UIViewController, DatabaseListener, DetailChange
         self.userProfileImageView.isUserInteractionEnabled = true
         var uiimageViewGesture = UITapGestureRecognizer(target: self, action: #selector(toEditProfileImage))
         self.userProfileImageView.addGestureRecognizer(uiimageViewGesture)
+        
+        self.userNameLabel.isUserInteractionEnabled = true
+        var userNameLabelGesture = UITapGestureRecognizer(target: self, action: #selector(toEditUsername))
+        self.userNameLabel.addGestureRecognizer(userNameLabelGesture)
+        
+        
     }
     
     @objc func toEditProfileImage(){
         performSegue(withIdentifier: "goToEditUserImage", sender: self.userProfileImageView.image)
+        
+    }
+    
+    @objc func toEditUsername(){
+        performSegue(withIdentifier: "goToEditUsernamePage", sender: self.userNameLabel.text)
         
     }
     
@@ -268,8 +279,15 @@ class PersonPageViewController: UIViewController, DatabaseListener, DetailChange
         if segue.identifier == "goToEditUserImage"{
             let destination = segue.destination as? ProfileImageEditViewController
             
-            destination?.profileImage = sender as! UIImage
+            destination?.profileImage = sender as? UIImage
         }
+        
+        if segue.identifier == "goToEditUsernamePage"{
+            let destination = segue.destination as? UsernameEditViewController
+            destination?.username = sender as? String
+            
+        }
+        
     }
 
 }
