@@ -11,6 +11,8 @@ import FirebaseFirestoreSwift
 import FirebaseStorage
 
 class FirebaseController: NSObject, DatabaseProtocol {
+
+    
  
     
 
@@ -1018,6 +1020,94 @@ class FirebaseController: NSObject, DatabaseProtocol {
         }
     }
         
+    
+    
+    
+    func addPostToUserLikesField(id: String, completion: @escaping () -> Void) {
+        let postCardDocRef = database.collection("post").document(id)
+        let userDocRef = database.collection("user").document(currentUser!.uid)
+        userDocRef.getDocument(){ (snapshot, error) in
+            if let error = error{
+                print("get user doc error: addPostToUserLikesField: \(error)")
+                return
+            }
+            
+            guard let snapshot = snapshot, let arrayField = snapshot.data()?["likes"] as? [DocumentReference] else{
+                print("get likes fields error: addPostToUserLikesField")
+                return
+            }
+            
+            if arrayField.contains(postCardDocRef){
+                
+                userDocRef.updateData([
+                    "likes": FieldValue.arrayRemove([postCardDocRef])
+                ]){ (updateError) in
+                    if let updateError = updateError {
+                        print("remove card on likes error:addPostToUserLikesField: \(updateError)")
+                    }
+                    print("like contains, then remove it")
+                    completion()
+                    
+                }
+            } else{
+                
+                userDocRef.updateData([
+                    "likes": FieldValue.arrayUnion([postCardDocRef])
+                ]){ (updateError) in
+                    if let updateError = updateError {
+                        print("update card on likes error:addPostToUserLikesField: \(updateError)")
+                    }
+                    print("like uncontains, then add it")
+                    completion()
+                }
+            }
+            
+        }
+    }
+    
+    func addPostToUserCollectionsField(id: String, completion: @escaping () -> Void) {
+        let postCardDocRef = database.collection("post").document(id)
+        let userDocRef = database.collection("user").document(currentUser!.uid)
+        userDocRef.getDocument(){ (snapshot, error) in
+            if let error = error{
+                print("get user doc error: addPostToUserCollectionsField: \(error)")
+                return
+            }
+            
+            guard let snapshot = snapshot, let arrayField = snapshot.data()?["collections"] as? [DocumentReference] else{
+                print("get collections fields error: addPostToUserCollectionsField")
+                return
+            }
+            
+            if arrayField.contains(postCardDocRef){
+               
+                userDocRef.updateData([
+                    "collections": FieldValue.arrayRemove([postCardDocRef])
+                ]){ (updateError) in
+                    if let updateError = updateError {
+                        print("remove card on collect error:addPostToUserCollectionsField: \(updateError)")
+                    }
+                    print("collect contains, then remove it")
+                    completion()
+                    
+                }
+                
+            } else{
+                
+                userDocRef.updateData([
+                    "collections": FieldValue.arrayUnion([postCardDocRef])
+                ]){ (updateError) in
+                    if let updateError = updateError {
+                        print("update card on collect error:addPostToUserCollectionsField: \(updateError)")
+                    }
+                    print("collect uncontains, then add it")
+                    completion()
+                    
+                }
+            }
+            
+        }
+    }
         
    
        
