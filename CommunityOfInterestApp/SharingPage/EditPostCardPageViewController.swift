@@ -216,45 +216,6 @@ class EditPostCardPageViewController: UIViewController, UICollectionViewDataSour
         }
     }
     
-//    func navigateToDetailViewController() {
-//        let detailViewController = DetailViewController()
-//        detailViewController.card = self.selectedCard
-//
-//        // Call setOneCardCache(card: Card) from FirebaseController
-//        databaseController?.setOneCardCache(card: self.selectedCard!)
-//
-//        // Find the tabBarController and navigate to the first tab
-//        if let tabBarController = self.navigationController?.tabBarController {
-//            tabBarController.selectedIndex = 0
-//            self.navigationController?.popToRootViewController(animated: false)
-//        }
-//
-//        // Present the DetailViewController
-//        tabBarController?.selectedViewController?.present(detailViewController, animated: true, completion: nil)
-//    }
-    
-    
-//    func navigateToDetailViewController() {
-//        let detailViewController = DetailViewController()
-//        detailViewController.card = self.selectedCard
-//
-//        // Call setOneCardCache(card: Card) from FirebaseController
-//        databaseController?.setOneCardCache(card: self.selectedCard!)
-//
-//        // Find the tabBarController and navigate to the first tab
-//        if let tabBarController = self.navigationController?.tabBarController {
-//            tabBarController.selectedIndex = 0
-//
-//            // Get the HomePageViewController and its navigationController
-//            if let homePageNavigationController = tabBarController.viewControllers?.first as? UINavigationController,
-//               let homePageViewController = homePageNavigationController.topViewController as? HomePageViewController {
-//                self.navigationController?.popToRootViewController(animated: false)
-//
-//                // Push the DetailViewController onto HomePageViewController's navigationController
-//                homePageNavigationController.pushViewController(detailViewController, animated: true)
-//            }
-//        }
-//    }
     
     func navigateToDetailViewController() {
         if let detailViewController = UIStoryboard(name: "HomePageMain", bundle: nil).instantiateViewController(withIdentifier: "DetailViewController") as? DetailViewController {
@@ -280,10 +241,6 @@ class EditPostCardPageViewController: UIViewController, UICollectionViewDataSour
             }
         }
     }
-
-
-
-
 
     
     func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
