@@ -73,7 +73,6 @@ class PersonPageViewController: UIViewController, DatabaseListener, DetailChange
     
     
     
-    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -89,6 +88,67 @@ class PersonPageViewController: UIViewController, DatabaseListener, DetailChange
         let appDelegate = UIApplication.shared.delegate as? AppDelegate
         databaseController = appDelegate?.databaseController
         
+        setupUserInteractionAndGesture()
+        
+        
+        
+
+    }
+    
+    
+    
+
+    
+    
+    
+    func showPostsView(){
+        self.showCardViewComponent?.clearAll(initialScrollComponentContentSize: initialScrollComponentContentSize!, initialLeftCardStackFrame: initialLeftCardStackFrame!, initialRightCardStackFrame: initialRightCardStackFrame!)
+        var cards:[CardView] = []
+        self.currentUserPostsList?.forEach{ card in
+            let cardView = CardFactory().buildACardView(username: card.username!, title: card.title!, imagePath: card.cover!, homepageViewControl: self, card: card)
+            cards.append(cardView)
+        }
+        showCardViewComponent?.fillNewCards(cards: cards)
+        
+    }
+    
+    func showCollectionsView(){
+        
+        self.showCardViewComponent?.clearAll(initialScrollComponentContentSize: initialScrollComponentContentSize!, initialLeftCardStackFrame: initialLeftCardStackFrame!, initialRightCardStackFrame: initialRightCardStackFrame!)
+        var cards:[CardView] = []
+        self.currentUserCollectionsList?.forEach{ card in
+            let cardView = CardFactory().buildACardView(username: card.username!, title: card.title!, imagePath: card.cover!, homepageViewControl: self, card: card)
+            cards.append(cardView)
+        }
+        showCardViewComponent?.fillNewCards(cards: cards)
+    }
+    
+    func showLikesView(){
+        
+        self.showCardViewComponent?.clearAll(initialScrollComponentContentSize: initialScrollComponentContentSize!, initialLeftCardStackFrame: initialLeftCardStackFrame!, initialRightCardStackFrame: initialRightCardStackFrame!)
+        var cards:[CardView] = []
+        self.currentUserLikesList?.forEach{ card in
+            let cardView = CardFactory().buildACardView(username: card.username!, title: card.title!, imagePath: card.cover!, homepageViewControl: self, card: card)
+            cards.append(cardView)
+        }
+        showCardViewComponent?.fillNewCards(cards: cards)
+    }
+    
+    
+
+    /*
+    // MARK: - Navigation
+
+    // In a storyboard-based application, you will often want to do a little preparation before navigation
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        // Get the new view controller using segue.destination.
+        // Pass the selected object to the new view controller.
+    }
+    */
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        databaseController!.parseUserCardViewList()
         Task{
             do{
                 databaseController?.getUserModel{ userModel in
@@ -121,82 +181,10 @@ class PersonPageViewController: UIViewController, DatabaseListener, DetailChange
             }
         }
         
+        self.currentUserPostsList = []
+        self.currentUserLikesList = []
+        self.currentUserCollectionsList = []
         
-
-    }
-    
-    
-    func showPostsView(){
-//        self.showCardViewComponent?.clearAll(initialScrollComponentContentSize: initialScrollComponentContentSize!, initialLeftCardStackFrame: initialLeftCardStackFrame!, initialRightCardStackFrame: initialRightCardStackFrame!)
-//        let cardList = databaseController?.parseUserCardViewList(referencesList: (currentUser?.posts)!)
-//        var cards:[CardView] = []
-//        cardList?.forEach{ card in
-//            let cardView = CardFactory().buildACardView(username: card.username!, title: card.title!, imagePath: card.cover!, homepageViewControl: self, card: card)
-//            cards.append(cardView)
-//        }
-//        showCardViewComponent?.fillNewCards(cards: cards)
-        self.showCardViewComponent?.clearAll(initialScrollComponentContentSize: initialScrollComponentContentSize!, initialLeftCardStackFrame: initialLeftCardStackFrame!, initialRightCardStackFrame: initialRightCardStackFrame!)
-        var cards:[CardView] = []
-        self.currentUserPostsList?.forEach{ card in
-            let cardView = CardFactory().buildACardView(username: card.username!, title: card.title!, imagePath: card.cover!, homepageViewControl: self, card: card)
-            cards.append(cardView)
-        }
-        showCardViewComponent?.fillNewCards(cards: cards)
-        
-    }
-    
-    func showCollectionsView(){
-//        self.showCardViewComponent?.clearAll(initialScrollComponentContentSize: initialScrollComponentContentSize!, initialLeftCardStackFrame: initialLeftCardStackFrame!, initialRightCardStackFrame: initialRightCardStackFrame!)
-//        let cardList = databaseController?.parseUserCardViewList(referencesList: (currentUser?.collections)!)
-//        var cards:[CardView] = []
-//        cardList?.forEach{ card in
-//            let cardView = CardFactory().buildACardView(username: card.username!, title: card.title!, imagePath: card.cover!, homepageViewControl: self, card: card)
-//            cards.append(cardView)
-//        }
-//        showCardViewComponent?.fillNewCards(cards: cards)
-        
-        self.showCardViewComponent?.clearAll(initialScrollComponentContentSize: initialScrollComponentContentSize!, initialLeftCardStackFrame: initialLeftCardStackFrame!, initialRightCardStackFrame: initialRightCardStackFrame!)
-        var cards:[CardView] = []
-        self.currentUserCollectionsList?.forEach{ card in
-            let cardView = CardFactory().buildACardView(username: card.username!, title: card.title!, imagePath: card.cover!, homepageViewControl: self, card: card)
-            cards.append(cardView)
-        }
-        showCardViewComponent?.fillNewCards(cards: cards)
-    }
-    
-    func showLikesView(){
-//        self.showCardViewComponent?.clearAll(initialScrollComponentContentSize: initialScrollComponentContentSize!, initialLeftCardStackFrame: initialLeftCardStackFrame!, initialRightCardStackFrame: initialRightCardStackFrame!)
-//        let cardList = databaseController?.parseUserCardViewList(referencesList: (currentUser?.likes)!)
-//        var cards:[CardView] = []
-//        cardList?.forEach{ card in
-//            let cardView = CardFactory().buildACardView(username: card.username!, title: card.title!, imagePath: card.cover!, homepageViewControl: self, card: card)
-//            cards.append(cardView)
-//        }
-//        showCardViewComponent?.fillNewCards(cards: cards)
-        
-        self.showCardViewComponent?.clearAll(initialScrollComponentContentSize: initialScrollComponentContentSize!, initialLeftCardStackFrame: initialLeftCardStackFrame!, initialRightCardStackFrame: initialRightCardStackFrame!)
-        var cards:[CardView] = []
-        self.currentUserLikesList?.forEach{ card in
-            let cardView = CardFactory().buildACardView(username: card.username!, title: card.title!, imagePath: card.cover!, homepageViewControl: self, card: card)
-            cards.append(cardView)
-        }
-        showCardViewComponent?.fillNewCards(cards: cards)
-    }
-    
-    
-
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
-    }
-    */
-    
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
         databaseController?.addListener(listener: self)
         self.showDifferCardSegmentedControl.selectedSegmentIndex = 0
         self.showPostsView()
@@ -204,8 +192,14 @@ class PersonPageViewController: UIViewController, DatabaseListener, DetailChange
     
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
-        databaseController?.removeListener(listener: self)
+        
+        self.currentUserPostsList = []
+        self.currentUserLikesList = []
+        self.currentUserCollectionsList = []
+        
+        
         self.showCardViewComponent?.clearAll(initialScrollComponentContentSize: initialScrollComponentContentSize!, initialLeftCardStackFrame: initialLeftCardStackFrame!, initialRightCardStackFrame: initialRightCardStackFrame!)
+        databaseController?.removeListener(listener: self)
     }
     
     
@@ -223,6 +217,9 @@ class PersonPageViewController: UIViewController, DatabaseListener, DetailChange
     }
     
     func onPersonChange(change: DatabaseChange, postsCards: [Card], likesCards: [Card], collectionsCards: [Card]) {
+        print("&(*&*(&*(&*(&*(")
+        print(likesCards)
+        print("&(*&*(&*(&*(&*(")
         self.currentUserPostsList = postsCards
         self.currentUserLikesList = likesCards
         self.currentUserCollectionsList = collectionsCards
@@ -250,6 +247,28 @@ class PersonPageViewController: UIViewController, DatabaseListener, DetailChange
                     homePageNavigationController.pushViewController(detailViewController, animated: true)
                 }
             }
+        }
+    }
+    
+    
+    
+    func setupUserInteractionAndGesture(){
+        self.userProfileImageView.isUserInteractionEnabled = true
+        var uiimageViewGesture = UITapGestureRecognizer(target: self, action: #selector(toEditProfileImage))
+        self.userProfileImageView.addGestureRecognizer(uiimageViewGesture)
+    }
+    
+    @objc func toEditProfileImage(){
+        performSegue(withIdentifier: "goToEditUserImage", sender: self.userProfileImageView.image)
+        
+    }
+    
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if segue.identifier == "goToEditUserImage"{
+            let destination = segue.destination as? ProfileImageEditViewController
+            
+            destination?.profileImage = sender as! UIImage
         }
     }
 

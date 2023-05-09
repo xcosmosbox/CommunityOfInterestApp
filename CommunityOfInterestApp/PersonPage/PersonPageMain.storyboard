@@ -129,11 +129,46 @@
                         <outlet property="userNameLabel" destination="fFH-Zl-o4q" id="32X-rj-G4s"/>
                         <outlet property="userProfileImageView" destination="7O9-9j-2KA" id="Jhw-Kx-l1B"/>
                         <outlet property="userProfileLabel" destination="f82-pl-mvx" id="OPQ-Uo-eii"/>
+                        <segue destination="Pht-RW-fMh" kind="show" identifier="goToEditUserImage" id="F3u-Q9-nb6"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="lQC-Rv-ZCp" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="1980.916030534351" y="1589.4366197183099"/>
+        </scene>
+        <!--Profile Image Edit View Controller-->
+        <scene sceneID="vln-Y0-hSp">
+            <objects>
+                <viewController id="Pht-RW-fMh" customClass="ProfileImageEditViewController" customModule="CommunityOfInterestApp" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="DtI-an-mD2">
+                        <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="U2T-Ig-7On">
+                                <rect key="frame" x="16" y="103" width="361" height="299"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            </imageView>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ngi-jS-RsB">
+                                <rect key="frame" x="16" y="467" width="361" height="60"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <state key="normal" title="Button"/>
+                                <buttonConfiguration key="configuration" style="gray" image="square.and.arrow.up" catalog="system" title="Upload Image"/>
+                                <connections>
+                                    <action selector="uploadImage:" destination="Pht-RW-fMh" eventType="touchUpInside" id="RWR-Up-tQ2"/>
+                                </connections>
+                            </button>
+                        </subviews>
+                        <viewLayoutGuide key="safeArea" id="JIe-O1-ccD"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                    </view>
+                    <navigationItem key="navigationItem" id="xqt-mY-wCM"/>
+                    <connections>
+                        <outlet property="profileImageUIImageView" destination="U2T-Ig-7On" id="SWQ-v8-zaR"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="H2E-Be-LDg" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="3058.7786259541986" y="834.50704225352115"/>
         </scene>
         <!--Person-->
         <scene sceneID="tYv-EC-H3S">
@@ -157,6 +192,7 @@
     </scenes>
     <resources>
         <image name="person.circle.fill" catalog="system" width="128" height="123"/>
+        <image name="square.and.arrow.up" catalog="system" width="115" height="128"/>
         <systemColor name="systemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
         </systemColor>
