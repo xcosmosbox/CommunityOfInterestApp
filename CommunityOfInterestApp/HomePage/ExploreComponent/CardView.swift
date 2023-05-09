@@ -139,7 +139,7 @@ class CardView: UIStackView {
 //        let detailViewController = DetailViewController()
 //        self.homePageController?.navigationController?.pushViewController(detailViewController, animated: true)
 //        self.homePageController?.performSegue(withIdentifier: "showCardDetailPage", sender: self)
-        guard let homeController = homePageController as? HomePageViewController else{
+        guard let homeController = homePageController as? DetailChangeDelegate else{
             print("Card class: Error!!!!! NO CARD!!!!!")
             return
         }
