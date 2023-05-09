@@ -26,6 +26,26 @@ class DetailViewController: UIViewController{
     @IBOutlet weak var ContentTextLabel: UILabel!
     
     
+    @IBAction func MenuToSelectLikesAndCollections(_ sender: UIBarButtonItem) {
+        // create the alert controller
+        let alertController = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
+
+        // set the first menu
+        let option1Action = UIAlertAction(title: "Like", style: .default) { _ in
+            // add this post to user's likes field
+        }
+        alertController.addAction(option1Action)
+
+        // set the second menu
+        let option2Action = UIAlertAction(title: "Collect", style: .default) { _ in
+            // add this post to user's collections field
+        }
+        alertController.addAction(option2Action)
+
+        //show menu
+        present(alertController, animated: true, completion: nil)
+
+    }
     
     
     

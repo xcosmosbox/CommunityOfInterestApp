@@ -128,7 +128,13 @@
                             <constraint firstAttribute="trailing" secondItem="Asy-7s-sgM" secondAttribute="trailing" id="v6D-X0-3pa"/>
                         </constraints>
                     </view>
-                    <navigationItem key="navigationItem" title="Post" id="Sdw-OP-kfL"/>
+                    <navigationItem key="navigationItem" title="Post" id="Sdw-OP-kfL">
+                        <barButtonItem key="rightBarButtonItem" title="Item" image="ellipsis" catalog="system" id="X8A-xj-Bf3">
+                            <connections>
+                                <action selector="MenuToSelectLikesAndCollections:" destination="kao-de-KUW" id="kB0-rZ-vtu"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
                     <connections>
                         <outlet property="ContentTextLabel" destination="INV-0m-ZZn" id="TeI-Hj-NLq"/>
                         <outlet property="PageContainer" destination="wgG-DG-Msi" id="iPq-C3-C3h"/>
@@ -256,6 +262,7 @@
         </scene>
     </scenes>
     <resources>
+        <image name="ellipsis" catalog="system" width="128" height="37"/>
         <image name="house.circle.fill" catalog="system" width="128" height="123"/>
         <image name="pencil.line" catalog="system" width="128" height="98"/>
         <systemColor name="secondarySystemBackgroundColor">
