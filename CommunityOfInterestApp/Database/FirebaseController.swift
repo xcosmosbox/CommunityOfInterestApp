@@ -62,6 +62,29 @@ class FirebaseController: NSObject, DatabaseProtocol {
         
         super.init()
         
+        let qery = database.collection("post").whereField("likes_number", isEqualTo: 0)
+        qery.getDocuments(){ (snapshot, error) in
+            if let error = error{
+                print("error!")
+                return
+            }
+            snapshot?.documents.forEach{ doc in
+                doc.reference.delete(){ delError in
+                    if let delError = delError{
+                        print("delError\(delError)")
+                        return
+                    }
+                    print("delete success")
+                    
+                }
+                
+            }
+            
+        }
+        
+        
+        
+        
         // anonymous sign in
 //        Task{
 //            do {
@@ -901,7 +924,11 @@ class FirebaseController: NSObject, DatabaseProtocol {
             let folderPath = "images/\(self.currentUser?.uid ?? "hFeuyISsXUWxdOUV5LynsgIH4lC2")/"
             do{
                 self.createPostCardForFirebase(title: title, content: content, selectedTags: selectedTags){ (createdPostCardRef, createdCard) in
+//                    self.database.collection("user").document(self.currentUser!.uid).updateData([
+//                        "posts": FieldValue.arrayUnion([createdPostCardRef])
+//                    ])
                     for image in self.currentImages{
+                       
                         DispatchQueue.main.async {
                             self.uploadImageToStorage(folderPath: folderPath, image: image){ storageLocationStr in
                                 DispatchQueue.main.async {
@@ -910,7 +937,7 @@ class FirebaseController: NSObject, DatabaseProtocol {
                                             "cover":"gs://fit3178-final-ci-app.appspot.com/\(storageLocationStr)"
                                         ])
                                         createdCard.cover = "gs://fit3178-final-ci-app.appspot.com/\(storageLocationStr)"
-                                        self.currentImagesCounter += 1
+//                                        self.currentImagesCounter += 1
                                     }
                                     createdPostCardRef.updateData([
                                         "picture": FieldValue.arrayUnion(["gs://fit3178-final-ci-app.appspot.com/\(storageLocationStr)"])
@@ -918,12 +945,14 @@ class FirebaseController: NSObject, DatabaseProtocol {
                                     createdCard.picture?.append("gs://fit3178-final-ci-app.appspot.com/\(storageLocationStr)")
                                     self.currentImagesCounter += 1
                                     
-                                    if self.currentImagesCounter == self.currentImages.count{
-                                        completion(createdPostCardRef, createdCard)
-                                    }
                                 }
+                                if self.currentImagesCounter == self.currentImages.count{
+                                    completion(createdPostCardRef, createdCard)
+                                }
+                               
                             }
                         }
+                        
                     }
                     
                     
