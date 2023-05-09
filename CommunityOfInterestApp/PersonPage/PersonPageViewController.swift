@@ -8,7 +8,9 @@
 import UIKit
 import FirebaseStorage
 
-class PersonPageViewController: UIViewController, DatabaseListener {
+class PersonPageViewController: UIViewController, DatabaseListener, DetailChangeDelegate {
+
+    
     
     var listenerType: ListenerType = .person
     weak var databaseController: DatabaseProtocol?
@@ -224,6 +226,31 @@ class PersonPageViewController: UIViewController, DatabaseListener {
         self.currentUserPostsList = postsCards
         self.currentUserLikesList = likesCards
         self.currentUserCollectionsList = collectionsCards
+    }
+    
+    func loadCardDetail(_ card: Card) {
+        if let detailViewController = UIStoryboard(name: "HomePageMain", bundle: nil).instantiateViewController(withIdentifier: "DetailViewController") as? DetailViewController {
+            
+            // Call setOneCardCache(card: Card) from FirebaseController
+            databaseController?.setOneCardCache(card: card)
+            
+            detailViewController.card = card
+
+            
+            // Find the tabBarController and navigate to the first tab
+            if let tabBarController = self.navigationController?.tabBarController {
+                tabBarController.selectedIndex = 0
+
+                // Get the HomePageViewController and its navigationController
+                if let homePageNavigationController = tabBarController.viewControllers?.first as? UINavigationController,
+                    let homePageViewController = homePageNavigationController.topViewController as? HomePageViewController {
+                    self.navigationController?.popToRootViewController(animated: false)
+
+                    // Push the DetailViewController onto HomePageViewController's navigationController
+                    homePageNavigationController.pushViewController(detailViewController, animated: true)
+                }
+            }
+        }
     }
 
 }
