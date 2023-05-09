@@ -261,6 +261,10 @@ class PersonPageViewController: UIViewController, DatabaseListener, DetailChange
         var userNameLabelGesture = UITapGestureRecognizer(target: self, action: #selector(toEditUsername))
         self.userNameLabel.addGestureRecognizer(userNameLabelGesture)
         
+        self.userProfileLabel.isUserInteractionEnabled = true
+        var userProfileLabelGesture = UITapGestureRecognizer(target: self, action: #selector(toEditUserProfileContent))
+        self.userProfileLabel.addGestureRecognizer(userProfileLabelGesture)
+        
         
     }
     
@@ -271,6 +275,11 @@ class PersonPageViewController: UIViewController, DatabaseListener, DetailChange
     
     @objc func toEditUsername(){
         performSegue(withIdentifier: "goToEditUsernamePage", sender: self.userNameLabel.text)
+        
+    }
+    
+    @objc func toEditUserProfileContent(){
+        performSegue(withIdentifier: "goToEditProfileContentPage", sender: self.userNameLabel.text)
         
     }
     
@@ -287,6 +296,7 @@ class PersonPageViewController: UIViewController, DatabaseListener, DetailChange
             destination?.username = sender as? String
             
         }
+        
         
     }
 
