@@ -131,6 +131,7 @@
                         <outlet property="userProfileLabel" destination="f82-pl-mvx" id="OPQ-Uo-eii"/>
                         <segue destination="Pht-RW-fMh" kind="show" identifier="goToEditUserImage" id="F3u-Q9-nb6"/>
                         <segue destination="tm4-NI-5z9" kind="show" identifier="goToEditUsernamePage" id="5lt-CH-PCP"/>
+                        <segue destination="brR-gC-EN8" kind="show" identifier="goToEditProfileContentPage" id="LUS-Bv-7u9"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="lQC-Rv-ZCp" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
@@ -194,6 +195,49 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="gFf-Ll-Qkg" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="3145.801526717557" y="1616.9014084507044"/>
+        </scene>
+        <!--Edit Profile Content Page View Controller-->
+        <scene sceneID="x4V-8j-zwe">
+            <objects>
+                <viewController id="brR-gC-EN8" customClass="EditProfileContentPageViewController" customModule="CommunityOfInterestApp" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="cNh-Jg-I7f">
+                        <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Type your new profile content" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="6yb-iV-5yc">
+                                <rect key="frame" x="16" y="125" width="361" height="21"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <textField opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="248" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="Pdy-zh-At4">
+                                <rect key="frame" x="16" y="154" width="361" height="34"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <textInputTraits key="textInputTraits"/>
+                            </textField>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="wQO-XZ-oFN">
+                                <rect key="frame" x="16" y="248" width="361" height="35"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <state key="normal" title="Button"/>
+                                <buttonConfiguration key="configuration" style="filled" title="Update"/>
+                                <connections>
+                                    <action selector="updateProfileContent:" destination="brR-gC-EN8" eventType="touchUpInside" id="tEt-jy-TiB"/>
+                                </connections>
+                            </button>
+                        </subviews>
+                        <viewLayoutGuide key="safeArea" id="8G3-am-KQO"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                    </view>
+                    <navigationItem key="navigationItem" id="Oj0-H9-Peb"/>
+                    <connections>
+                        <outlet property="newProfileContent" destination="Pdy-zh-At4" id="rv8-tf-AF4"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="nYp-Nd-UXG" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="3145.801526717557" y="2336.6197183098593"/>
         </scene>
         <!--Profile Image Edit View Controller-->
         <scene sceneID="vln-Y0-hSp">
