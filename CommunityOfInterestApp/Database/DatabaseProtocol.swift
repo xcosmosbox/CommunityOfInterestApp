@@ -64,6 +64,7 @@ protocol DatabaseProtocol: AnyObject{
     func login(email:String, password:String)
     func signup(newEmail:String, newPassword:String)
     func setupUserSelectedTags(tags: [String]) -> Bool
+    func parseUserCardViewList()
     
     // person page data init
 //    func getUserModel() -> User
@@ -81,6 +82,11 @@ protocol DatabaseProtocol: AnyObject{
     // likes & collections operations
     func addPostToUserLikesField(id: String, completion: @escaping () -> Void)
     func addPostToUserCollectionsField(id: String, completion: @escaping () -> Void)
+    
+    // update user info
+    func updateUserProfileImage(image: UIImage, completion: @escaping () -> Void)
+    func updateUserName(name: String, completion: @escaping () -> Void)
+    func updateUserProfileContent(content: String, completion: @escaping () -> Void)
     
     
 }
