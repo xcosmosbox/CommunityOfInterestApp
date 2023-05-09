@@ -11,6 +11,8 @@ import FirebaseFirestoreSwift
 import FirebaseStorage
 
 class FirebaseController: NSObject, DatabaseProtocol {
+    
+    
 
     
  
@@ -62,25 +64,10 @@ class FirebaseController: NSObject, DatabaseProtocol {
         
         super.init()
         
-        let qery = database.collection("post").whereField("likes_number", isEqualTo: 0)
-        qery.getDocuments(){ (snapshot, error) in
-            if let error = error{
-                print("error!")
-                return
-            }
-            snapshot?.documents.forEach{ doc in
-                doc.reference.delete(){ delError in
-                    if let delError = delError{
-                        print("delError\(delError)")
-                        return
-                    }
-                    print("delete success")
-                    
-                }
-                
-            }
-            
-        }
+        
+        clearCache()
+        
+
         
         
         
@@ -925,8 +912,7 @@ class FirebaseController: NSObject, DatabaseProtocol {
             do{
                 self.createPostCardForFirebase(title: title, content: content, selectedTags: selectedTags){ (createdPostCardRef, createdCard) in
                     for image in self.currentImages{
-                       
-//                        DispatchQueue.main.async {
+                        DispatchQueue.main.async {
                             self.uploadImageToStorage(folderPath: folderPath, image: image){ storageLocationStr in
                                 DispatchQueue.main.async {
                                     if self.currentImagesCounter == 0{
@@ -941,18 +927,16 @@ class FirebaseController: NSObject, DatabaseProtocol {
                                     createdCard.picture?.append("gs://fit3178-final-ci-app.appspot.com/\(storageLocationStr)")
                                     self.currentImagesCounter += 1
                                     
+                                    
+                                    
                                 }
                                 if self.currentImagesCounter == self.currentImages.count{
-//                                    DispatchQueue.main.async {
-//                                        self.database.collection("user").document(self.currentUser!.uid).updateData([
-//                                            "posts": FieldValue.arrayUnion([createdPostCardRef])
-//                                        ])
-//                                    }
                                     completion(createdPostCardRef, createdCard)
                                 }
+                                
                                
                             }
-//                        }
+                        }
                         
                     }
                     
@@ -1049,6 +1033,16 @@ class FirebaseController: NSObject, DatabaseProtocol {
             
         }
     }
+    
+    func addPostIntoUser(postDocRef: DocumentReference) {
+//        let postPath = "/post/\(postDocRef.documentID)"
+//        database.collection("user").document(currentUser!.uid).updateData([
+//            "posts": FieldValue.arrayUnion([postPath])
+//        ])
+        database.collection("user").document(currentUser!.uid).updateData([
+            "posts": FieldValue.arrayUnion([postDocRef])
+        ])
+    }
         
     
     
@@ -1136,6 +1130,42 @@ class FirebaseController: NSObject, DatabaseProtocol {
                 }
             }
             
+        }
+    }
+    
+    func clearCache(){
+//        let qery = database.collection("post").whereField("likes_number", isEqualTo: 0)
+//        qery.getDocuments(){ (snapshot, error) in
+//            if let error = error{
+//                print("error!")
+//                return
+//            }
+//            snapshot?.documents.forEach{ doc in
+//                doc.reference.delete(){ delError in
+//                    if let delError = delError{
+//                        print("delError\(delError)")
+//                        return
+//                    }
+//                    print("delete success")
+//                }
+//            }
+//        }
+        
+        let qery2 = database.collection("post").whereField("cover", isEqualTo: "")
+        qery2.getDocuments(){ (snapshot, error) in
+            if let error = error{
+                print("error!")
+                return
+            }
+            snapshot?.documents.forEach{ doc in
+                doc.reference.delete(){ delError in
+                    if let delError = delError{
+                        print("delError\(delError)")
+                        return
+                    }
+                    print("delete success")
+                }
+            }
         }
     }
         

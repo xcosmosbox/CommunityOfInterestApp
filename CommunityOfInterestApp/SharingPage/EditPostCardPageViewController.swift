@@ -199,6 +199,7 @@ class EditPostCardPageViewController: UIViewController, UICollectionViewDataSour
 
         databaseController?.uploadCurrentImagesForCard(title: titleTextField.text!, content: contentTextView.text, selectedTags: selectedTags) { (documentReference, createdCard) in
             
+            print("&^^^^^^^^^^^^^")
             print(createdCard.id)
             print(createdCard.picture)
             print(createdCard.cover)
@@ -206,13 +207,10 @@ class EditPostCardPageViewController: UIViewController, UICollectionViewDataSour
             print(createdCard.title)
             print(createdCard.content)
             
-            Task{
-                do{
-                    DispatchQueue.main.async {
-                        
-                    }
-                }
-            }
+            print(documentReference.documentID)
+            print("&^^^^^^^^^^^^^")
+            
+            self.databaseController?.addPostIntoUser(postDocRef: documentReference)
             
             // process the upload success content, such as go to the detail page
             print("upload success")
