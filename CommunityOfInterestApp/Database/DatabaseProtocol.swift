@@ -77,6 +77,10 @@ protocol DatabaseProtocol: AnyObject{
     func clearCurrentImages()
     func uploadCurrentImagesForCard(title: String, content: String, selectedTags: [String], completion: @escaping (DocumentReference, Card) -> Void)
     
+    // likes & collections operations
+    func addPostToUserLikesField(id: String, completion: @escaping () -> Void)
+    func addPostToUserCollectionsField(id: String, completion: @escaping () -> Void)
+    
     
 }
 

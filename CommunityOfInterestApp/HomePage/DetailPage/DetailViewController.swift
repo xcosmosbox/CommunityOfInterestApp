@@ -9,6 +9,7 @@ import UIKit
 
 class DetailViewController: UIViewController{
     
+    weak var databaseController: DatabaseProtocol?
 
     
     
@@ -33,12 +34,20 @@ class DetailViewController: UIViewController{
         // set the first menu
         let option1Action = UIAlertAction(title: "Like", style: .default) { _ in
             // add this post to user's likes field
+            self.databaseController?.addPostToUserLikesField(id: (self.card?.id)!){ () in
+                print("add card to likes field success")
+                
+            }
         }
         alertController.addAction(option1Action)
 
         // set the second menu
         let option2Action = UIAlertAction(title: "Collect", style: .default) { _ in
             // add this post to user's collections field
+            self.databaseController?.addPostToUserCollectionsField(id: (self.card?.id)!){ () in
+                print("add card to collection field success")
+                
+            }
         }
         alertController.addAction(option2Action)
 
@@ -61,6 +70,9 @@ class DetailViewController: UIViewController{
         print("3")
         
         super.viewDidLoad()
+        
+        let appDelegate = UIApplication.shared.delegate as? AppDelegate
+        databaseController = appDelegate?.databaseController
         
         print("4")
         
