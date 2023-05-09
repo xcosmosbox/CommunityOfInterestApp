@@ -924,12 +924,9 @@ class FirebaseController: NSObject, DatabaseProtocol {
             let folderPath = "images/\(self.currentUser?.uid ?? "hFeuyISsXUWxdOUV5LynsgIH4lC2")/"
             do{
                 self.createPostCardForFirebase(title: title, content: content, selectedTags: selectedTags){ (createdPostCardRef, createdCard) in
-//                    self.database.collection("user").document(self.currentUser!.uid).updateData([
-//                        "posts": FieldValue.arrayUnion([createdPostCardRef])
-//                    ])
                     for image in self.currentImages{
                        
-                        DispatchQueue.main.async {
+//                        DispatchQueue.main.async {
                             self.uploadImageToStorage(folderPath: folderPath, image: image){ storageLocationStr in
                                 DispatchQueue.main.async {
                                     if self.currentImagesCounter == 0{
@@ -937,7 +934,6 @@ class FirebaseController: NSObject, DatabaseProtocol {
                                             "cover":"gs://fit3178-final-ci-app.appspot.com/\(storageLocationStr)"
                                         ])
                                         createdCard.cover = "gs://fit3178-final-ci-app.appspot.com/\(storageLocationStr)"
-//                                        self.currentImagesCounter += 1
                                     }
                                     createdPostCardRef.updateData([
                                         "picture": FieldValue.arrayUnion(["gs://fit3178-final-ci-app.appspot.com/\(storageLocationStr)"])
@@ -947,11 +943,16 @@ class FirebaseController: NSObject, DatabaseProtocol {
                                     
                                 }
                                 if self.currentImagesCounter == self.currentImages.count{
+//                                    DispatchQueue.main.async {
+//                                        self.database.collection("user").document(self.currentUser!.uid).updateData([
+//                                            "posts": FieldValue.arrayUnion([createdPostCardRef])
+//                                        ])
+//                                    }
                                     completion(createdPostCardRef, createdCard)
                                 }
                                
                             }
-                        }
+//                        }
                         
                     }
                     
@@ -969,7 +970,7 @@ class FirebaseController: NSObject, DatabaseProtocol {
             do{
                 self.getUserModel{ userModel in
                     
-                    DispatchQueue.main.async {
+//                    DispatchQueue.main.async {
                         var postedCard = Card()
                         postedCard.title = title
                         postedCard.content = content
@@ -993,7 +994,7 @@ class FirebaseController: NSObject, DatabaseProtocol {
                         
                         completion(documentRef, postedCard)
                         
-                    }
+//                    }
                 }
                 
                
