@@ -26,6 +26,7 @@
 		270BFF3129E42D7000850009 /* TagManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 270BFF3029E42D7000850009 /* TagManager.swift */; };
 		270BFF3429E4443600850009 /* TagBoxTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 270BFF3329E4443600850009 /* TagBoxTableViewController.swift */; };
 		2712F1C62A0A947900428F7A /* ProfileImageEditViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2712F1C52A0A947900428F7A /* ProfileImageEditViewController.swift */; };
+		2712F1C82A0AA9E500428F7A /* UsernameEditViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2712F1C72A0AA9E500428F7A /* UsernameEditViewController.swift */; };
 		272C806229E44B8C004924F7 /* AddTagPageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 272C806129E44B8C004924F7 /* AddTagPageViewController.swift */; };
 		274DF89F2A00AB670030A1B2 /* LoginPageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 274DF89E2A00AB670030A1B2 /* LoginPageViewController.swift */; };
 		274DF8A12A00B3370030A1B2 /* SelectTagsPageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 274DF8A02A00B3370030A1B2 /* SelectTagsPageViewController.swift */; };
@@ -74,6 +75,7 @@
 		270BFF3029E42D7000850009 /* TagManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TagManager.swift; sourceTree = "<group>"; };
 		270BFF3329E4443600850009 /* TagBoxTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TagBoxTableViewController.swift; sourceTree = "<group>"; };
 		2712F1C52A0A947900428F7A /* ProfileImageEditViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileImageEditViewController.swift; sourceTree = "<group>"; };
+		2712F1C72A0AA9E500428F7A /* UsernameEditViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UsernameEditViewController.swift; sourceTree = "<group>"; };
 		272C806129E44B8C004924F7 /* AddTagPageViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddTagPageViewController.swift; sourceTree = "<group>"; };
 		274DF89E2A00AB670030A1B2 /* LoginPageViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginPageViewController.swift; sourceTree = "<group>"; };
 		274DF8A02A00B3370030A1B2 /* SelectTagsPageViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectTagsPageViewController.swift; sourceTree = "<group>"; };
@@ -215,6 +217,7 @@
 			isa = PBXGroup;
 			children = (
 				2712F1C52A0A947900428F7A /* ProfileImageEditViewController.swift */,
+				2712F1C72A0AA9E500428F7A /* UsernameEditViewController.swift */,
 			);
 			path = EditProfile;
 			sourceTree = "<group>";
@@ -385,6 +388,7 @@
 				270BFF3429E4443600850009 /* TagBoxTableViewController.swift in Sources */,
 				270BFF2829E3D88400850009 /* HomePageViewController.swift in Sources */,
 				270BFF2A29E3DA4900850009 /* HorizontalMenuButton.swift in Sources */,
+				2712F1C82A0AA9E500428F7A /* UsernameEditViewController.swift in Sources */,
 				270BFEF629E3A75000850009 /* SceneDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

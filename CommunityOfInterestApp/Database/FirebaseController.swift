@@ -1083,7 +1083,9 @@ class FirebaseController: NSObject, DatabaseProtocol {
             do{
                 self.database.collection("user").document(self.currentUser!.uid).updateData([
                     "name":name
-                ])
+                ]){_ in 
+                    completion()
+                }
             }
         }
     }
@@ -1093,7 +1095,9 @@ class FirebaseController: NSObject, DatabaseProtocol {
             do{
                 self.database.collection("user").document(self.currentUser!.uid).updateData([
                     "profile":content
-                ])
+                ]){_ in 
+                    completion()
+                }
             }
         }
     }
