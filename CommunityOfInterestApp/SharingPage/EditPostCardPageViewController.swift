@@ -206,6 +206,14 @@ class EditPostCardPageViewController: UIViewController, UICollectionViewDataSour
             print(createdCard.title)
             print(createdCard.content)
             
+            Task{
+                do{
+                    DispatchQueue.main.async {
+                        
+                    }
+                }
+            }
+            
             // process the upload success content, such as go to the detail page
             print("upload success")
             // Save the created card object
