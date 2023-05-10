@@ -14,7 +14,7 @@ class Card: NSObject, Codable {
     var content: String?
     var cover: String?
     var likes_number: Int?
-    var picture: [String]?
+    var picture: [String]? = []
     var username: String?
     
     
