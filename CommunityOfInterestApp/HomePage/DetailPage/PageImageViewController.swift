@@ -15,6 +15,8 @@ class PageImageViewController: UIPageViewController, UIPageViewControllerDataSou
     
     let appDelegate = UIApplication.shared.delegate as? AppDelegate
     weak var databaseController: DatabaseProtocol?
+    
+    var didChangePage: ((Int) -> Void)?
 
     override func viewDidLoad() {
         databaseController = appDelegate?.databaseController
@@ -67,6 +69,9 @@ class PageImageViewController: UIPageViewController, UIPageViewControllerDataSou
             return nil
         } else {
             let newIndex = currentIndex - 1
+            
+            didChangePage?(newIndex)
+            
 //            print("before \(newIndex)")
             let page = PicturesViewController(imagePath: imagesLoader![newIndex])
 //            updateImagePageNumer(viewController: page)
@@ -83,6 +88,9 @@ class PageImageViewController: UIPageViewController, UIPageViewControllerDataSou
             return nil
         } else {
             let newIndex = currentIndex + 1
+            
+            didChangePage?(newIndex)
+            
 //            databaseController?.updateCurrentImagePageNumber(pageNumber: newIndex)
             let page = PicturesViewController(imagePath: imagesLoader![newIndex])
             return page
