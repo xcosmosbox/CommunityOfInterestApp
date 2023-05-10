@@ -97,8 +97,8 @@
                                         <nil key="textColor"/>
                                         <nil key="highlightedColor"/>
                                     </label>
-                                    <pageControl opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" numberOfPages="3" translatesAutoresizingMaskIntoConstraints="NO" id="gpG-ia-tcQ">
-                                        <rect key="frame" x="138" y="439" width="116" height="26"/>
+                                    <pageControl opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" numberOfPages="4" translatesAutoresizingMaskIntoConstraints="NO" id="gpG-ia-tcQ">
+                                        <rect key="frame" x="8" y="439" width="377" height="26"/>
                                         <color key="backgroundColor" name="unselectedColor"/>
                                     </pageControl>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="INV-0m-ZZn">
@@ -114,7 +114,7 @@
                                     <constraint firstItem="gpG-ia-tcQ" firstAttribute="top" secondItem="wgG-DG-Msi" secondAttribute="bottom" constant="8" id="7Qh-B1-wEa"/>
                                     <constraint firstItem="gpG-ia-tcQ" firstAttribute="centerX" secondItem="C0Q-za-xSq" secondAttribute="centerX" id="DOn-pf-aFH"/>
                                     <constraint firstItem="wgG-DG-Msi" firstAttribute="top" secondItem="Asy-7s-sgM" secondAttribute="top" id="GHl-OE-I0g"/>
-                                    <constraint firstItem="gpG-ia-tcQ" firstAttribute="leading" secondItem="G8x-7B-wSD" secondAttribute="leading" constant="138" id="Grb-LC-heh"/>
+                                    <constraint firstItem="gpG-ia-tcQ" firstAttribute="leading" secondItem="G8x-7B-wSD" secondAttribute="leading" constant="8" id="Grb-LC-heh"/>
                                     <constraint firstItem="C0Q-za-xSq" firstAttribute="leading" secondItem="INV-0m-ZZn" secondAttribute="leading" id="Ock-3Y-GZb"/>
                                     <constraint firstItem="wgG-DG-Msi" firstAttribute="leading" secondItem="Asy-7s-sgM" secondAttribute="leading" id="RBb-bC-lrQ"/>
                                     <constraint firstItem="C0Q-za-xSq" firstAttribute="trailing" secondItem="wgG-DG-Msi" secondAttribute="trailing" constant="-8" id="pAb-7M-eW8"/>
