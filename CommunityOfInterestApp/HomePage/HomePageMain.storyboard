@@ -3,6 +3,7 @@
     <device id="retina6_12" orientation="portrait" appearance="light"/>
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="21505"/>
+        <capability name="Named colors" minToolsVersion="9.0"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="System colors in document resources" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
@@ -90,14 +91,18 @@
                                             <segue destination="NTy-Ca-MkH" kind="embed" id="RnX-m2-vhd"/>
                                         </connections>
                                     </containerView>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="Label" textAlignment="natural" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="C0Q-za-xSq">
-                                        <rect key="frame" x="8" y="450" width="377" height="64"/>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="C0Q-za-xSq">
+                                        <rect key="frame" x="8" y="473" width="377" height="40.666666666666629"/>
                                         <fontDescription key="fontDescription" style="UICTFontTextStyleTitle0"/>
                                         <nil key="textColor"/>
                                         <nil key="highlightedColor"/>
                                     </label>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="Label" textAlignment="natural" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="INV-0m-ZZn">
-                                        <rect key="frame" x="8" y="522" width="377" height="129"/>
+                                    <pageControl opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" numberOfPages="3" translatesAutoresizingMaskIntoConstraints="NO" id="gpG-ia-tcQ">
+                                        <rect key="frame" x="138" y="439" width="116" height="26"/>
+                                        <color key="backgroundColor" name="unselectedColor"/>
+                                    </pageControl>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="INV-0m-ZZn">
+                                        <rect key="frame" x="8" y="521.66666666666663" width="377" height="20.333333333333371"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                         <nil key="textColor"/>
                                         <nil key="highlightedColor"/>
@@ -105,13 +110,16 @@
                                 </subviews>
                                 <constraints>
                                     <constraint firstItem="INV-0m-ZZn" firstAttribute="top" secondItem="C0Q-za-xSq" secondAttribute="bottom" constant="7.9999999999998863" id="3An-Fp-qyM"/>
-                                    <constraint firstItem="C0Q-za-xSq" firstAttribute="top" secondItem="wgG-DG-Msi" secondAttribute="bottom" constant="19" id="3zT-hI-VsU"/>
+                                    <constraint firstItem="C0Q-za-xSq" firstAttribute="top" secondItem="wgG-DG-Msi" secondAttribute="bottom" constant="42" id="3zT-hI-VsU"/>
+                                    <constraint firstItem="gpG-ia-tcQ" firstAttribute="top" secondItem="wgG-DG-Msi" secondAttribute="bottom" constant="8" id="7Qh-B1-wEa"/>
+                                    <constraint firstItem="gpG-ia-tcQ" firstAttribute="centerX" secondItem="C0Q-za-xSq" secondAttribute="centerX" id="DOn-pf-aFH"/>
                                     <constraint firstItem="wgG-DG-Msi" firstAttribute="top" secondItem="Asy-7s-sgM" secondAttribute="top" id="GHl-OE-I0g"/>
+                                    <constraint firstItem="gpG-ia-tcQ" firstAttribute="leading" secondItem="G8x-7B-wSD" secondAttribute="leading" constant="138" id="Grb-LC-heh"/>
                                     <constraint firstItem="C0Q-za-xSq" firstAttribute="leading" secondItem="INV-0m-ZZn" secondAttribute="leading" id="Ock-3Y-GZb"/>
                                     <constraint firstItem="wgG-DG-Msi" firstAttribute="leading" secondItem="Asy-7s-sgM" secondAttribute="leading" id="RBb-bC-lrQ"/>
                                     <constraint firstItem="C0Q-za-xSq" firstAttribute="trailing" secondItem="wgG-DG-Msi" secondAttribute="trailing" constant="-8" id="pAb-7M-eW8"/>
                                     <constraint firstAttribute="trailing" secondItem="wgG-DG-Msi" secondAttribute="trailing" id="pNK-Qn-ubE"/>
-                                    <constraint firstAttribute="bottom" secondItem="INV-0m-ZZn" secondAttribute="bottom" constant="98" id="w66-rt-e5b"/>
+                                    <constraint firstAttribute="bottom" secondItem="INV-0m-ZZn" secondAttribute="bottom" constant="75" id="w66-rt-e5b"/>
                                     <constraint firstItem="C0Q-za-xSq" firstAttribute="trailing" secondItem="INV-0m-ZZn" secondAttribute="trailing" id="wre-zj-VGI"/>
                                     <constraint firstItem="C0Q-za-xSq" firstAttribute="leading" secondItem="wgG-DG-Msi" secondAttribute="leading" constant="8" id="zsA-kX-ow5"/>
                                 </constraints>
@@ -140,6 +148,7 @@
                         <outlet property="PageContainer" destination="wgG-DG-Msi" id="iPq-C3-C3h"/>
                         <outlet property="PageScrollController" destination="Asy-7s-sgM" id="5ZC-rz-vni"/>
                         <outlet property="TitleTextLabel" destination="C0Q-za-xSq" id="m8l-nF-vQN"/>
+                        <outlet property="pageControlBar" destination="gpG-ia-tcQ" id="RUm-gw-qth"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="xEP-YC-dWG" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
@@ -265,6 +274,9 @@
         <image name="ellipsis" catalog="system" width="128" height="37"/>
         <image name="house.circle.fill" catalog="system" width="128" height="123"/>
         <image name="pencil.line" catalog="system" width="128" height="98"/>
+        <namedColor name="unselectedColor">
+            <color red="0.86500000953674316" green="0.86500000953674316" blue="0.86500000953674316" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+        </namedColor>
         <systemColor name="secondarySystemBackgroundColor">
             <color red="0.94901960784313721" green="0.94901960784313721" blue="0.96862745098039216" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>

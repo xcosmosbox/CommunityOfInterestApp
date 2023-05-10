@@ -21,6 +21,7 @@ class DetailViewController: UIViewController{
     @IBOutlet weak var PageContainer: UIView!
     
     
+    @IBOutlet weak var pageControlBar: UIPageControl!
     
     @IBOutlet weak var TitleTextLabel: UILabel!
     
@@ -87,6 +88,7 @@ class DetailViewController: UIViewController{
         print("+++++")
         
         
+        pageControlBar.numberOfPages = (card?.picture!.count)!
         
         
 //        TitleTextLabel.numberOfLines = 0
@@ -108,6 +110,17 @@ class DetailViewController: UIViewController{
         
 
         // Do any additional setup after loading the view.
+        
+        for child in children{
+            if let childPage = child as? PageImageViewController{
+                childPage.didChangePage = { [weak self] currentPage in
+                    self?.pageControlBar.currentPage = currentPage
+                    
+                }
+                break
+            }
+        }
+        
     }
     
 
