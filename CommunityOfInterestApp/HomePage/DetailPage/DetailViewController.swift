@@ -9,6 +9,7 @@ import UIKit
 
 class DetailViewController: UIViewController{
     
+    weak var databaseController: DatabaseProtocol?
 
     
     
@@ -26,6 +27,34 @@ class DetailViewController: UIViewController{
     @IBOutlet weak var ContentTextLabel: UILabel!
     
     
+    @IBAction func MenuToSelectLikesAndCollections(_ sender: UIBarButtonItem) {
+        // create the alert controller
+        let alertController = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
+
+        // set the first menu
+        let option1Action = UIAlertAction(title: "Like", style: .default) { _ in
+            // add this post to user's likes field
+            self.databaseController?.addPostToUserLikesField(id: (self.card?.id)!){ () in
+                print("add card to likes field success")
+                
+            }
+        }
+        alertController.addAction(option1Action)
+
+        // set the second menu
+        let option2Action = UIAlertAction(title: "Collect", style: .default) { _ in
+            // add this post to user's collections field
+            self.databaseController?.addPostToUserCollectionsField(id: (self.card?.id)!){ () in
+                print("add card to collection field success")
+                
+            }
+        }
+        alertController.addAction(option2Action)
+
+        //show menu
+        present(alertController, animated: true, completion: nil)
+
+    }
     
     
     
@@ -42,10 +71,19 @@ class DetailViewController: UIViewController{
         
         super.viewDidLoad()
         
+        let appDelegate = UIApplication.shared.delegate as? AppDelegate
+        databaseController = appDelegate?.databaseController
+        
         print("4")
         
         print("=====")
         print(card)
+        print(card?.id)
+        print(card?.username)
+        print(card?.content)
+        print(card?.title)
+        print(card?.cover)
+        print(card?.picture)
         print("+++++")
         
         
