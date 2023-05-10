@@ -7,7 +7,7 @@
 
 import UIKit
 
-class PageImageViewController: UIPageViewController, UIPageViewControllerDataSource {
+class PageImageViewController: UIPageViewController, UIPageViewControllerDataSource, UIPageViewControllerDelegate {
     
     var imagesLoader:[String]?
     
@@ -15,6 +15,8 @@ class PageImageViewController: UIPageViewController, UIPageViewControllerDataSou
     
     let appDelegate = UIApplication.shared.delegate as? AppDelegate
     weak var databaseController: DatabaseProtocol?
+    
+    var didChangePage: ((Int) -> Void)?
 
     override func viewDidLoad() {
         databaseController = appDelegate?.databaseController
@@ -29,6 +31,7 @@ class PageImageViewController: UIPageViewController, UIPageViewControllerDataSou
         
         
         dataSource = self
+        delegate = self
         
         print("+++****+++++********")
         print(imagesLoader)
@@ -67,6 +70,9 @@ class PageImageViewController: UIPageViewController, UIPageViewControllerDataSou
             return nil
         } else {
             let newIndex = currentIndex - 1
+            
+//            didChangePage?(newIndex)
+            
 //            print("before \(newIndex)")
             let page = PicturesViewController(imagePath: imagesLoader![newIndex])
 //            updateImagePageNumer(viewController: page)
@@ -83,9 +89,26 @@ class PageImageViewController: UIPageViewController, UIPageViewControllerDataSou
             return nil
         } else {
             let newIndex = currentIndex + 1
+            
+//            didChangePage?(newIndex)
+            
 //            databaseController?.updateCurrentImagePageNumber(pageNumber: newIndex)
             let page = PicturesViewController(imagePath: imagesLoader![newIndex])
             return page
+        }
+    }
+    
+    func pageViewController(_ pageViewController: UIPageViewController, willTransitionTo pendingViewControllers: [UIViewController]) {
+        guard let viewController = pendingViewControllers.first as? PicturesViewController else { return }
+        guard let newIndex = imagesLoader?.firstIndex(of: viewController.imagePath) else { return }
+        didChangePage?(newIndex)
+    }
+    
+    func pageViewController(_ pageViewController: UIPageViewController, didFinishAnimating finished: Bool, previousViewControllers: [UIViewController], transitionCompleted completed: Bool) {
+        if !completed {
+            guard let viewController = previousViewControllers.first as? PicturesViewController else { return }
+            guard let newIndex = imagesLoader?.firstIndex(of: viewController.imagePath) else { return }
+            didChangePage?(newIndex)
         }
     }
     
