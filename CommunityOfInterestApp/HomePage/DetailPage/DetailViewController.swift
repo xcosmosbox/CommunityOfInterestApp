@@ -121,6 +121,9 @@ class DetailViewController: UIViewController{
             }
         }
         
+//        pageControlBar.tintColor = .systemGray2
+        pageControlBar.currentPageIndicatorTintColor = .systemBlue
+        
     }
     
 
