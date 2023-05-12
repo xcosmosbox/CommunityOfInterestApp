@@ -9,7 +9,7 @@ import UIKit
 import Firebase
 import FirebaseFirestoreSwift
 
-class FollowingFollowerViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
+class FollowingFollowerViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, UIScrollViewDelegate {
 
     
     
@@ -21,6 +21,9 @@ class FollowingFollowerViewController: UIViewController, UITableViewDelegate, UI
     var followingUsers: [DocumentReference] = []
     var followerUsers: [DocumentReference] = []
     
+    let refreshControl = UIRefreshControl()
+    var isFetchingData = false // to avoid fetching data multiple items
+    
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -31,7 +34,16 @@ class FollowingFollowerViewController: UIViewController, UITableViewDelegate, UI
         tableView.dataSource = self
         tableView.register(UINib(nibName: "UserTableViewCell", bundle: nil), forCellReuseIdentifier: "UserTableViewCell")
         
+        // setup the refresh control
+        refreshControl.addTarget(self, action: #selector(refreshData), for: .valueChanged)
+        tableView.addSubview(refreshControl)
+        
         segmentedControl.addTarget(self, action: #selector(segmentedControlChanged), for: .valueChanged)
+    }
+    
+    @objc func refreshData() {
+        // Fetch the data again and reload the table view
+        // Remember to call refreshControl.endRefreshing() when the request is done
     }
     
     @objc func segmentedControlChanged() {
@@ -50,6 +62,28 @@ class FollowingFollowerViewController: UIViewController, UITableViewDelegate, UI
     }
     */
     
+    // scroll view
+    func scrollViewDidScroll(_ scrollView: UIScrollView) {
+        let offsetY = scrollView.contentOffset.y
+        let contentHeight = scrollView.contentSize.height
+        if offsetY > contentHeight - scrollView.frame.height * 4 {
+            // You're at the bottom of the table view, fetch the next page of data
+            // Check isFetchingData to avoid fetching data multiple times
+            if !isFetchingData {
+                isFetchingData = true
+                fetchNextPage()
+            }
+        }
+    }
+    
+    func fetchNextPage() {
+        // Fetch the next page of data here
+        // Remember to set isFetchingData = false when the request is done
+    }
+    
+    
+    
+    // table view
     func numberOfSections(in tableView: UITableView) -> Int {
         return 1
     }
