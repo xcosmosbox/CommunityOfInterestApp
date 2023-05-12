@@ -209,6 +209,24 @@ class FollowingFollowerViewController: UIViewController, UITableViewDelegate, UI
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         //
+        performSegue(withIdentifier: "showOtherUserDetail", sender: self)
+    }
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if segue.identifier == "showOtherUserDetail"{
+            if let indexPath = tableView.indexPathForSelectedRow{
+                var userDocRef: DocumentReference?
+                if segmentedControl.selectedSegmentIndex == 0{
+                    userDocRef = followingUsers[indexPath.row]
+                    let destination = segue.destination as? OtherUserDetailViewController
+                    destination?.currentUserDocRef = userDocRef
+                } else{
+                    userDocRef = followerUsers[indexPath.row]
+                    let destination = segue.destination as? OtherUserDetailViewController
+                    destination?.currentUserDocRef = userDocRef
+                }
+            }
+        }
     }
 
 }

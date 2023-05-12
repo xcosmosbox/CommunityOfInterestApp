@@ -286,6 +286,7 @@
                                             <outlet property="followButton" destination="z9Q-mt-ZGl" id="mCq-DC-wmW"/>
                                             <outlet property="profileImageView" destination="TaC-u4-Bfg" id="SuL-Rc-ZlM"/>
                                             <outlet property="usernameLabel" destination="QTW-I6-hO6" id="DNU-iP-je9"/>
+                                            <segue destination="BuZ-vZ-Wp3" kind="showDetail" identifier="showOtherUserDetail" id="Swl-gq-gc9"/>
                                         </connections>
                                     </tableViewCell>
                                 </prototypes>
@@ -311,6 +312,66 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="AN1-k6-zwX" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="3058.7786259541986" y="2228.8732394366198"/>
+        </scene>
+        <!--Other User Detail View Controller-->
+        <scene sceneID="R6I-ww-qDq">
+            <objects>
+                <viewController id="BuZ-vZ-Wp3" customClass="OtherUserDetailViewController" customModule="CommunityOfInterestApp" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="r1N-nw-wHw">
+                        <rect key="frame" x="0.0" y="0.0" width="393" height="783"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="n5e-yx-4jO">
+                                <rect key="frame" x="44" y="59" width="304" height="200"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            </imageView>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="skf-wJ-hNt">
+                                <rect key="frame" x="44" y="267" width="304" height="37"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="SVr-Us-33J">
+                                <rect key="frame" x="44" y="312" width="304" height="54"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="2Wy-m4-N1v">
+                                <rect key="frame" x="25" y="374" width="352" height="398"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <subviews>
+                                    <stackView opaque="NO" contentMode="scaleToFill" fixedFrame="YES" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="WPv-1u-qk8">
+                                        <rect key="frame" x="8" y="8" width="160" height="382"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                    </stackView>
+                                    <stackView opaque="NO" contentMode="scaleToFill" fixedFrame="YES" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="Qvd-Rv-8Ma">
+                                        <rect key="frame" x="184" y="8" width="160" height="382"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                    </stackView>
+                                </subviews>
+                                <color key="backgroundColor" systemColor="systemGray6Color"/>
+                                <viewLayoutGuide key="contentLayoutGuide" id="Rm9-Hj-Rrq"/>
+                                <viewLayoutGuide key="frameLayoutGuide" id="25Y-4M-XxP"/>
+                            </scrollView>
+                        </subviews>
+                        <viewLayoutGuide key="safeArea" id="plP-KV-eXY"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                    </view>
+                    <connections>
+                        <outlet property="leftStack" destination="WPv-1u-qk8" id="eWH-Su-plV"/>
+                        <outlet property="rightStack" destination="Qvd-Rv-8Ma" id="haK-eN-Lvl"/>
+                        <outlet property="scrollViewControl" destination="2Wy-m4-N1v" id="stP-U4-xxe"/>
+                        <outlet property="userImageView" destination="n5e-yx-4jO" id="9zu-Mt-xPh"/>
+                        <outlet property="userNameLabel" destination="skf-wJ-hNt" id="b6f-TH-fJ8"/>
+                        <outlet property="userProfileLabel" destination="SVr-Us-33J" id="5EQ-wU-IdE"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="f1k-FE-abI" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="4035.8778625954196" y="2228.8732394366198"/>
         </scene>
         <!--Profile Image Edit View Controller-->
         <scene sceneID="vln-Y0-hSp">

@@ -12,6 +12,7 @@ import FirebaseStorage
 
 class FirebaseController: NSObject, DatabaseProtocol {
 
+
     
 
 
@@ -694,6 +695,97 @@ class FirebaseController: NSObject, DatabaseProtocol {
         }
         
     }
+    
+    func getUserModelByDocRef(userDocRef: DocumentReference, completion: @escaping (User) -> Void) {
+        var userModel = User()
+        userDocRef.addSnapshotListener {
+            (querySnapshot, error) in
+            
+            guard let querySnapshot = querySnapshot else {
+                print("Failed to get documet for this user getUserModelByDocRef--> \(error!)")
+                return
+            }
+            
+            if querySnapshot.data() == nil{
+                print("Failed to get documet for this user getUserModelByDocRef")
+                return
+            }
+            
+            if let id = querySnapshot.documentID as? String{
+                userModel.id = id
+            }
+            
+            if let name = querySnapshot.data()!["name"] as? String {
+                userModel.name = name
+            }
+            
+            if let profile = querySnapshot.data()!["profile"] as? String {
+                userModel.profile = profile
+            }
+            
+            if let profile_image = querySnapshot.data()!["profile_image"] as? String {
+                userModel.profile_image = profile_image
+            }
+        
+            if let tags = querySnapshot.data()!["tags"] as? [String] {
+                userModel.tags = tags
+            }
+        
+            if let collections = querySnapshot.data()!["collections"] as? [DocumentReference] {
+                userModel.collections = collections
+            }
+            
+            if let follower = querySnapshot.data()!["follower"] as? [DocumentReference] {
+                userModel.follower = follower
+            }
+            
+            if let following = querySnapshot.data()!["following"] as? [DocumentReference] {
+                userModel.following = following
+            }
+            
+            if let likes = querySnapshot.data()!["likes"] as? [DocumentReference] {
+                userModel.likes = likes
+            }
+            
+            if let posts = querySnapshot.data()!["posts"] as? [DocumentReference] {
+                userModel.posts = posts
+            }
+            
+            completion(userModel)
+        }
+    }
+    
+    func getUserPostsListByDocRefArray(postsRefArray:[DocumentReference], completion: @escaping ([Card]) -> Void){
+        var resultPostList:[Card] = []
+        do{
+            postsRefArray.forEach{ referenceDoc in
+                referenceDoc.getDocument{ (document, error) in
+                    if let error = error{
+                        print("error parsePostsList postsRefArray:\(error)")
+                    } else if let document = document{
+                        do{
+                            let card = try document.data(as: Card.self)
+                            if card == nil{
+                                print("Failed to parse card")
+                            }else{
+                                resultPostList.append(card)
+                                
+                            }
+                            if resultPostList.count == postsRefArray.count{
+                                completion(resultPostList)
+                            }
+                            
+                        }catch{
+                            print("error parsePostsList catch:\(error)")
+                        }
+                    }
+                    
+                }
+                
+            }
+        }
+    }
+    
 
     
     
