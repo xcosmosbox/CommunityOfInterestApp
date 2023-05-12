@@ -89,6 +89,10 @@ protocol DatabaseProtocol: AnyObject{
     func updateUserName(name: String, completion: @escaping () -> Void)
     func updateUserProfileContent(content: String, completion: @escaping () -> Void)
     
+    // others user page
+    func addUserIntoFollowing(otherUserDocRef: DocumentReference, completion: @escaping () -> Void) async
+    func addMeIntoSomeoneFollower(otherUserDocRef: DocumentReference, completion: @escaping () -> Void) async
+    
     
 }
 
