@@ -29,6 +29,8 @@
 		2712F1C82A0AA9E500428F7A /* UsernameEditViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2712F1C72A0AA9E500428F7A /* UsernameEditViewController.swift */; };
 		2712F1CA2A0AAD8900428F7A /* EditProfileContentPageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2712F1C92A0AAD8900428F7A /* EditProfileContentPageViewController.swift */; };
 		272C806229E44B8C004924F7 /* AddTagPageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 272C806129E44B8C004924F7 /* AddTagPageViewController.swift */; };
+		274C2EA52A0E0A8500325F9F /* UserTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 274C2EA42A0E0A8500325F9F /* UserTableViewCell.swift */; };
+		274C2EA72A0E17D300325F9F /* FollowingFollowerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 274C2EA62A0E17D300325F9F /* FollowingFollowerViewController.swift */; };
 		274DF89F2A00AB670030A1B2 /* LoginPageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 274DF89E2A00AB670030A1B2 /* LoginPageViewController.swift */; };
 		274DF8A12A00B3370030A1B2 /* SelectTagsPageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 274DF8A02A00B3370030A1B2 /* SelectTagsPageViewController.swift */; };
 		274DF8AF2A00DD3A0030A1B2 /* CouldSelectedButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 274DF8AE2A00DD3A0030A1B2 /* CouldSelectedButton.swift */; };
@@ -79,6 +81,8 @@
 		2712F1C72A0AA9E500428F7A /* UsernameEditViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UsernameEditViewController.swift; sourceTree = "<group>"; };
 		2712F1C92A0AAD8900428F7A /* EditProfileContentPageViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditProfileContentPageViewController.swift; sourceTree = "<group>"; };
 		272C806129E44B8C004924F7 /* AddTagPageViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddTagPageViewController.swift; sourceTree = "<group>"; };
+		274C2EA42A0E0A8500325F9F /* UserTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserTableViewCell.swift; sourceTree = "<group>"; };
+		274C2EA62A0E17D300325F9F /* FollowingFollowerViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FollowingFollowerViewController.swift; sourceTree = "<group>"; };
 		274DF89E2A00AB670030A1B2 /* LoginPageViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginPageViewController.swift; sourceTree = "<group>"; };
 		274DF8A02A00B3370030A1B2 /* SelectTagsPageViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectTagsPageViewController.swift; sourceTree = "<group>"; };
 		274DF8AE2A00DD3A0030A1B2 /* CouldSelectedButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CouldSelectedButton.swift; sourceTree = "<group>"; };
@@ -180,6 +184,7 @@
 		270BFF1529E3B2FA00850009 /* PersonPage */ = {
 			isa = PBXGroup;
 			children = (
+				274C2EA32A0E0A5B00325F9F /* OtherUser */,
 				2712F1C42A0A945600428F7A /* EditProfile */,
 				270BFF1A29E3B34C00850009 /* PersonPageMain.storyboard */,
 				27B63E542A01168800BCE0CA /* PersonPageViewController.swift */,
@@ -223,6 +228,15 @@
 				2712F1C92A0AAD8900428F7A /* EditProfileContentPageViewController.swift */,
 			);
 			path = EditProfile;
+			sourceTree = "<group>";
+		};
+		274C2EA32A0E0A5B00325F9F /* OtherUser */ = {
+			isa = PBXGroup;
+			children = (
+				274C2EA42A0E0A8500325F9F /* UserTableViewCell.swift */,
+				274C2EA62A0E17D300325F9F /* FollowingFollowerViewController.swift */,
+			);
+			path = OtherUser;
 			sourceTree = "<group>";
 		};
 		274DF89D2A00AB520030A1B2 /* LoginPage */ = {
@@ -369,6 +383,7 @@
 				270AD1ED29FE6AAF0034BBD3 /* PicturesViewController.swift in Sources */,
 				270BFEF829E3A75000850009 /* ViewController.swift in Sources */,
 				276355D929F5542B006046AA /* Post.swift in Sources */,
+				274C2EA52A0E0A8500325F9F /* UserTableViewCell.swift in Sources */,
 				274DF89F2A00AB670030A1B2 /* LoginPageViewController.swift in Sources */,
 				270BFF2F29E42C7700850009 /* TagBean.swift in Sources */,
 				274F9D4929E57FBC000E174D /* ExploreComponent.swift in Sources */,
@@ -393,6 +408,7 @@
 				270BFF2A29E3DA4900850009 /* HorizontalMenuButton.swift in Sources */,
 				2712F1C82A0AA9E500428F7A /* UsernameEditViewController.swift in Sources */,
 				270BFEF629E3A75000850009 /* SceneDelegate.swift in Sources */,
+				274C2EA72A0E17D300325F9F /* FollowingFollowerViewController.swift in Sources */,
 				2712F1CA2A0AAD8900428F7A /* EditProfileContentPageViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
