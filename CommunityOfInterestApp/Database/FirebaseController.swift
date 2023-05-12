@@ -12,6 +12,7 @@ import FirebaseStorage
 
 class FirebaseController: NSObject, DatabaseProtocol {
 
+
     
 
     
@@ -1154,6 +1155,83 @@ class FirebaseController: NSObject, DatabaseProtocol {
         }
     }
     
+    
+    
+    func addUserIntoFollowing(otherUserDocRef: DocumentReference, completion: @escaping () -> Void) async {
+        let userDocRef = database.collection("user").document(currentUser!.uid)
+        try await userDocRef.getDocument(){ (snapshot, error) in
+            if let error = error{
+                print("get user doc error: addUserIntoFollowing: \(error)")
+                return
+            }
+            
+            guard let snapshot = snapshot, let arrayField = snapshot.data()?["following"] as? [DocumentReference] else{
+                print("get following fields error: addUserIntoFollowing")
+                return
+            }
+            
+            if arrayField.contains(otherUserDocRef){
+                userDocRef.updateData([
+                    "following": FieldValue.arrayRemove([otherUserDocRef])
+                ]){ (updateError) in
+                    if let updateError = updateError {
+                        print("remove user on following error:addUserIntoFollowing: \(updateError)")
+                    }
+                    print("following contains, then remove it")
+                    completion()
+                }
+            } else{
+                userDocRef.updateData([
+                    "following": FieldValue.arrayUnion([otherUserDocRef])
+                ]){ (updateError) in
+                    if let updateError = updateError {
+                        print("update following on user error:addUserIntoFollowing: \(updateError)")
+                    }
+                    print("following uncontains, then add it")
+                    completion()
+                }
+            }
+            
+        }
+    }
+    
+    func addMeIntoSomeoneFollower(otherUserDocRef: DocumentReference, completion: @escaping () -> Void) async {
+        let userDocRef = database.collection("user").document(currentUser!.uid)
+        try await otherUserDocRef.getDocument(){ (snapshot, error) in
+            if let error = error{
+                print("get user doc error: addMeIntoSomeoneFollower: \(error)")
+                return
+            }
+            
+            guard let snapshot = snapshot, let arrayField = snapshot.data()?["follower"] as? [DocumentReference] else{
+                print("get follower fields error: addMeIntoSomeoneFollower")
+                return
+            }
+            
+            if arrayField.contains(userDocRef){
+                otherUserDocRef.updateData([
+                    "follower": FieldValue.arrayRemove([userDocRef])
+                ]){ (updateError) in
+                    if let updateError = updateError {
+                        print("remove user on follower error:addMeIntoSomeoneFollower: \(updateError)")
+                    }
+                    print("follower contains, then remove it")
+                    completion()
+                }
+            } else{
+                otherUserDocRef.updateData([
+                    "follower": FieldValue.arrayUnion([userDocRef])
+                ]){ (updateError) in
+                    if let updateError = updateError {
+                        print("remove user on follower error:addMeIntoSomeoneFollower: \(updateError)")
+                    }
+                    print("follower uncontains, then add it")
+                    completion()
+                    
+                }
+            }
+        }
+    }
     
     
     
