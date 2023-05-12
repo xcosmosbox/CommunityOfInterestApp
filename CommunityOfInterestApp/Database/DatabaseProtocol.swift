@@ -73,6 +73,8 @@ protocol DatabaseProtocol: AnyObject{
 //    func getUserModel() -> User
     func getUserModel(completion: @escaping (User) -> Void)
     func getCardModel(cardRef: DocumentReference, completion: @escaping (Card) -> Void)
+    func getUserModelByDocRef(userDocRef: DocumentReference, completion: @escaping (User) -> Void)
+    func getUserPostsListByDocRefArray(postsRefArray:[DocumentReference], completion: @escaping ([Card]) -> Void)
     
     
     // image

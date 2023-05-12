@@ -31,6 +31,7 @@
 		272C806229E44B8C004924F7 /* AddTagPageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 272C806129E44B8C004924F7 /* AddTagPageViewController.swift */; };
 		274C2EA52A0E0A8500325F9F /* UserTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 274C2EA42A0E0A8500325F9F /* UserTableViewCell.swift */; };
 		274C2EA72A0E17D300325F9F /* FollowingFollowerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 274C2EA62A0E17D300325F9F /* FollowingFollowerViewController.swift */; };
+		274C2EAB2A0E666400325F9F /* OtherUserDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 274C2EAA2A0E666400325F9F /* OtherUserDetailViewController.swift */; };
 		274DF89F2A00AB670030A1B2 /* LoginPageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 274DF89E2A00AB670030A1B2 /* LoginPageViewController.swift */; };
 		274DF8A12A00B3370030A1B2 /* SelectTagsPageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 274DF8A02A00B3370030A1B2 /* SelectTagsPageViewController.swift */; };
 		274DF8AF2A00DD3A0030A1B2 /* CouldSelectedButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 274DF8AE2A00DD3A0030A1B2 /* CouldSelectedButton.swift */; };
@@ -83,6 +84,7 @@
 		272C806129E44B8C004924F7 /* AddTagPageViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddTagPageViewController.swift; sourceTree = "<group>"; };
 		274C2EA42A0E0A8500325F9F /* UserTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserTableViewCell.swift; sourceTree = "<group>"; };
 		274C2EA62A0E17D300325F9F /* FollowingFollowerViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FollowingFollowerViewController.swift; sourceTree = "<group>"; };
+		274C2EAA2A0E666400325F9F /* OtherUserDetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OtherUserDetailViewController.swift; sourceTree = "<group>"; };
 		274DF89E2A00AB670030A1B2 /* LoginPageViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginPageViewController.swift; sourceTree = "<group>"; };
 		274DF8A02A00B3370030A1B2 /* SelectTagsPageViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectTagsPageViewController.swift; sourceTree = "<group>"; };
 		274DF8AE2A00DD3A0030A1B2 /* CouldSelectedButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CouldSelectedButton.swift; sourceTree = "<group>"; };
@@ -235,6 +237,7 @@
 			children = (
 				274C2EA42A0E0A8500325F9F /* UserTableViewCell.swift */,
 				274C2EA62A0E17D300325F9F /* FollowingFollowerViewController.swift */,
+				274C2EAA2A0E666400325F9F /* OtherUserDetailViewController.swift */,
 			);
 			path = OtherUser;
 			sourceTree = "<group>";
@@ -382,6 +385,7 @@
 				276355D529F53A72006046AA /* MulticastDelegate.swift in Sources */,
 				270AD1ED29FE6AAF0034BBD3 /* PicturesViewController.swift in Sources */,
 				270BFEF829E3A75000850009 /* ViewController.swift in Sources */,
+				274C2EAB2A0E666400325F9F /* OtherUserDetailViewController.swift in Sources */,
 				276355D929F5542B006046AA /* Post.swift in Sources */,
 				274C2EA52A0E0A8500325F9F /* UserTableViewCell.swift in Sources */,
 				274DF89F2A00AB670030A1B2 /* LoginPageViewController.swift in Sources */,
