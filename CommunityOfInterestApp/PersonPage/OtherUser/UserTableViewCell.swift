@@ -28,6 +28,7 @@ class UserTableViewCell: UITableViewCell {
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code
+        print("2222+*+*+*+*+*+*+*+**+*+*+*+*+")
     }
 
     override func setSelected(_ selected: Bool, animated: Bool) {
@@ -38,37 +39,71 @@ class UserTableViewCell: UITableViewCell {
     
     
     func setupWithUser(userDocRef: DocumentReference, showFollowButton: Bool) {
+        print("Setting up cell with user \(userDocRef)")
+//        awakeFromNib()
         
         self.userDocRef = userDocRef
         
+        
+        
         Task{
             do{
-                try await userDocRef.getDocument(){ (snapshot, error) in
-                    self.usernameLabel.text = snapshot?.data()!["name"] as? String
-                    
-                    let path = snapshot?.data()!["profile_image"] as? String
-                    
-                    // set profile iamge
-                    let gsReference = Storage.storage().reference(forURL: path!)
-                    gsReference.getData(maxSize: 10 * 1024 * 1024){ data, error in
-                        if let error = error{
-                            print("error!: \(error)")
-                        } else{
-                            let userProfileImage = UIImage(data: data!)
-                            // set the post image view's image
-                            self.profileImageView.image = userProfileImage
+                await print(try userDocRef.getDocument().data() ?? "!!!!!!")
+                let dataCol = try await userDocRef.getDocument().data()
+                if let dataCol = dataCol{
+                    DispatchQueue.main.async {
+                        self.usernameLabel.text = dataCol["name"] as? String
+                        let path = dataCol["profile_image"] as? String
+                        // set profile iamge
+                        let gsReference = Storage.storage().reference(forURL: path!)
+                        gsReference.getData(maxSize: 10 * 1024 * 1024){ data, error in
+                            if let error = error{
+                                print("error!: \(error)")
+                            } else{
+                                let userProfileImage = UIImage(data: data!)
+                                // set the post image view's image
+                                self.profileImageView.image = userProfileImage
+                            }
+                        }
+                        self.followButton.isHidden = !showFollowButton
+
+                        if showFollowButton {
+                //            followButton.setTitle(isFollowing ? "Following" : "Follow", for: .normal)
+                //            followButton.backgroundColor = isFollowing ? .gray : .red
+                            self.followButton.setTitle("Following", for: .normal)
+                            self.followButton.backgroundColor = .gray
                         }
                     }
                     
-                    self.followButton.isHidden = !showFollowButton
                     
-                    if showFollowButton {
-            //            followButton.setTitle(isFollowing ? "Following" : "Follow", for: .normal)
-            //            followButton.backgroundColor = isFollowing ? .gray : .red
-                        self.followButton.setTitle("Following", for: .normal)
-                        self.followButton.backgroundColor = .gray
-                    }
+                    
                 }
+//                userDocRef.getDocument(){ (snapshot, error) in
+//                    self.usernameLabel.text = snapshot?.data()!["name"] as? String
+//
+//                    let path = snapshot?.data()!["profile_image"] as? String
+//
+                    // set profile iamge
+//                    let gsReference = Storage.storage().reference(forURL: path!)
+//                    gsReference.getData(maxSize: 10 * 1024 * 1024){ data, error in
+//                        if let error = error{
+//                            print("error!: \(error)")
+//                        } else{
+//                            let userProfileImage = UIImage(data: data!)
+//                            // set the post image view's image
+//                            self.profileImageView.image = userProfileImage
+//                        }
+//                    }
+//
+//                    self.followButton.isHidden = !showFollowButton
+//
+//                    if showFollowButton {
+//            //            followButton.setTitle(isFollowing ? "Following" : "Follow", for: .normal)
+//            //            followButton.backgroundColor = isFollowing ? .gray : .red
+//                        self.followButton.setTitle("Following", for: .normal)
+//                        self.followButton.backgroundColor = .gray
+//                    }
+//                }
             }
         }
         
