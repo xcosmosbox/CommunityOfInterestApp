@@ -69,6 +69,7 @@ protocol DatabaseProtocol: AnyObject{
     // person page data init
 //    func getUserModel() -> User
     func getUserModel(completion: @escaping (User) -> Void)
+    func getCardModel(cardRef: DocumentReference, completion: @escaping (Card) -> Void)
     
     
     // image

@@ -618,6 +618,55 @@ class FirebaseController: NSObject, DatabaseProtocol {
             completion(userModel)
         }
     }
+    
+    func getCardModel(cardRef: DocumentReference, completion: @escaping (Card) -> Void){
+        var card = Card()
+        let cardDocRef = database.collection("post").document(cardRef.documentID).addSnapshotListener {
+            (querySnapshot, error) in
+            
+            guard let querySnapshot = querySnapshot else {
+                print("Failed to get documet for this card --> \(error!)")
+                return
+            }
+            
+            if querySnapshot.data() == nil{
+                print("Failed to get documet for this card")
+                return
+            }
+            
+            if let id = querySnapshot.documentID as? String{
+                card.id = id
+            }
+            
+            if let title = querySnapshot.data()!["title"] as? String{
+                card.title = title
+            }
+            
+            if let content = querySnapshot.data()!["content"] as? String{
+                card.content = content
+            }
+            
+            if let cover = querySnapshot.data()!["cover"] as? String{
+                card.cover = cover
+            }
+            
+            if let likes_number = querySnapshot.data()!["likes_number"] as? Int{
+                card.likes_number = likes_number
+            }
+            
+            if let picture = querySnapshot.data()!["picture"] as? [String]{
+                card.picture = picture
+            }
+            
+            if let username = querySnapshot.data()!["username"] as? String{
+                card.username = username
+            }
+            
+            completion(card)
+            
+        }
+        
+    }
 
     
     
@@ -781,16 +830,19 @@ class FirebaseController: NSObject, DatabaseProtocol {
                                     }
                                     createdPostCardRef.updateData([
                                         "picture": FieldValue.arrayUnion(["gs://fit3178-final-ci-app.appspot.com/\(storageLocationStr)"])
-                                    ])
-                                    createdCard.picture?.append("gs://fit3178-final-ci-app.appspot.com/\(storageLocationStr)")
-                                    self.currentImagesCounter += 1
+                                    ]){_ in
+                                        createdCard.picture?.append("gs://fit3178-final-ci-app.appspot.com/\(storageLocationStr)")
+                                        self.currentImagesCounter += 1
+                                        if self.currentImagesCounter == self.currentImages.count{
+                                            completion(createdPostCardRef, createdCard)
+                                        }
+                                    }
+                                    
                                     
                                     
                                     
                                 }
-                                if self.currentImagesCounter == self.currentImages.count{
-                                    completion(createdPostCardRef, createdCard)
-                                }
+                                
                                 
                                
                             }

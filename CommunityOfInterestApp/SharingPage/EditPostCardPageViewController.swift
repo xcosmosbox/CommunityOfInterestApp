@@ -215,9 +215,14 @@ class EditPostCardPageViewController: UIViewController, UICollectionViewDataSour
             // process the upload success content, such as go to the detail page
             print("upload success")
             // Save the created card object
-            self.selectedCard = createdCard
-            // Navigate to DetailViewController
-            self.navigateToDetailViewController()
+//            self.selectedCard = createdCard
+            self.databaseController!.getCardModel(cardRef: documentReference){ card in
+                self.selectedCard = card
+                
+                // Navigate to DetailViewController
+                self.navigateToDetailViewController()
+            }
+            
             
         }
     }
