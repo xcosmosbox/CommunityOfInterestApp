@@ -37,15 +37,25 @@ class FollowingFollowerViewController: UIViewController, UITableViewDelegate, UI
 
         // Do any additional setup after loading the view.
         
+        print("1111+*+*+*+*+*+*+*+**+*+*+*+*+")
+        print("Following users count111: \(followingUsers.count)")
+        print("Follower users count1111: \(followerUsers.count)")
+        
         tableView.delegate = self
         tableView.dataSource = self
-        tableView.register(UINib(nibName: "UserTableViewCell", bundle: nil), forCellReuseIdentifier: "UserTableViewCell")
+//        tableView.register(UINib(nibName: "UserTableViewCell", bundle: nil), forCellReuseIdentifier: "UserTableViewCell")
+//        tableView.register(UserTableViewCell.self, forCellReuseIdentifier: "UserTableViewCell")
+//        tableView.register(UINib(nibName: "CELL_USER_INFO", bundle: nil), forCellReuseIdentifier: "UserTableViewCell")
         
         // setup the refresh control
         refreshControl.addTarget(self, action: #selector(refreshData), for: .valueChanged)
         tableView.addSubview(refreshControl)
         
         segmentedControl.addTarget(self, action: #selector(segmentedControlChanged), for: .valueChanged)
+        
+        print("Following users count222: \(followingUsers.count)")
+        print("Follower users count2222: \(followerUsers.count)")
+
     }
     
     @objc func refreshData() {
@@ -180,7 +190,10 @@ class FollowingFollowerViewController: UIViewController, UITableViewDelegate, UI
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "UserTableViewCell", for: indexPath) as! UserTableViewCell
+        
+        print("cellForRowAt at \(indexPath)")
+        
+        let cell = tableView.dequeueReusableCell(withIdentifier: "CELL_USER_INFO", for: indexPath) as! UserTableViewCell
         if segmentedControl.selectedSegmentIndex == 0{
             cell.setupWithUser(userDocRef: followingUsers[indexPath.row], showFollowButton: true)
         } else{
@@ -188,6 +201,10 @@ class FollowingFollowerViewController: UIViewController, UITableViewDelegate, UI
         }
         
         return cell
+    }
+    
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        return 80
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {

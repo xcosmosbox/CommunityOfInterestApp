@@ -217,9 +217,9 @@ class PersonPageViewController: UIViewController, DatabaseListener, DetailChange
     }
     
     func onPersonChange(change: DatabaseChange, postsCards: [Card], likesCards: [Card], collectionsCards: [Card]) {
-        print("&(*&*(&*(&*(&*(")
-        print(likesCards)
-        print("&(*&*(&*(&*(&*(")
+//        print("&(*&*(&*(&*(&*(")
+//        print(likesCards)
+//        print("&(*&*(&*(&*(&*(")
         self.currentUserPostsList = postsCards
         self.currentUserLikesList = likesCards
         self.currentUserCollectionsList = collectionsCards
@@ -313,6 +313,26 @@ class PersonPageViewController: UIViewController, DatabaseListener, DetailChange
         
         if segue.identifier == "goToShowFollowingAndFollowerPage"{
             let destination = segue.destination as? FollowingFollowerViewController
+            print("goToShowFollowingAndFollowerPage1: \(self.currentUser)")
+            print("goToShowFollowingAndFollowerPage2: \(self.currentUser!.following!)")
+            print("goToShowFollowingAndFollowerPage2: \(self.currentUser!.follower!)")
+            destination?.followingUsers = self.currentUser!.following!
+            destination?.followerUsers = self.currentUser!.follower!
+            
+//            Task{
+//                do{
+//                    DispatchQueue.main.async {
+//                        self.databaseController?.getUserModel(){ userModel in
+//                            print("goToShowFollowingAndFollowerPage1: \(userModel)")
+//                            print("goToShowFollowingAndFollowerPage2: \(userModel.following!)")
+//                            print("goToShowFollowingAndFollowerPage2: \(userModel.follower!)")
+//                            destination?.followingUsers = userModel.following!
+//                            destination?.followerUsers = userModel.follower!
+//
+//                        }
+//                    }
+//                }
+//            }
             
         }
         
