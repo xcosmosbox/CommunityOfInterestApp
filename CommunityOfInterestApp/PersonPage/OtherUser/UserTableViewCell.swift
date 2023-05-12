@@ -65,45 +65,16 @@ class UserTableViewCell: UITableViewCell {
                                 self.profileImageView.image = userProfileImage
                             }
                         }
-                        self.followButton.isHidden = !showFollowButton
+                    }
+                    self.followButton.isHidden = !showFollowButton
 
-                        if showFollowButton {
-                //            followButton.setTitle(isFollowing ? "Following" : "Follow", for: .normal)
-                //            followButton.backgroundColor = isFollowing ? .gray : .red
-                            self.followButton.setTitle("Following", for: .normal)
-                            self.followButton.backgroundColor = .gray
-                        }
+                    if showFollowButton {
+                        self.followButton.setTitle("Following", for: .normal)
+                        self.followButton.backgroundColor = .gray
                     }
                     
                     
-                    
                 }
-//                userDocRef.getDocument(){ (snapshot, error) in
-//                    self.usernameLabel.text = snapshot?.data()!["name"] as? String
-//
-//                    let path = snapshot?.data()!["profile_image"] as? String
-//
-                    // set profile iamge
-//                    let gsReference = Storage.storage().reference(forURL: path!)
-//                    gsReference.getData(maxSize: 10 * 1024 * 1024){ data, error in
-//                        if let error = error{
-//                            print("error!: \(error)")
-//                        } else{
-//                            let userProfileImage = UIImage(data: data!)
-//                            // set the post image view's image
-//                            self.profileImageView.image = userProfileImage
-//                        }
-//                    }
-//
-//                    self.followButton.isHidden = !showFollowButton
-//
-//                    if showFollowButton {
-//            //            followButton.setTitle(isFollowing ? "Following" : "Follow", for: .normal)
-//            //            followButton.backgroundColor = isFollowing ? .gray : .red
-//                        self.followButton.setTitle("Following", for: .normal)
-//                        self.followButton.backgroundColor = .gray
-//                    }
-//                }
             }
         }
         
