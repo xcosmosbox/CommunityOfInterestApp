@@ -265,6 +265,15 @@ class PersonPageViewController: UIViewController, DatabaseListener, DetailChange
         var userProfileLabelGesture = UITapGestureRecognizer(target: self, action: #selector(toEditUserProfileContent))
         self.userProfileLabel.addGestureRecognizer(userProfileLabelGesture)
         
+        self.userFollowingNumber.isUserInteractionEnabled = true
+        var userFollowingNumberGesture = UITapGestureRecognizer(target: self, action: #selector(toShowFollowingAndFollower))
+        self.userFollowingNumber.addGestureRecognizer(userFollowingNumberGesture)
+        
+        self.userFollowerLabel.isUserInteractionEnabled = true
+        var userFollowerLabelGesture = UITapGestureRecognizer(target: self, action: #selector(toShowFollowingAndFollower))
+        self.userFollowerLabel.addGestureRecognizer(userFollowerLabelGesture)
+        
+        
         
     }
     
@@ -279,7 +288,12 @@ class PersonPageViewController: UIViewController, DatabaseListener, DetailChange
     }
     
     @objc func toEditUserProfileContent(){
-        performSegue(withIdentifier: "goToEditProfileContentPage", sender: self.userNameLabel.text)
+        performSegue(withIdentifier: "goToEditProfileContentPage", sender: self.userProfileLabel.text)
+        
+    }
+    
+    @objc func toShowFollowingAndFollower(){
+        performSegue(withIdentifier: "goToShowFollowingAndFollowerPage", sender: self)
         
     }
     
@@ -294,6 +308,11 @@ class PersonPageViewController: UIViewController, DatabaseListener, DetailChange
         if segue.identifier == "goToEditUsernamePage"{
             let destination = segue.destination as? UsernameEditViewController
             destination?.username = sender as? String
+            
+        }
+        
+        if segue.identifier == "goToShowFollowingAndFollowerPage"{
+            let destination = segue.destination as? FollowingFollowerViewController
             
         }
         

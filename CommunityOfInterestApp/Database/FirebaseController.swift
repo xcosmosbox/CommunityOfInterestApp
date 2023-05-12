@@ -12,6 +12,8 @@ import FirebaseStorage
 
 class FirebaseController: NSObject, DatabaseProtocol {
 
+    
+
 
     
 
@@ -617,6 +619,30 @@ class FirebaseController: NSObject, DatabaseProtocol {
             }
             
             completion(userModel)
+        }
+    }
+    
+    func getCurrentUserUID() -> String{
+        return currentUser!.uid
+    }
+    
+    func getCurrentUserFollowing(completion: @escaping ([DocumentReference]) -> Void) async{
+        Task{
+            do{
+                try await database.document(currentUser!.uid).getDocument(){ (snapshot, error) in
+                    completion((snapshot?.data()!["following"])! as! [DocumentReference])
+                }
+            }
+        }
+    }
+    
+    func getCurrentUserFollower(completion: @escaping ([DocumentReference]) -> Void) async {
+        Task{
+            do{
+                try await database.document(currentUser!.uid).getDocument(){ (snapshot, error) in
+                    completion((snapshot?.data()!["follower"])! as! [DocumentReference])
+                }
+            }
         }
     }
     

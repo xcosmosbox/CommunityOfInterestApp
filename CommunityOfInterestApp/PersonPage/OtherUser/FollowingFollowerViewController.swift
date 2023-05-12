@@ -24,6 +24,13 @@ class FollowingFollowerViewController: UIViewController, UITableViewDelegate, UI
     let refreshControl = UIRefreshControl()
     var isFetchingData = false // to avoid fetching data multiple items
     
+    var lastFollowingDocument: DocumentSnapshot?
+    var isLastFollowingPage = false
+
+    var lastFollowerDocument: DocumentSnapshot?
+    var isLastFollowerPage = false
+
+    weak var databaseController: DatabaseProtocol? = (UIApplication.shared.delegate as? AppDelegate)?.databaseController
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -44,6 +51,17 @@ class FollowingFollowerViewController: UIViewController, UITableViewDelegate, UI
     @objc func refreshData() {
         // Fetch the data again and reload the table view
         // Remember to call refreshControl.endRefreshing() when the request is done
+        followingUsers.removeAll()
+        lastFollowingDocument = nil
+        isLastFollowingPage = false
+
+        followerUsers.removeAll()
+        lastFollowerDocument = nil
+        isLastFollowerPage = false
+
+        fetchNextPage()
+
+        refreshControl.endRefreshing()
     }
     
     @objc func segmentedControlChanged() {
@@ -79,7 +97,72 @@ class FollowingFollowerViewController: UIViewController, UITableViewDelegate, UI
     func fetchNextPage() {
         // Fetch the next page of data here
         // Remember to set isFetchingData = false when the request is done
+        if segmentedControl.selectedSegmentIndex == 0 {
+            fetchFollowing()
+        } else if segmentedControl.selectedSegmentIndex == 1 {
+            fetchFollowers()
+        }
     }
+    
+    func fetchFollowing() {
+        if isLastFollowingPage {
+            return
+        }
+
+        var query = Firestore.firestore().collection("user")
+            .document((databaseController?.getCurrentUserUID())!)
+            .collection("following")
+            .order(by: "name")
+            .limit(to: 10)
+        if let lastDocument = lastFollowingDocument {
+            query = query.start(afterDocument: lastDocument)
+        }
+
+        query.getDocuments { snapshot, error in
+            guard let documents = snapshot?.documents else {
+                print("Error fetching documents: \(error!)")
+                self.isFetchingData = false
+                return
+            }
+
+            self.followingUsers.append(contentsOf: documents.map { $0.reference })
+            self.lastFollowingDocument = documents.last
+            self.isLastFollowingPage = documents.count < 20
+            self.tableView.reloadData()
+            self.isFetchingData = false
+        }
+    }
+    
+    func fetchFollowers() {
+        if isLastFollowerPage {
+            return
+        }
+
+        var query = Firestore.firestore().collection("user")
+            .document((databaseController?.getCurrentUserUID())!)
+            .collection("followers")
+            .order(by: "name")
+            .limit(to: 10)
+        if let lastDocument = lastFollowerDocument {
+            query = query.start(afterDocument: lastDocument)
+        }
+
+        query.getDocuments { snapshot, error in
+            guard let documents = snapshot?.documents else {
+                print("Error fetching documents: \(error!)")
+                self.isFetchingData = false
+                return
+            }
+
+            self.followerUsers.append(contentsOf: documents.map { $0.reference })
+            self.lastFollowerDocument = documents.last
+            self.isLastFollowerPage = documents.count < 20
+            self.tableView.reloadData()
+            self.isFetchingData = false
+        }
+    }
+
+
     
     
     
