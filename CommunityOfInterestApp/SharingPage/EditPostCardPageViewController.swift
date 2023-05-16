@@ -22,6 +22,7 @@ class EditPostCardPageViewController: UIViewController, UICollectionViewDataSour
     var weatherInfo: Int?
     var weatherLocation: String?
     var pushTime: String?
+    var pushInfo: (temp_c:Int, location:String, pushTime:String)? = nil
     var locationManager = CLLocationManager()
     
     let tags = ["Food", "Pet", "Travel", "Nature", "Game", "Sport", "Music"] // tags
@@ -99,6 +100,7 @@ class EditPostCardPageViewController: UIViewController, UICollectionViewDataSour
         print("djoiasjdioa: \(self.weatherInfo)")
         print("daoshdoua: \(self.weatherLocation)")
         print("psuhtiem: \(self.pushTime)")
+        print("pushinfo: \(pushInfo)")
     }
 
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
@@ -117,6 +119,10 @@ class EditPostCardPageViewController: UIViewController, UICollectionViewDataSour
                         let location = json["location"] as! [String : Any]
                         self.weatherLocation = location["tz_id"] as? String
                         self.pushTime = location["localtime"] as? String
+                        if let weather_c = self.weatherInfo, let currtLocation = self.weatherLocation, let time = self.pushTime{
+//                            (temp_c:Int, location:String, pushTime:String)
+                            self.pushInfo = (temp_c:weather_c, location:currtLocation, pushTime:time)
+                        }
 //                        print(current)
 //                        print(type(of: current["temp_c"]))
 //                        print("sweather: \(self.weatherInfo)")
@@ -291,7 +297,7 @@ class EditPostCardPageViewController: UIViewController, UICollectionViewDataSour
     @objc func uploadButtonTapped() {
         let selectedTags = tagButtons.filter { $0.isSelected }.map { $0.title(for: .normal)! }
 
-        databaseController?.uploadCurrentImagesForCard(title: titleTextField.text!, content: contentTextView.text, selectedTags: selectedTags) { (documentReference, createdCard) in
+        databaseController?.uploadCurrentImagesForCard(title: titleTextField.text!, content: contentTextView.text, selectedTags: selectedTags, weatherInfo: self.pushInfo) { (documentReference, createdCard) in
             
             print("&^^^^^^^^^^^^^")
             print(createdCard.id)

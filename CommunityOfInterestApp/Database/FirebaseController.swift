@@ -931,49 +931,95 @@ class FirebaseController: NSObject, DatabaseProtocol {
         self.currentImages.removeAll()
     }
     
-    func uploadCurrentImagesForCard(title: String, content: String, selectedTags: [String], completion: @escaping (DocumentReference, Card) -> Void) {
+    func uploadCurrentImagesForCard(title: String, content: String, selectedTags: [String], weatherInfo:(temp_c:Int, location:String, pushTime:String)?, completion: @escaping (DocumentReference, Card) -> Void) {
         self.currentImagesCounter = 0
         
-        Task{
-            let folderPath = "images/\(self.currentUser?.uid ?? "hFeuyISsXUWxdOUV5LynsgIH4lC2")/"
-            do{
-                self.createPostCardForFirebase(title: title, content: content, selectedTags: selectedTags){ (createdPostCardRef, createdCard) in
-                    for image in self.currentImages{
-                        DispatchQueue.main.async {
-                            self.uploadImageToStorage(folderPath: folderPath, image: image){ storageLocationStr in
-                                DispatchQueue.main.async {
-                                    if self.currentImagesCounter == 0{
-                                        createdPostCardRef.updateData([
-                                            "cover":"gs://fit3178-final-ci-app.appspot.com/\(storageLocationStr)"
-                                        ])
-                                        createdCard.cover = "gs://fit3178-final-ci-app.appspot.com/\(storageLocationStr)"
-                                    }
-                                    createdPostCardRef.updateData([
-                                        "picture": FieldValue.arrayUnion(["gs://fit3178-final-ci-app.appspot.com/\(storageLocationStr)"])
-                                    ]){_ in
-                                        createdCard.picture?.append("gs://fit3178-final-ci-app.appspot.com/\(storageLocationStr)")
-                                        self.currentImagesCounter += 1
-                                        if self.currentImagesCounter == self.currentImages.count{
-                                            completion(createdPostCardRef, createdCard)
+        if weatherInfo != nil{
+            Task{
+                let newContent = content + "\n\nCity:\(weatherInfo?.location)  Time:\(weatherInfo?.pushTime)  Temperature:\(weatherInfo?.temp_c)"
+                let folderPath = "images/\(self.currentUser?.uid ?? "hFeuyISsXUWxdOUV5LynsgIH4lC2")/"
+                do{
+                    self.createPostCardForFirebase(title: title, content: newContent, selectedTags: selectedTags){ (createdPostCardRef, createdCard) in
+                        for image in self.currentImages{
+                            DispatchQueue.main.async {
+                                self.uploadImageToStorage(folderPath: folderPath, image: image){ storageLocationStr in
+                                    DispatchQueue.main.async {
+                                        if self.currentImagesCounter == 0{
+                                            createdPostCardRef.updateData([
+                                                "cover":"gs://fit3178-final-ci-app.appspot.com/\(storageLocationStr)"
+                                            ])
+                                            createdCard.cover = "gs://fit3178-final-ci-app.appspot.com/\(storageLocationStr)"
                                         }
+                                        createdPostCardRef.updateData([
+                                            "picture": FieldValue.arrayUnion(["gs://fit3178-final-ci-app.appspot.com/\(storageLocationStr)"])
+                                        ]){_ in
+                                            createdCard.picture?.append("gs://fit3178-final-ci-app.appspot.com/\(storageLocationStr)")
+                                            self.currentImagesCounter += 1
+                                            if self.currentImagesCounter == self.currentImages.count{
+                                                completion(createdPostCardRef, createdCard)
+                                            }
+                                        }
+                                        
+                                        
+                                        
+                                        
                                     }
                                     
                                     
-                                    
-                                    
+                                   
                                 }
-                                
-                                
-                               
                             }
+                            
                         }
                         
+                        
                     }
-                    
-                    
+                }
+            }
+        } else {
+            Task{
+                let folderPath = "images/\(self.currentUser?.uid ?? "hFeuyISsXUWxdOUV5LynsgIH4lC2")/"
+                do{
+                    self.createPostCardForFirebase(title: title, content: content, selectedTags: selectedTags){ (createdPostCardRef, createdCard) in
+                        for image in self.currentImages{
+                            DispatchQueue.main.async {
+                                self.uploadImageToStorage(folderPath: folderPath, image: image){ storageLocationStr in
+                                    DispatchQueue.main.async {
+                                        if self.currentImagesCounter == 0{
+                                            createdPostCardRef.updateData([
+                                                "cover":"gs://fit3178-final-ci-app.appspot.com/\(storageLocationStr)"
+                                            ])
+                                            createdCard.cover = "gs://fit3178-final-ci-app.appspot.com/\(storageLocationStr)"
+                                        }
+                                        createdPostCardRef.updateData([
+                                            "picture": FieldValue.arrayUnion(["gs://fit3178-final-ci-app.appspot.com/\(storageLocationStr)"])
+                                        ]){_ in
+                                            createdCard.picture?.append("gs://fit3178-final-ci-app.appspot.com/\(storageLocationStr)")
+                                            self.currentImagesCounter += 1
+                                            if self.currentImagesCounter == self.currentImages.count{
+                                                completion(createdPostCardRef, createdCard)
+                                            }
+                                        }
+                                        
+                                        
+                                        
+                                        
+                                    }
+                                    
+                                    
+                                   
+                                }
+                            }
+                            
+                        }
+                        
+                        
+                    }
                 }
             }
         }
+        
+
         
         
     }
