@@ -93,7 +93,17 @@ class DetailViewController: UIViewController{
         print("+++++")
         
         
-        pageControlBar.numberOfPages = (card?.picture!.count)!
+        var pageCounter = 0
+        card?.picture?.forEach{ _ in
+            pageCounter += 1
+        }
+        card?.video?.forEach{ _ in
+            pageCounter += 1
+        }
+        card?.audio?.forEach{ _ in
+            pageCounter += 1
+        }
+        pageControlBar.numberOfPages = pageCounter
         
         
 //        TitleTextLabel.numberOfLines = 0

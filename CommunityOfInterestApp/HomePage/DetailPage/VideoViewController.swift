@@ -65,7 +65,7 @@ class VideoViewController: MediaViewController {
                         playerViewController.didMove(toParent: self)
                         
                         // play
-                        playerViewController.player?.play()
+//                        playerViewController.player?.play()
                         
                     } catch {
                         // error
