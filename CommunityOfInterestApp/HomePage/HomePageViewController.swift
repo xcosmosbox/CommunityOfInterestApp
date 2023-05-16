@@ -53,7 +53,7 @@ class HomePageViewController: UIViewController, DatabaseListener, DetailChangeDe
 
     
     @IBAction func gotoSearchPageAction(_ sender: Any) {
-        performSegue(withIdentifier: "gotoSearchPage", sender: self)
+        performSegue(withIdentifier: "goToSearchPage", sender: self)
     }
     
     
