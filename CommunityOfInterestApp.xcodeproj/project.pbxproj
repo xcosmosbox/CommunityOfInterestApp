@@ -50,6 +50,7 @@
 		276ECF8629F6D5A0005101B9 /* Card.swift in Sources */ = {isa = PBXBuildFile; fileRef = 276ECF8529F6D5A0005101B9 /* Card.swift */; };
 		276ECF8829F6D5FB005101B9 /* Tag.swift in Sources */ = {isa = PBXBuildFile; fileRef = 276ECF8729F6D5FB005101B9 /* Tag.swift */; };
 		276ECF8A29F6D719005101B9 /* FirebaseController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 276ECF8929F6D719005101B9 /* FirebaseController.swift */; };
+		277DA2EB2A13A9FA0075AC16 /* AudioViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 277DA2EA2A13A9FA0075AC16 /* AudioViewController.swift */; };
 		27A981612A01346000829C39 /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27A981602A01346000829C39 /* User.swift */; };
 		27B63E552A01168800BCE0CA /* PersonPageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27B63E542A01168800BCE0CA /* PersonPageViewController.swift */; };
 		27B979702A13417000844D7A /* SearchCardPageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27B9796F2A13417000844D7A /* SearchCardPageViewController.swift */; };
@@ -103,6 +104,7 @@
 		276ECF8529F6D5A0005101B9 /* Card.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Card.swift; sourceTree = "<group>"; };
 		276ECF8729F6D5FB005101B9 /* Tag.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Tag.swift; sourceTree = "<group>"; };
 		276ECF8929F6D719005101B9 /* FirebaseController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirebaseController.swift; sourceTree = "<group>"; };
+		277DA2EA2A13A9FA0075AC16 /* AudioViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudioViewController.swift; sourceTree = "<group>"; };
 		27A981602A01346000829C39 /* User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
 		27B63E542A01168800BCE0CA /* PersonPageViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PersonPageViewController.swift; sourceTree = "<group>"; };
 		27B9796F2A13417000844D7A /* SearchCardPageViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchCardPageViewController.swift; sourceTree = "<group>"; };
@@ -279,6 +281,7 @@
 				270AD1EC29FE6AAF0034BBD3 /* PicturesViewController.swift */,
 				27B979722A136BD600844D7A /* VideoViewController.swift */,
 				27B979752A13721100844D7A /* MediaViewController.swift */,
+				277DA2EA2A13A9FA0075AC16 /* AudioViewController.swift */,
 			);
 			path = DetailPage;
 			sourceTree = "<group>";
@@ -402,6 +405,7 @@
 				270AD1EB29FE6A340034BBD3 /* PageImageViewController.swift in Sources */,
 				270BFF2C29E4018D00850009 /* HorizontalMenuBarComponent.swift in Sources */,
 				276ECF8629F6D5A0005101B9 /* Card.swift in Sources */,
+				277DA2EB2A13A9FA0075AC16 /* AudioViewController.swift in Sources */,
 				27B979732A136BD600844D7A /* VideoViewController.swift in Sources */,
 				276355D529F53A72006046AA /* MulticastDelegate.swift in Sources */,
 				270AD1ED29FE6AAF0034BBD3 /* PicturesViewController.swift in Sources */,

@@ -1,5 +1,5 @@
 //
-//  VideoViewController.swift
+//  AudioViewController.swift
 //  CommunityOfInterestApp
 //
 //  Created by Yuxiang Feng on 16/5/2023.
@@ -10,17 +10,17 @@ import AVKit
 import AVFoundation
 import FirebaseStorage
 
-class VideoViewController: MediaViewController {
+class AudioViewController: MediaViewController {
     
-    
-    let videoURL: String
+    let audioURL: String
     let storage = Storage.storage()
-
-    init(videoURL: String) {
-        self.videoURL = videoURL.replacingOccurrences(of: "gs://", with: "https://storage.googleapis.com/")
-        super.init(mediaURL: videoURL)
+//    var audioPlayer: AVAudioPlayer?
+    
+    init(audioURL: String) {
+        self.audioURL = audioURL
+        super.init(mediaURL: audioURL)
     }
-
+    
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
@@ -35,13 +35,13 @@ class VideoViewController: MediaViewController {
             // download
             gsReference.getData(maxSize: 100 * 1024 * 1024){ (data, error) in
                 if let error = error{
-                    print("error for download VideoViewController: \(error)")
+                    print("error for download AudioViewController: \(error)")
                     return
                 }
                 
                 if let data = data{
                     let temporaryDirectory = NSTemporaryDirectory()
-                    let temporaryFileURL = URL(fileURLWithPath: temporaryDirectory).appendingPathComponent("temp_\(UUID().uuidString).mp4")
+                    let temporaryFileURL = URL(fileURLWithPath: temporaryDirectory).appendingPathComponent("temp_\(UUID().uuidString).mp3")
                     
                     do {
                         // write data
@@ -79,6 +79,43 @@ class VideoViewController: MediaViewController {
             }
         }
         
+//        if let gsURL = URL(string: audioURL) {
+//            let gsReference = storage.reference(forURL: gsURL.absoluteString)
+//
+//            gsReference.getData(maxSize: 100 * 1024 * 1024) { (data, error) in
+//                if let error = error {
+//                    print("Error downloading audio: \(error)")
+//                    return
+//                }
+//
+//                if let data = data {
+//                    print(data)
+//                    let temporaryDirectory = NSTemporaryDirectory()
+//                    let temporaryFileURL = URL(fileURLWithPath: temporaryDirectory).appendingPathComponent("temp_\(UUID().uuidString).mp3")
+//                    print("dhjouahwuoda\(temporaryFileURL)")
+//                    do {
+//                        print("1")
+//                        try data.write(to: temporaryFileURL)
+//                        print("temo\(temporaryFileURL)")
+//
+//                        print("2")
+//
+//                        let audioPlayer = try AVAudioPlayer(contentsOf: temporaryFileURL)
+//
+//                        print("audio:\(audioPlayer)")
+//
+//
+//                        audioPlayer.prepareToPlay()
+////                        audioPlayer.play()
+//
+//                    } catch {
+//                        print("Error writing or playing audio file: \(error)")
+//                    }
+//                } else {
+//                    print("No data received for audio file.")
+//                }
+//            }
+//        }
     }
     
 
@@ -91,5 +128,9 @@ class VideoViewController: MediaViewController {
         // Pass the selected object to the new view controller.
     }
     */
+//
+//    override func viewWillDisappear(_ animated: Bool) {
+//        self.audioPlayer?.stop()
+//    }
 
 }

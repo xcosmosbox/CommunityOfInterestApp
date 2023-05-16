@@ -35,6 +35,11 @@ class PageImageViewController: UIPageViewController, UIPageViewControllerDataSou
             mediaLoader?.append((MediaType.video, videoURL))
         }
         
+        cardCache?.audio?.forEach{ audioURL in
+            print("audor: \(audioURL)")
+            mediaLoader?.append((MediaType.audio, audioURL))
+        }
+        
         
         
         super.viewDidLoad()
@@ -148,6 +153,8 @@ class PageImageViewController: UIPageViewController, UIPageViewControllerDataSou
             return PicturesViewController(imagePath: media!.url)
         case .video:
             return VideoViewController(videoURL: media!.url)
+        case .audio:
+            return AudioViewController(audioURL: media!.url)
         default:
             return UIViewController()
         }
