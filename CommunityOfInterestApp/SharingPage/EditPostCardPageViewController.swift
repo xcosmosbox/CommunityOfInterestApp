@@ -6,8 +6,9 @@
 //
 
 import UIKit
+import CoreLocation
 
-class EditPostCardPageViewController: UIViewController, UICollectionViewDataSource, UICollectionViewDelegate, UITextViewDelegate, UICollectionViewDelegateFlowLayout, UITextFieldDelegate {
+class EditPostCardPageViewController: UIViewController, UICollectionViewDataSource, UICollectionViewDelegate, UITextViewDelegate, UICollectionViewDelegateFlowLayout, UITextFieldDelegate, CLLocationManagerDelegate {
 
     // Properties
     var imagesArray: [UIImage] = []
@@ -16,6 +17,12 @@ class EditPostCardPageViewController: UIViewController, UICollectionViewDataSour
     var contentTextView: UITextView!
     var uploadButton = UIButton()
     var tagButtons: [UIButton] = []
+    var APIUseStack: UIStackView = UIStackView()
+    let weatherSwitch = UISwitch()
+    var weatherInfo: Int?
+    var weatherLocation: String?
+    var pushTime: String?
+    var locationManager = CLLocationManager()
     
     let tags = ["Food", "Pet", "Travel", "Nature", "Game", "Sport", "Music"] // tags
     
@@ -26,6 +33,15 @@ class EditPostCardPageViewController: UIViewController, UICollectionViewDataSour
     override func viewDidLoad() {
         super.viewDidLoad()
 
+//        let locationManager = CLLocationManager()
+        locationManager.delegate = self
+        let status = locationManager.authorizationStatus
+        if status == .notDetermined{
+            locationManager.requestWhenInUseAuthorization()
+        }
+//        locationManager.requestWhenInUseAuthorization()
+        locationManager.startUpdatingLocation()
+        
         // Do any additional setup after loading the view.
         
         let appDelegate = UIApplication.shared.delegate as? AppDelegate
@@ -34,8 +50,86 @@ class EditPostCardPageViewController: UIViewController, UICollectionViewDataSour
         imagesArray = databaseController!.currentImages
         
         setupCollectionView()
+        
+        setupWeatherButton()
+        
         setupTextFieldsAndTagButtons()
+        
+        
     }
+    
+    func setupWeatherButton() {
+        
+        var apiUseLabel = UILabel()
+        apiUseLabel.text = "Add Weather Into Post"
+        apiUseLabel.textColor = .systemGray2
+        
+
+        weatherSwitch.layer.cornerRadius = 5
+        weatherSwitch.addTarget(self, action: #selector(weatherButtonTapped), for: .touchUpInside)
+        
+        self.APIUseStack.addArrangedSubview(apiUseLabel)
+        self.APIUseStack.addArrangedSubview(weatherSwitch)
+
+        view.addSubview(self.APIUseStack)
+        self.APIUseStack.translatesAutoresizingMaskIntoConstraints = false
+        NSLayoutConstraint.activate([
+            self.APIUseStack.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 20),
+            self.APIUseStack.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -20),
+            self.APIUseStack.topAnchor.constraint(equalTo: collectionView.bottomAnchor, constant: 10)
+        ])
+    }
+
+    @objc func weatherButtonTapped() {
+        weatherSwitch.isSelected = !weatherSwitch.isSelected
+        if weatherSwitch.isSelected {
+            fetchWeatherInfo()
+        } else {
+            weatherInfo = nil
+        }
+    }
+
+    func fetchWeatherInfo() {
+//        print("hahaha")
+        // Request user's location
+//        let locationManager = CLLocationManager()
+//        locationManager.delegate = self
+//        locationManager.requestWhenInUseAuthorization()
+//        locationManager.startUpdatingLocation()
+        print("djoiasjdioa: \(self.weatherInfo)")
+        print("daoshdoua: \(self.weatherLocation)")
+        print("psuhtiem: \(self.pushTime)")
+    }
+
+    func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
+        print("xixixixi")
+        
+        if let location = locations.first {
+            let url = URL(string: "https://api.weatherapi.com/v1/current.json?key=dab97fb14a374905b6a134741231605&q=\(location.coordinate.latitude),\(location.coordinate.longitude)&aqi=no")!
+            print("lat: \(location.coordinate.latitude)")
+            print("lon: \(location.coordinate.longitude)")
+            let task = URLSession.shared.dataTask(with: url) { (data, response, error) in
+                if let data = data {
+                    do {
+                        let json = try JSONSerialization.jsonObject(with: data, options: .mutableContainers) as! [String: Any]
+                        let current = json["current"] as! [String: Any]
+                        self.weatherInfo = current["temp_c"] as? Int
+                        let location = json["location"] as! [String : Any]
+                        self.weatherLocation = location["tz_id"] as? String
+                        self.pushTime = location["localtime"] as? String
+//                        print(current)
+//                        print(type(of: current["temp_c"]))
+//                        print("sweather: \(self.weatherInfo)")
+                    } catch {
+                        print(error)
+                    }
+                }
+            }
+            task.resume()
+        }
+        manager.stopUpdatingLocation()
+    }
+
     
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
@@ -82,7 +176,7 @@ class EditPostCardPageViewController: UIViewController, UICollectionViewDataSour
             collectionView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
             collectionView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
             collectionView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
-            collectionView.heightAnchor.constraint(equalToConstant: UIScreen.main.bounds.width)
+            collectionView.heightAnchor.constraint(equalToConstant: UIScreen.main.bounds.width-40)
         ])
     }
     
@@ -158,7 +252,7 @@ class EditPostCardPageViewController: UIViewController, UICollectionViewDataSour
         NSLayoutConstraint.activate([
             stackView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 20),
             stackView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -20),
-            stackView.topAnchor.constraint(equalTo: collectionView.bottomAnchor, constant: 20)
+            stackView.topAnchor.constraint(equalTo: self.APIUseStack.bottomAnchor, constant: 20)
         ])
         
         tagsStackView.translatesAutoresizingMaskIntoConstraints = false
