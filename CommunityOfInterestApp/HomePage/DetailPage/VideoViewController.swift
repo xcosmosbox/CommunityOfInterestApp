@@ -8,11 +8,13 @@
 import UIKit
 import AVKit
 import AVFoundation
+import FirebaseStorage
 
 class VideoViewController: MediaViewController {
     
     
     let videoURL: String
+    let storage = Storage.storage()
 
     init(videoURL: String) {
         self.videoURL = videoURL.replacingOccurrences(of: "gs://", with: "https://storage.googleapis.com/")
@@ -28,21 +30,55 @@ class VideoViewController: MediaViewController {
 
         // Do any additional setup after loading the view.
         
-        guard let url = URL(string: self.videoURL) else {
-            return
+        if let gsURL = URL(string: mediaURL){
+            let gsReference = storage.reference(forURL: gsURL.absoluteString)
+            // download
+            gsReference.getData(maxSize: 100 * 1024 * 1024){ (data, error) in
+                if let error = error{
+                    print("error for download VideoViewController: \(error)")
+                    return
+                }
+                
+                if let data = data{
+                    let temporaryDirectory = NSTemporaryDirectory()
+                    let temporaryFileURL = URL(fileURLWithPath: temporaryDirectory).appendingPathComponent("temp.mp4")
+                    
+                    do {
+                        // write data
+                        try data.write(to: temporaryFileURL)
+                        
+                        // crate AVPlayerItem to load the temp data
+                        let playerItem = AVPlayerItem(url: temporaryFileURL)
+                        
+                        // create AVPlayer and link to AVPlayerItem
+                        let player = AVPlayer(playerItem: playerItem)
+                        
+                        // create AVPlayerViewController and link to AVPlayer
+                        let playerViewController = AVPlayerViewController()
+                        playerViewController.player = player
+                        
+                        
+                        
+                        self.addChild(playerViewController)
+                        self.view.addSubview(playerViewController.view)
+                        playerViewController.view.frame = self.view.frame
+                        playerViewController.didMove(toParent: self)
+                        
+                        // play
+                        playerViewController.player?.play()
+                        
+                    } catch {
+                        // error
+                        print("Error writing file: \(error)")
+                    }
+                                
+                } else{
+                    print("no data !!!")
+                }
+                
+            }
         }
-
-        let player = AVPlayer(url: url)
-
-        let playerViewController = AVPlayerViewController()
-        playerViewController.player = player
-
-        addChild(playerViewController)
-        view.addSubview(playerViewController.view)
-        playerViewController.view.frame = view.frame
-        playerViewController.didMove(toParent: self)
-
-        player.play()
+        
     }
     
 
