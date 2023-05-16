@@ -7,6 +7,7 @@
 
 import UIKit
 import FirebaseFirestoreSwift
+import Firebase
 
 class Card: NSObject, Codable {
     @DocumentID var id: String?
@@ -18,6 +19,7 @@ class Card: NSObject, Codable {
     var video: [String]? = []
     var audio: [String]? = []
     var username: String?
+    var publisher: DocumentReference?
     
     
     enum CodingKeys: String, CodingKey{
@@ -27,6 +29,7 @@ class Card: NSObject, Codable {
         case cover
         case likes_number
         case picture
+        case publisher
         case video
         case audio
         case username
