@@ -281,7 +281,6 @@ class FirebaseController: NSObject, DatabaseProtocol {
             
             do{
                 parsedCard = try change.document.data(as: Card.self)
-                print(parsedCard?.cover)
             } catch {
                 print("Unable to decode card. Is the card malformed?")
                 return
@@ -293,7 +292,6 @@ class FirebaseController: NSObject, DatabaseProtocol {
             }
             
             if change.type == .added{
-                print(currentCards)
                 currentCards.insert(card, at: Int(change.newIndex))
             } else if change.type == .modified{
                 currentCards[Int(change.oldIndex)] = card

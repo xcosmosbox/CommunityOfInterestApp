@@ -88,6 +88,8 @@ class DetailViewController: UIViewController{
         print(card?.title)
         print(card?.cover)
         print(card?.picture)
+        print(card?.video)
+//        print(card.publisher)
         print("+++++")
         
         

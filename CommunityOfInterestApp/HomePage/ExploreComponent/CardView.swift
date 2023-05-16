@@ -47,7 +47,7 @@ class CardView: UIStackView {
         
         self.homePageController = homepageViewControl
         self.card = card
-        
+//        print(card.video)
         // set itself
         self.axis = .vertical
         self.alignment = .leading
