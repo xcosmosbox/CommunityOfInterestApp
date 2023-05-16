@@ -51,6 +51,12 @@ class HomePageViewController: UIViewController, DatabaseListener, DetailChangeDe
     var initialRightCardStackFrame: CGRect?
     
 
+    
+    @IBAction func gotoSearchPageAction(_ sender: Any) {
+        performSegue(withIdentifier: "gotoSearchPage", sender: self)
+    }
+    
+    
     // home page init
     override func viewDidLoad() {
         super.viewDidLoad()
