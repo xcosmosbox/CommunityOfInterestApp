@@ -51,6 +51,9 @@ class DetailViewController: UIViewController{
             }
         }
         alertController.addAction(option2Action)
+        
+        let cancelAction = UIAlertAction(title: "Cancel", style: .cancel)
+        alertController.addAction(cancelAction)
 
         //show menu
         present(alertController, animated: true, completion: nil)
