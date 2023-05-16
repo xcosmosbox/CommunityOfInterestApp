@@ -1357,7 +1357,7 @@ class FirebaseController: NSObject, DatabaseProtocol {
     
     
     // search posts
-    func fetchPostsForSearch(serachType: String, searchText: String, pageSize: Int, currentDocument: DocumentSnapshot?, completion: @escaping ([Card], DocumentSnapshot) -> Void) {
+    func fetchPostsForSearch(serachType: String, searchText: String, pageSize: Int, currentDocument: DocumentSnapshot?, completion: @escaping ([Card], DocumentSnapshot?) -> Void) {
         var query: Query?
         var cards: [Card] = []
         var newCurrentDocument: DocumentSnapshot? = currentDocument
@@ -1368,8 +1368,8 @@ class FirebaseController: NSObject, DatabaseProtocol {
             query = database.collection("post").whereField("tags", arrayContains: searchText)
         case "Title":
             query = database.collection("post").whereField("title", isEqualTo: searchText)
-        case "Username":
-            query = database.collection("post").whereField("username", isEqualTo: searchText)
+//        case "Username":
+//            query = database.collection("post").whereField("username", isEqualTo: searchText)
         default:
             print("unexpected search type")
             return
@@ -1396,17 +1396,21 @@ class FirebaseController: NSObject, DatabaseProtocol {
                     
                     newCurrentDocument = documentSnapshot!
                     
-                }
-                
-                querySnapshot?.documents.forEach{ doc in
-                    if let card = try? doc.data(as: Card.self){
-                        cards.append(card)
+                    print("newnewnew: \(newCurrentDocument)")
+                    
+                    querySnapshot?.documents.forEach{ doc in
+                        if let card = try? doc.data(as: Card.self){
+                            cards.append(card)
+                        }
                     }
+                    
+                    if cards.count == querySnapshot?.documents.count{
+                        completion(cards, newCurrentDocument)
+                    }
+                    
                 }
                 
-                if cards.count == querySnapshot?.documents.count{
-                    completion(cards, newCurrentDocument!)
-                }
+               
             
                 
             }
