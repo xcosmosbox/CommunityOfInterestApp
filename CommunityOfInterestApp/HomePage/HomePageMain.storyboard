@@ -187,6 +187,9 @@
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <state key="normal" title="Button"/>
                                 <buttonConfiguration key="configuration" style="filled" title="Search"/>
+                                <connections>
+                                    <action selector="buttonSearchAction:" destination="4N0-mz-Zj4" eventType="touchUpInside" id="08C-aN-3rF"/>
+                                </connections>
                             </button>
                             <segmentedControl opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="plain" selectedSegmentIndex="0" translatesAutoresizingMaskIntoConstraints="NO" id="3dv-tr-q67">
                                 <rect key="frame" x="16" y="145" width="361" height="32"/>
@@ -194,8 +197,6 @@
                                 <segments>
                                     <segment title="Tag"/>
                                     <segment title="Title"/>
-                                    <segment title="Content"/>
-                                    <segment title="Username"/>
                                 </segments>
                             </segmentedControl>
                             <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="GkE-3r-48a">
@@ -219,6 +220,13 @@
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                     </view>
                     <navigationItem key="navigationItem" title="Search" id="kqd-Io-SRs"/>
+                    <connections>
+                        <outlet property="leftStack" destination="JtF-gS-1UY" id="f0C-BR-a4X"/>
+                        <outlet property="optionsSegment" destination="3dv-tr-q67" id="OGN-30-JSF"/>
+                        <outlet property="rightStack" destination="K2j-4H-ztf" id="EyN-Vc-bOK"/>
+                        <outlet property="scrollViewComponent" destination="GkE-3r-48a" id="05E-ub-qwo"/>
+                        <outlet property="serachBar" destination="fff-v9-j02" id="Ddn-NL-bMu"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="gQQ-FF-S8Z" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
