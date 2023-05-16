@@ -53,6 +53,7 @@
 		27A981612A01346000829C39 /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27A981602A01346000829C39 /* User.swift */; };
 		27B63E552A01168800BCE0CA /* PersonPageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27B63E542A01168800BCE0CA /* PersonPageViewController.swift */; };
 		27B979702A13417000844D7A /* SearchCardPageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27B9796F2A13417000844D7A /* SearchCardPageViewController.swift */; };
+		27B979732A136BD600844D7A /* VideoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27B979722A136BD600844D7A /* VideoViewController.swift */; };
 		27BC74E72A05FCAB009550B2 /* MultiSelectImagePageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27BC74E62A05FCAB009550B2 /* MultiSelectImagePageViewController.swift */; };
 		27C62EDE2A08D93C00F20767 /* EditPostCardPageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27C62EDD2A08D93C00F20767 /* EditPostCardPageViewController.swift */; };
 		27C62EE02A08DA8B00F20767 /* ImageCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27C62EDF2A08DA8B00F20767 /* ImageCell.swift */; };
@@ -103,6 +104,7 @@
 		27A981602A01346000829C39 /* User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
 		27B63E542A01168800BCE0CA /* PersonPageViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PersonPageViewController.swift; sourceTree = "<group>"; };
 		27B9796F2A13417000844D7A /* SearchCardPageViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchCardPageViewController.swift; sourceTree = "<group>"; };
+		27B979722A136BD600844D7A /* VideoViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VideoViewController.swift; sourceTree = "<group>"; };
 		27BC74E62A05FCAB009550B2 /* MultiSelectImagePageViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MultiSelectImagePageViewController.swift; sourceTree = "<group>"; };
 		27C62EDD2A08D93C00F20767 /* EditPostCardPageViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditPostCardPageViewController.swift; sourceTree = "<group>"; };
 		27C62EDF2A08DA8B00F20767 /* ImageCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageCell.swift; sourceTree = "<group>"; };
@@ -271,6 +273,7 @@
 				275E432029FD5B9100A5916D /* DetailViewController.swift */,
 				270AD1EA29FE6A340034BBD3 /* PageImageViewController.swift */,
 				270AD1EC29FE6AAF0034BBD3 /* PicturesViewController.swift */,
+				27B979722A136BD600844D7A /* VideoViewController.swift */,
 			);
 			path = DetailPage;
 			sourceTree = "<group>";
@@ -393,6 +396,7 @@
 				270AD1EB29FE6A340034BBD3 /* PageImageViewController.swift in Sources */,
 				270BFF2C29E4018D00850009 /* HorizontalMenuBarComponent.swift in Sources */,
 				276ECF8629F6D5A0005101B9 /* Card.swift in Sources */,
+				27B979732A136BD600844D7A /* VideoViewController.swift in Sources */,
 				276355D529F53A72006046AA /* MulticastDelegate.swift in Sources */,
 				270AD1ED29FE6AAF0034BBD3 /* PicturesViewController.swift in Sources */,
 				270BFEF829E3A75000850009 /* ViewController.swift in Sources */,
