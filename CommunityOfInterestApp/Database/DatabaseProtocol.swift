@@ -82,7 +82,7 @@ protocol DatabaseProtocol: AnyObject{
     var currentImagesCounter:Int {get}
     func saveCurrentImagesAsDraft(images:[UIImage])
     func clearCurrentImages()
-    func uploadCurrentImagesForCard(title: String, content: String, selectedTags: [String], completion: @escaping (DocumentReference, Card) -> Void)
+    func uploadCurrentImagesForCard(title: String, content: String, selectedTags: [String], weatherInfo:(temp_c:Int, location:String, pushTime:String)?, completion: @escaping (DocumentReference, Card) -> Void)
     func addPostIntoUser(postDocRef: DocumentReference)
     
     // likes & collections operations
