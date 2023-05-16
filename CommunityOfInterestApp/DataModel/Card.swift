@@ -15,6 +15,8 @@ class Card: NSObject, Codable {
     var cover: String?
     var likes_number: Int?
     var picture: [String]? = []
+    var video: [String]? = []
+    var audio: [String]? = []
     var username: String?
     
     
@@ -25,6 +27,8 @@ class Card: NSObject, Codable {
         case cover
         case likes_number
         case picture
+        case video
+        case audio
         case username
     }
     
