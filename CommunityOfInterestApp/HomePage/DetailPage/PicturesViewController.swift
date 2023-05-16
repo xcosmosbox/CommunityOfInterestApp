@@ -8,7 +8,7 @@
 import UIKit
 import FirebaseStorage
 
-class PicturesViewController: UIViewController {
+class PicturesViewController: MediaViewController {
     
     let imageView = UIImageView()
 //    let image: UIImage
@@ -16,7 +16,8 @@ class PicturesViewController: UIViewController {
     
     init(imagePath: String) {
         self.imagePath = imagePath
-        super.init(nibName: nil, bundle: nil)
+        super.init(mediaURL: imagePath)
+        
     }
     
     required init?(coder: NSCoder) {

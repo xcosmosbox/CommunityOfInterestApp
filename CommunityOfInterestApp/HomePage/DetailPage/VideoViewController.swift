@@ -9,14 +9,14 @@ import UIKit
 import AVKit
 import AVFoundation
 
-class VideoViewController: UIViewController {
+class VideoViewController: MediaViewController {
     
     
     let videoURL: String
 
     init(videoURL: String) {
         self.videoURL = videoURL.replacingOccurrences(of: "gs://", with: "https://storage.googleapis.com/")
-        super.init(nibName: nil, bundle: nil)
+        super.init(mediaURL: videoURL)
     }
 
     required init?(coder: NSCoder) {

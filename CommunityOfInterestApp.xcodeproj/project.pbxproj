@@ -54,6 +54,7 @@
 		27B63E552A01168800BCE0CA /* PersonPageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27B63E542A01168800BCE0CA /* PersonPageViewController.swift */; };
 		27B979702A13417000844D7A /* SearchCardPageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27B9796F2A13417000844D7A /* SearchCardPageViewController.swift */; };
 		27B979732A136BD600844D7A /* VideoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27B979722A136BD600844D7A /* VideoViewController.swift */; };
+		27B979762A13721100844D7A /* MediaViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27B979752A13721100844D7A /* MediaViewController.swift */; };
 		27BC74E72A05FCAB009550B2 /* MultiSelectImagePageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27BC74E62A05FCAB009550B2 /* MultiSelectImagePageViewController.swift */; };
 		27C62EDE2A08D93C00F20767 /* EditPostCardPageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27C62EDD2A08D93C00F20767 /* EditPostCardPageViewController.swift */; };
 		27C62EE02A08DA8B00F20767 /* ImageCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27C62EDF2A08DA8B00F20767 /* ImageCell.swift */; };
@@ -105,6 +106,7 @@
 		27B63E542A01168800BCE0CA /* PersonPageViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PersonPageViewController.swift; sourceTree = "<group>"; };
 		27B9796F2A13417000844D7A /* SearchCardPageViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchCardPageViewController.swift; sourceTree = "<group>"; };
 		27B979722A136BD600844D7A /* VideoViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VideoViewController.swift; sourceTree = "<group>"; };
+		27B979752A13721100844D7A /* MediaViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MediaViewController.swift; sourceTree = "<group>"; };
 		27BC74E62A05FCAB009550B2 /* MultiSelectImagePageViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MultiSelectImagePageViewController.swift; sourceTree = "<group>"; };
 		27C62EDD2A08D93C00F20767 /* EditPostCardPageViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditPostCardPageViewController.swift; sourceTree = "<group>"; };
 		27C62EDF2A08DA8B00F20767 /* ImageCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageCell.swift; sourceTree = "<group>"; };
@@ -274,6 +276,7 @@
 				270AD1EA29FE6A340034BBD3 /* PageImageViewController.swift */,
 				270AD1EC29FE6AAF0034BBD3 /* PicturesViewController.swift */,
 				27B979722A136BD600844D7A /* VideoViewController.swift */,
+				27B979752A13721100844D7A /* MediaViewController.swift */,
 			);
 			path = DetailPage;
 			sourceTree = "<group>";
@@ -402,6 +405,7 @@
 				270BFEF829E3A75000850009 /* ViewController.swift in Sources */,
 				274C2EAB2A0E666400325F9F /* OtherUserDetailViewController.swift in Sources */,
 				276355D929F5542B006046AA /* Post.swift in Sources */,
+				27B979762A13721100844D7A /* MediaViewController.swift in Sources */,
 				274C2EA52A0E0A8500325F9F /* UserTableViewCell.swift in Sources */,
 				27B979702A13417000844D7A /* SearchCardPageViewController.swift in Sources */,
 				274DF89F2A00AB670030A1B2 /* LoginPageViewController.swift in Sources */,
