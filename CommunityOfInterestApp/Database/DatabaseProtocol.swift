@@ -98,6 +98,10 @@ protocol DatabaseProtocol: AnyObject{
     func addUserIntoFollowing(otherUserDocRef: DocumentReference, completion: @escaping () -> Void) async
     func addMeIntoSomeoneFollower(otherUserDocRef: DocumentReference, completion: @escaping () -> Void) async
     
+    // search page
+    func fetchPostsForSearch(serachType:String, searchText:String, pageSize:Int, currentDocument: DocumentSnapshot, completion: @escaping ([Card], DocumentSnapshot) -> Void)
+    
+    
     
 }
 

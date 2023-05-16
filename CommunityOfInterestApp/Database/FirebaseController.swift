@@ -12,6 +12,8 @@ import FirebaseStorage
 
 class FirebaseController: NSObject, DatabaseProtocol {
 
+    
+
 
     
 
@@ -1349,6 +1351,69 @@ class FirebaseController: NSObject, DatabaseProtocol {
                 }
             }
         }
+    }
+    
+    
+    
+    // search posts
+    func fetchPostsForSearch(serachType: String, searchText: String, pageSize: Int, currentDocument: DocumentSnapshot?, completion: @escaping ([Card], DocumentSnapshot) -> Void) {
+        var query: Query?
+        var cards: [Card] = []
+        var newCurrentDocument: DocumentSnapshot? = currentDocument
+        
+        // set the query
+        switch serachType{
+        case "Tag":
+            query = database.collection("post").whereField("tags", arrayContains: searchText)
+        case "Title":
+            query = database.collection("post").whereField("title", isEqualTo: searchText)
+        case "Username":
+            query = database.collection("post").whereField("username", isEqualTo: searchText)
+        default:
+            print("unexpected search type")
+            return
+        }
+        
+        // set start point
+        if currentDocument != nil{
+            query = query?.start(afterDocument: currentDocument!)
+        }
+        
+        // set limit number
+        query = query?.limit(to: pageSize)
+        
+        // to search
+        query?.getDocuments{ (querySnapshot, err) in
+            if let err = err{
+                print("fetchPostsForSearch error: \(err)")
+            } else {
+                // mark last document
+                querySnapshot?.documents.last?.reference.getDocument{ (documentSnapshot, error) in
+                    if let error = error{
+                        print("fetchPostsForSearch newCurrentDocument error: \(error)")
+                    }
+                    
+                    newCurrentDocument = documentSnapshot!
+                    
+                }
+                
+                querySnapshot?.documents.forEach{ doc in
+                    if let card = try? doc.data(as: Card.self){
+                        cards.append(card)
+                    }
+                }
+                
+                if cards.count == querySnapshot?.documents.count{
+                    completion(cards, newCurrentDocument!)
+                }
+            
+                
+            }
+                
+            
+        }
+        
+        
     }
     
     
