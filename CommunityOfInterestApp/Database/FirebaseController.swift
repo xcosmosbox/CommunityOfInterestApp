@@ -815,6 +815,19 @@ class FirebaseController: NSObject, DatabaseProtocol {
         
     }
     
+    func checkIsLikeCard(card: Card, completion: @escaping (Bool) -> Void){
+        Task {
+            do {
+                let arrayField = try await database.collection("user").document(currentUser!.uid).getDocument().data()?["likes"] as? [DocumentReference]
+                let containsCard = arrayField?.contains(where: { $0.documentID == card.id }) ?? false
+                completion(containsCard)
+            } catch {
+                completion(false)
+            }
+        }
+
+    }
+    
     func parsePostsList(referencesList: [DocumentReference]){
         do{
             referencesList.forEach{ referenceDoc in

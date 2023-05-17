@@ -65,6 +65,7 @@ protocol DatabaseProtocol: AnyObject{
     func signup(newEmail:String, newPassword:String)
     func setupUserSelectedTags(tags: [String]) -> Bool
     func parseUserCardViewList()
+    func checkIsLikeCard(card: Card, completion: @escaping (Bool) -> Void)
     func getCurrentUserUID() -> String
     func getCurrentUserFollowing(completion: @escaping ([DocumentReference]) -> Void) async
     func getCurrentUserFollower(completion: @escaping ([DocumentReference]) -> Void) async
