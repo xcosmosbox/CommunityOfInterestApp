@@ -1072,7 +1072,7 @@ class FirebaseController: NSObject, DatabaseProtocol {
             let storageRef = self.fireStorage.reference(withPath: path)
             
             // build the imageData
-            guard let imageData = image.jpegData(compressionQuality: 0.8) else {
+            guard let imageData = image.jpegData(compressionQuality: 0.5) else {
                 // image transfer to data faild
                 return
             }
