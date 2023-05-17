@@ -51,6 +51,9 @@ class DetailViewController: UIViewController{
             }
         }
         alertController.addAction(option2Action)
+        
+        let cancelAction = UIAlertAction(title: "Cancel", style: .cancel)
+        alertController.addAction(cancelAction)
 
         //show menu
         present(alertController, animated: true, completion: nil)
@@ -85,10 +88,22 @@ class DetailViewController: UIViewController{
         print(card?.title)
         print(card?.cover)
         print(card?.picture)
+        print(card?.video)
+//        print(card.publisher)
         print("+++++")
         
         
-        pageControlBar.numberOfPages = (card?.picture!.count)!
+        var pageCounter = 0
+        card?.picture?.forEach{ _ in
+            pageCounter += 1
+        }
+        card?.video?.forEach{ _ in
+            pageCounter += 1
+        }
+        card?.audio?.forEach{ _ in
+            pageCounter += 1
+        }
+        pageControlBar.numberOfPages = pageCounter
         
         
 //        TitleTextLabel.numberOfLines = 0

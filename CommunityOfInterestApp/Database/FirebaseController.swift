@@ -11,6 +11,13 @@ import FirebaseFirestoreSwift
 import FirebaseStorage
 
 class FirebaseController: NSObject, DatabaseProtocol {
+    
+
+    
+
+
+    
+
 
     
 
@@ -274,7 +281,6 @@ class FirebaseController: NSObject, DatabaseProtocol {
             
             do{
                 parsedCard = try change.document.data(as: Card.self)
-                print(parsedCard?.cover)
             } catch {
                 print("Unable to decode card. Is the card malformed?")
                 return
@@ -286,7 +292,6 @@ class FirebaseController: NSObject, DatabaseProtocol {
             }
             
             if change.type == .added{
-                print(currentCards)
                 currentCards.insert(card, at: Int(change.newIndex))
             } else if change.type == .modified{
                 currentCards[Int(change.oldIndex)] = card
@@ -619,6 +624,30 @@ class FirebaseController: NSObject, DatabaseProtocol {
         }
     }
     
+    func getCurrentUserUID() -> String{
+        return currentUser!.uid
+    }
+    
+    func getCurrentUserFollowing(completion: @escaping ([DocumentReference]) -> Void) async{
+        Task{
+            do{
+                try await database.document(currentUser!.uid).getDocument(){ (snapshot, error) in
+                    completion((snapshot?.data()!["following"])! as! [DocumentReference])
+                }
+            }
+        }
+    }
+    
+    func getCurrentUserFollower(completion: @escaping ([DocumentReference]) -> Void) async {
+        Task{
+            do{
+                try await database.document(currentUser!.uid).getDocument(){ (snapshot, error) in
+                    completion((snapshot?.data()!["follower"])! as! [DocumentReference])
+                }
+            }
+        }
+    }
+    
     func getCardModel(cardRef: DocumentReference, completion: @escaping (Card) -> Void){
         var card = Card()
         let cardDocRef = database.collection("post").document(cardRef.documentID).addSnapshotListener {
@@ -667,6 +696,97 @@ class FirebaseController: NSObject, DatabaseProtocol {
         }
         
     }
+    
+    func getUserModelByDocRef(userDocRef: DocumentReference, completion: @escaping (User) -> Void) {
+        var userModel = User()
+        userDocRef.addSnapshotListener {
+            (querySnapshot, error) in
+            
+            guard let querySnapshot = querySnapshot else {
+                print("Failed to get documet for this user getUserModelByDocRef--> \(error!)")
+                return
+            }
+            
+            if querySnapshot.data() == nil{
+                print("Failed to get documet for this user getUserModelByDocRef")
+                return
+            }
+            
+            if let id = querySnapshot.documentID as? String{
+                userModel.id = id
+            }
+            
+            if let name = querySnapshot.data()!["name"] as? String {
+                userModel.name = name
+            }
+            
+            if let profile = querySnapshot.data()!["profile"] as? String {
+                userModel.profile = profile
+            }
+            
+            if let profile_image = querySnapshot.data()!["profile_image"] as? String {
+                userModel.profile_image = profile_image
+            }
+        
+            if let tags = querySnapshot.data()!["tags"] as? [String] {
+                userModel.tags = tags
+            }
+        
+            if let collections = querySnapshot.data()!["collections"] as? [DocumentReference] {
+                userModel.collections = collections
+            }
+            
+            if let follower = querySnapshot.data()!["follower"] as? [DocumentReference] {
+                userModel.follower = follower
+            }
+            
+            if let following = querySnapshot.data()!["following"] as? [DocumentReference] {
+                userModel.following = following
+            }
+            
+            if let likes = querySnapshot.data()!["likes"] as? [DocumentReference] {
+                userModel.likes = likes
+            }
+            
+            if let posts = querySnapshot.data()!["posts"] as? [DocumentReference] {
+                userModel.posts = posts
+            }
+            
+            completion(userModel)
+        }
+    }
+    
+    func getUserPostsListByDocRefArray(postsRefArray:[DocumentReference], completion: @escaping ([Card]) -> Void){
+        var resultPostList:[Card] = []
+        do{
+            postsRefArray.forEach{ referenceDoc in
+                referenceDoc.getDocument{ (document, error) in
+                    if let error = error{
+                        print("error parsePostsList postsRefArray:\(error)")
+                    } else if let document = document{
+                        do{
+                            let card = try document.data(as: Card.self)
+                            if card == nil{
+                                print("Failed to parse card")
+                            }else{
+                                resultPostList.append(card)
+                                
+                            }
+                            if resultPostList.count == postsRefArray.count{
+                                completion(resultPostList)
+                            }
+                            
+                        }catch{
+                            print("error parsePostsList catch:\(error)")
+                        }
+                    }
+                    
+                }
+                
+            }
+        }
+    }
+    
 
     
     
@@ -693,6 +813,19 @@ class FirebaseController: NSObject, DatabaseProtocol {
             }
         }
         
+    }
+    
+    func checkIsLikeCard(card: Card, completion: @escaping (Bool) -> Void){
+        Task {
+            do {
+                let arrayField = try await database.collection("user").document(currentUser!.uid).getDocument().data()?["likes"] as? [DocumentReference]
+                let containsCard = arrayField?.contains(where: { $0.documentID == card.id }) ?? false
+                completion(containsCard)
+            } catch {
+                completion(false)
+            }
+        }
+
     }
     
     func parsePostsList(referencesList: [DocumentReference]){
@@ -811,49 +944,95 @@ class FirebaseController: NSObject, DatabaseProtocol {
         self.currentImages.removeAll()
     }
     
-    func uploadCurrentImagesForCard(title: String, content: String, selectedTags: [String], completion: @escaping (DocumentReference, Card) -> Void) {
+    func uploadCurrentImagesForCard(title: String, content: String, selectedTags: [String], weatherInfo:(temp_c:Int, location:String, pushTime:String)?, completion: @escaping (DocumentReference, Card) -> Void) {
         self.currentImagesCounter = 0
         
-        Task{
-            let folderPath = "images/\(self.currentUser?.uid ?? "hFeuyISsXUWxdOUV5LynsgIH4lC2")/"
-            do{
-                self.createPostCardForFirebase(title: title, content: content, selectedTags: selectedTags){ (createdPostCardRef, createdCard) in
-                    for image in self.currentImages{
-                        DispatchQueue.main.async {
-                            self.uploadImageToStorage(folderPath: folderPath, image: image){ storageLocationStr in
-                                DispatchQueue.main.async {
-                                    if self.currentImagesCounter == 0{
-                                        createdPostCardRef.updateData([
-                                            "cover":"gs://fit3178-final-ci-app.appspot.com/\(storageLocationStr)"
-                                        ])
-                                        createdCard.cover = "gs://fit3178-final-ci-app.appspot.com/\(storageLocationStr)"
-                                    }
-                                    createdPostCardRef.updateData([
-                                        "picture": FieldValue.arrayUnion(["gs://fit3178-final-ci-app.appspot.com/\(storageLocationStr)"])
-                                    ]){_ in
-                                        createdCard.picture?.append("gs://fit3178-final-ci-app.appspot.com/\(storageLocationStr)")
-                                        self.currentImagesCounter += 1
-                                        if self.currentImagesCounter == self.currentImages.count{
-                                            completion(createdPostCardRef, createdCard)
+        if weatherInfo != nil{
+            Task{
+                let newContent = content + "\n\nCity:\(weatherInfo?.location)  Time:\(weatherInfo?.pushTime)  Temperature:\(weatherInfo?.temp_c)"
+                let folderPath = "images/\(self.currentUser?.uid ?? "hFeuyISsXUWxdOUV5LynsgIH4lC2")/"
+                do{
+                    self.createPostCardForFirebase(title: title, content: newContent, selectedTags: selectedTags){ (createdPostCardRef, createdCard) in
+                        for image in self.currentImages{
+                            DispatchQueue.main.async {
+                                self.uploadImageToStorage(folderPath: folderPath, image: image){ storageLocationStr in
+                                    DispatchQueue.main.async {
+                                        if self.currentImagesCounter == 0{
+                                            createdPostCardRef.updateData([
+                                                "cover":"gs://fit3178-final-ci-app.appspot.com/\(storageLocationStr)"
+                                            ])
+                                            createdCard.cover = "gs://fit3178-final-ci-app.appspot.com/\(storageLocationStr)"
                                         }
+                                        createdPostCardRef.updateData([
+                                            "picture": FieldValue.arrayUnion(["gs://fit3178-final-ci-app.appspot.com/\(storageLocationStr)"])
+                                        ]){_ in
+                                            createdCard.picture?.append("gs://fit3178-final-ci-app.appspot.com/\(storageLocationStr)")
+                                            self.currentImagesCounter += 1
+                                            if self.currentImagesCounter == self.currentImages.count{
+                                                completion(createdPostCardRef, createdCard)
+                                            }
+                                        }
+                                        
+                                        
+                                        
+                                        
                                     }
                                     
                                     
-                                    
-                                    
+                                   
                                 }
-                                
-                                
-                               
                             }
+                            
                         }
                         
+                        
                     }
-                    
-                    
+                }
+            }
+        } else {
+            Task{
+                let folderPath = "images/\(self.currentUser?.uid ?? "hFeuyISsXUWxdOUV5LynsgIH4lC2")/"
+                do{
+                    self.createPostCardForFirebase(title: title, content: content, selectedTags: selectedTags){ (createdPostCardRef, createdCard) in
+                        for image in self.currentImages{
+                            DispatchQueue.main.async {
+                                self.uploadImageToStorage(folderPath: folderPath, image: image){ storageLocationStr in
+                                    DispatchQueue.main.async {
+                                        if self.currentImagesCounter == 0{
+                                            createdPostCardRef.updateData([
+                                                "cover":"gs://fit3178-final-ci-app.appspot.com/\(storageLocationStr)"
+                                            ])
+                                            createdCard.cover = "gs://fit3178-final-ci-app.appspot.com/\(storageLocationStr)"
+                                        }
+                                        createdPostCardRef.updateData([
+                                            "picture": FieldValue.arrayUnion(["gs://fit3178-final-ci-app.appspot.com/\(storageLocationStr)"])
+                                        ]){_ in
+                                            createdCard.picture?.append("gs://fit3178-final-ci-app.appspot.com/\(storageLocationStr)")
+                                            self.currentImagesCounter += 1
+                                            if self.currentImagesCounter == self.currentImages.count{
+                                                completion(createdPostCardRef, createdCard)
+                                            }
+                                        }
+                                        
+                                        
+                                        
+                                        
+                                    }
+                                    
+                                    
+                                   
+                                }
+                            }
+                            
+                        }
+                        
+                        
+                    }
                 }
             }
         }
+        
+
         
         
     }
@@ -906,7 +1085,7 @@ class FirebaseController: NSObject, DatabaseProtocol {
             let storageRef = self.fireStorage.reference(withPath: path)
             
             // build the imageData
-            guard let imageData = image.jpegData(compressionQuality: 0.8) else {
+            guard let imageData = image.jpegData(compressionQuality: 0.5) else {
                 // image transfer to data faild
                 return
             }
@@ -1154,6 +1333,150 @@ class FirebaseController: NSObject, DatabaseProtocol {
         }
     }
     
+    
+    
+    func addUserIntoFollowing(otherUserDocRef: DocumentReference, completion: @escaping () -> Void) async {
+        let userDocRef = database.collection("user").document(currentUser!.uid)
+        try await userDocRef.getDocument(){ (snapshot, error) in
+            if let error = error{
+                print("get user doc error: addUserIntoFollowing: \(error)")
+                return
+            }
+            
+            guard let snapshot = snapshot, let arrayField = snapshot.data()?["following"] as? [DocumentReference] else{
+                print("get following fields error: addUserIntoFollowing")
+                return
+            }
+            
+            if arrayField.contains(otherUserDocRef){
+                userDocRef.updateData([
+                    "following": FieldValue.arrayRemove([otherUserDocRef])
+                ]){ (updateError) in
+                    if let updateError = updateError {
+                        print("remove user on following error:addUserIntoFollowing: \(updateError)")
+                    }
+                    print("following contains, then remove it")
+                    completion()
+                }
+            } else{
+                userDocRef.updateData([
+                    "following": FieldValue.arrayUnion([otherUserDocRef])
+                ]){ (updateError) in
+                    if let updateError = updateError {
+                        print("update following on user error:addUserIntoFollowing: \(updateError)")
+                    }
+                    print("following uncontains, then add it")
+                    completion()
+                }
+            }
+            
+        }
+    }
+    
+    func addMeIntoSomeoneFollower(otherUserDocRef: DocumentReference, completion: @escaping () -> Void) async {
+        let userDocRef = database.collection("user").document(currentUser!.uid)
+        try await otherUserDocRef.getDocument(){ (snapshot, error) in
+            if let error = error{
+                print("get user doc error: addMeIntoSomeoneFollower: \(error)")
+                return
+            }
+            
+            guard let snapshot = snapshot, let arrayField = snapshot.data()?["follower"] as? [DocumentReference] else{
+                print("get follower fields error: addMeIntoSomeoneFollower")
+                return
+            }
+            
+            if arrayField.contains(userDocRef){
+                otherUserDocRef.updateData([
+                    "follower": FieldValue.arrayRemove([userDocRef])
+                ]){ (updateError) in
+                    if let updateError = updateError {
+                        print("remove user on follower error:addMeIntoSomeoneFollower: \(updateError)")
+                    }
+                    print("follower contains, then remove it")
+                    completion()
+                }
+            } else{
+                otherUserDocRef.updateData([
+                    "follower": FieldValue.arrayUnion([userDocRef])
+                ]){ (updateError) in
+                    if let updateError = updateError {
+                        print("remove user on follower error:addMeIntoSomeoneFollower: \(updateError)")
+                    }
+                    print("follower uncontains, then add it")
+                    completion()
+                    
+                }
+            }
+        }
+    }
+    
+    
+    
+    // search posts
+    func fetchPostsForSearch(serachType: String, searchText: String, pageSize: Int, currentDocument: DocumentSnapshot?, completion: @escaping ([Card], DocumentSnapshot?) -> Void) {
+        var query: Query?
+        var cards: [Card] = []
+        var newCurrentDocument: DocumentSnapshot? = currentDocument
+        
+        // set the query
+        switch serachType{
+        case "Tag":
+            query = database.collection("post").whereField("tags", arrayContains: searchText)
+        case "Title":
+            query = database.collection("post").whereField("title", isEqualTo: searchText)
+//        case "Username":
+//            query = database.collection("post").whereField("username", isEqualTo: searchText)
+        default:
+            print("unexpected search type")
+            return
+        }
+        
+        // set start point
+        if currentDocument != nil{
+            query = query?.start(afterDocument: currentDocument!)
+        }
+        
+        // set limit number
+        query = query?.limit(to: pageSize)
+        
+        // to search
+        query?.getDocuments{ (querySnapshot, err) in
+            if let err = err{
+                print("fetchPostsForSearch error: \(err)")
+            } else {
+                // mark last document
+                querySnapshot?.documents.last?.reference.getDocument{ (documentSnapshot, error) in
+                    if let error = error{
+                        print("fetchPostsForSearch newCurrentDocument error: \(error)")
+                    }
+                    
+                    newCurrentDocument = documentSnapshot!
+                    
+                    print("newnewnew: \(newCurrentDocument)")
+                    
+                    querySnapshot?.documents.forEach{ doc in
+                        if let card = try? doc.data(as: Card.self){
+                            cards.append(card)
+                        }
+                    }
+                    
+                    if cards.count == querySnapshot?.documents.count{
+                        completion(cards, newCurrentDocument)
+                    }
+                    
+                }
+                
+               
+            
+                
+            }
+                
+            
+        }
+        
+        
+    }
     
     
     

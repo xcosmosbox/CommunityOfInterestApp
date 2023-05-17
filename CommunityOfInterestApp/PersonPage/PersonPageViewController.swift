@@ -217,9 +217,9 @@ class PersonPageViewController: UIViewController, DatabaseListener, DetailChange
     }
     
     func onPersonChange(change: DatabaseChange, postsCards: [Card], likesCards: [Card], collectionsCards: [Card]) {
-        print("&(*&*(&*(&*(&*(")
-        print(likesCards)
-        print("&(*&*(&*(&*(&*(")
+//        print("&(*&*(&*(&*(&*(")
+//        print(likesCards)
+//        print("&(*&*(&*(&*(&*(")
         self.currentUserPostsList = postsCards
         self.currentUserLikesList = likesCards
         self.currentUserCollectionsList = collectionsCards
@@ -265,6 +265,15 @@ class PersonPageViewController: UIViewController, DatabaseListener, DetailChange
         var userProfileLabelGesture = UITapGestureRecognizer(target: self, action: #selector(toEditUserProfileContent))
         self.userProfileLabel.addGestureRecognizer(userProfileLabelGesture)
         
+        self.userFollowingNumber.isUserInteractionEnabled = true
+        var userFollowingNumberGesture = UITapGestureRecognizer(target: self, action: #selector(toShowFollowingAndFollower))
+        self.userFollowingNumber.addGestureRecognizer(userFollowingNumberGesture)
+        
+        self.userFollowerLabel.isUserInteractionEnabled = true
+        var userFollowerLabelGesture = UITapGestureRecognizer(target: self, action: #selector(toShowFollowingAndFollower))
+        self.userFollowerLabel.addGestureRecognizer(userFollowerLabelGesture)
+        
+        
         
     }
     
@@ -279,7 +288,12 @@ class PersonPageViewController: UIViewController, DatabaseListener, DetailChange
     }
     
     @objc func toEditUserProfileContent(){
-        performSegue(withIdentifier: "goToEditProfileContentPage", sender: self.userNameLabel.text)
+        performSegue(withIdentifier: "goToEditProfileContentPage", sender: self.userProfileLabel.text)
+        
+    }
+    
+    @objc func toShowFollowingAndFollower(){
+        performSegue(withIdentifier: "goToShowFollowingAndFollowerPage", sender: self)
         
     }
     
@@ -294,6 +308,31 @@ class PersonPageViewController: UIViewController, DatabaseListener, DetailChange
         if segue.identifier == "goToEditUsernamePage"{
             let destination = segue.destination as? UsernameEditViewController
             destination?.username = sender as? String
+            
+        }
+        
+        if segue.identifier == "goToShowFollowingAndFollowerPage"{
+            let destination = segue.destination as? FollowingFollowerViewController
+            print("goToShowFollowingAndFollowerPage1: \(self.currentUser)")
+            print("goToShowFollowingAndFollowerPage2: \(self.currentUser!.following!)")
+            print("goToShowFollowingAndFollowerPage2: \(self.currentUser!.follower!)")
+            destination?.followingUsers = self.currentUser!.following!
+            destination?.followerUsers = self.currentUser!.follower!
+            
+//            Task{
+//                do{
+//                    DispatchQueue.main.async {
+//                        self.databaseController?.getUserModel(){ userModel in
+//                            print("goToShowFollowingAndFollowerPage1: \(userModel)")
+//                            print("goToShowFollowingAndFollowerPage2: \(userModel.following!)")
+//                            print("goToShowFollowingAndFollowerPage2: \(userModel.follower!)")
+//                            destination?.followingUsers = userModel.following!
+//                            destination?.followerUsers = userModel.follower!
+//
+//                        }
+//                    }
+//                }
+//            }
             
         }
         
