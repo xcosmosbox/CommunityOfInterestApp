@@ -174,7 +174,7 @@ class EditPostCardPageViewController: UIViewController, UICollectionViewDataSour
         collectionView.dataSource = self
         collectionView.delegate = self
         collectionView.register(ImageCell.self, forCellWithReuseIdentifier: "ImageCell")
-        collectionView.backgroundColor = .white
+        collectionView.backgroundColor = .systemBackground
         
         view.addSubview(collectionView)
         collectionView.translatesAutoresizingMaskIntoConstraints = false
@@ -194,7 +194,6 @@ class EditPostCardPageViewController: UIViewController, UICollectionViewDataSour
         
         contentTextView = UITextView()
         contentTextView.text = "Please type the content"
-        contentTextView.textColor = .lightGray
         contentTextView.delegate = self
         
         // set the deafult height for content text view
@@ -370,14 +369,16 @@ class EditPostCardPageViewController: UIViewController, UICollectionViewDataSour
     func textViewDidBeginEditing(_ textView: UITextView) {
         if textView.text == "Please type the content" {
             textView.text = ""
-            textView.textColor = .black
+//            textView.textColor = .black
+            textView.textColor = UIColor(named: "TextViewColor")
         }
     }
 
     func textViewDidEndEditing(_ textView: UITextView) {
         if textView.text.isEmpty {
             textView.text = "Please type the content"
-            textView.textColor = .lightGray
+//            textView.textColor = .lightGray
+            textView.textColor = UIColor(named: "TextViewColor")
         }
     }
 
