@@ -107,7 +107,11 @@ class EditPostCardPageViewController: UIViewController, UICollectionViewDataSour
         print("xixixixi")
         
         if let location = locations.first {
-            let url = URL(string: "https://api.weatherapi.com/v1/current.json?key=dab97fb14a374905b6a134741231605&q=\(location.coordinate.latitude),\(location.coordinate.longitude)&aqi=no")!
+            let appDelegate = UIApplication.shared.delegate as? AppDelegate
+            var apiLink = appDelegate?.getAPIInfo()
+            var api = apiLink! + "&q=\(location.coordinate.latitude),\(location.coordinate.longitude)&aqi=no"
+//            let url = URL(string: "https://api.weatherapi.com/v1/current.json?key=dab97fb14a374905b6a134741231605&q=\(location.coordinate.latitude),\(location.coordinate.longitude)&aqi=no")!
+            let url = URL(string: api)!
             print("lat: \(location.coordinate.latitude)")
             print("lon: \(location.coordinate.longitude)")
             let task = URLSession.shared.dataTask(with: url) { (data, response, error) in
