@@ -949,7 +949,11 @@ class FirebaseController: NSObject, DatabaseProtocol {
         
         if weatherInfo != nil{
             Task{
-                let newContent = content + "\n\nCity:\(weatherInfo?.location)  Time:\(weatherInfo?.pushTime)  Temperature:\(weatherInfo?.temp_c)"
+                var newContent = ""
+                if let loc = weatherInfo?.location, let p_time = weatherInfo?.pushTime, let temp_c = weatherInfo?.temp_c{
+                    newContent = content + "\n\nCity: \(loc)  \nTime: \(p_time)  \nTemperature: \(temp_c)"
+                }
+//                let newContent = content + "\n\nCity:\((weatherInfo?.location)!)  Time:\((weatherInfo?.pushTime!)!)  Temperature:\(weatherInfo?.temp_c!)"
                 let folderPath = "images/\(self.currentUser?.uid ?? "hFeuyISsXUWxdOUV5LynsgIH4lC2")/"
                 do{
                     self.createPostCardForFirebase(title: title, content: newContent, selectedTags: selectedTags){ (createdPostCardRef, createdCard) in
