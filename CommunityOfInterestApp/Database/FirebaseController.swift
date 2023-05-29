@@ -958,9 +958,9 @@ class FirebaseController: NSObject, DatabaseProtocol {
                 do{
                     self.createPostCardForFirebase(title: title, content: newContent, selectedTags: selectedTags){ (createdPostCardRef, createdCard) in
                         for image in self.currentImages{
-                            DispatchQueue.main.async {
+//                            DispatchQueue.main.async {
                                 self.uploadImageToStorage(folderPath: folderPath, image: image){ storageLocationStr in
-                                    DispatchQueue.main.async {
+//                                    DispatchQueue.main.async {
                                         if self.currentImagesCounter == 0{
                                             createdPostCardRef.updateData([
                                                 "cover":"gs://fit3178-final-ci-app.appspot.com/\(storageLocationStr)"
@@ -980,12 +980,12 @@ class FirebaseController: NSObject, DatabaseProtocol {
                                         
                                         
                                         
-                                    }
+//                                    }
                                     
                                     
                                    
                                 }
-                            }
+//                            }
                             
                         }
                         
@@ -1045,14 +1045,17 @@ class FirebaseController: NSObject, DatabaseProtocol {
         
         Task{
             do{
-                self.getUserModel{ userModel in
-                    
-//                    DispatchQueue.main.async {
+                database.collection("user").document(currentUser!.uid).getDocument{ (snapshot, error) in
+                    if let error = error{
+                        print("createPostCardForFirebase error: \(error)")
+                        return
+                    }
+                    if let user_name = snapshot?.data()!["name"] as? String{
                         var postedCard = Card()
                         postedCard.title = title
                         postedCard.content = content
                         postedCard.likes_number = 0
-                        postedCard.username = userModel.name!
+                        postedCard.username = user_name
                         
                         let documentRef = self.database.collection("post").document()
                         documentRef.setData([
@@ -1061,17 +1064,21 @@ class FirebaseController: NSObject, DatabaseProtocol {
                             "cover":"",
                             "likes_number":0,
                             "picture":[],
-                            "publisher":self.database.collection("user").document(userModel.id!),
+                            "publisher":self.database.collection("user").document(snapshot!.documentID),
                             "tags":selectedTags,
                             "title":title,
-                            "username":userModel.name!,
+                            "username":user_name,
                             "video":[]
                         ])
                         postedCard.id = documentRef.documentID
                         
-                        completion(documentRef, postedCard)
+                        print("test createPostCardForFirebase")
                         
-//                    }
+                        completion(documentRef, postedCard)
+                    }
+                    
+                    
+                    
                 }
                 
                

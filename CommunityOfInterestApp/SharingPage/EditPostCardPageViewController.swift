@@ -25,6 +25,9 @@ class EditPostCardPageViewController: UIViewController, UICollectionViewDataSour
     var pushInfo: (temp_c:Int, location:String, pushTime:String)? = nil
     var locationManager = CLLocationManager()
     
+    private var activityIndicator: UIActivityIndicatorView!
+    private var timer: Timer?
+    
     let tags = ["Food", "Pet", "Travel", "Nature", "Game", "Sport", "Music"] // tags
     
     var selectedCard: Card?
@@ -55,6 +58,10 @@ class EditPostCardPageViewController: UIViewController, UICollectionViewDataSour
         setupWeatherButton()
         
         setupTextFieldsAndTagButtons()
+        
+        activityIndicator = UIActivityIndicatorView(style: .medium)
+        activityIndicator.center = view.center
+        view.addSubview(activityIndicator)
         
         
     }
@@ -298,36 +305,73 @@ class EditPostCardPageViewController: UIViewController, UICollectionViewDataSour
     }
     
     @objc func uploadButtonTapped() {
-        let selectedTags = tagButtons.filter { $0.isSelected }.map { $0.title(for: .normal)! }
-
-        databaseController?.uploadCurrentImagesForCard(title: titleTextField.text!, content: contentTextView.text, selectedTags: selectedTags, weatherInfo: self.pushInfo) { (documentReference, createdCard) in
-            
-            print("&^^^^^^^^^^^^^")
-            print(createdCard.id)
-            print(createdCard.picture)
-            print(createdCard.cover)
-            print(createdCard.username)
-            print(createdCard.title)
-            print(createdCard.content)
-            
-            print(documentReference.documentID)
-            print("&^^^^^^^^^^^^^")
-            
-            self.databaseController?.addPostIntoUser(postDocRef: documentReference)
-            
-            // process the upload success content, such as go to the detail page
-            print("upload success")
-            // Save the created card object
-//            self.selectedCard = createdCard
-            self.databaseController!.getCardModel(cardRef: documentReference){ card in
-                self.selectedCard = card
+//        let selectedTags = tagButtons.filter { $0.isSelected }.map { $0.title(for: .normal)! }
+        
+        activityIndicator.startAnimating()
+        timer = Timer.scheduledTimer(withTimeInterval: 3.0, repeats: true){ _ in
+            let selectedTags = self.tagButtons.filter { $0.isSelected }.map { $0.title(for: .normal)! }
+            self.databaseController?.uploadCurrentImagesForCard(title: self.titleTextField.text!, content: self.contentTextView.text, selectedTags: selectedTags, weatherInfo: self.pushInfo) { (documentReference, createdCard) in
                 
-                // Navigate to DetailViewController
-                self.navigateToDetailViewController()
+                print("&^^^^^^^^^^^^^")
+                print(createdCard.id)
+                print(createdCard.picture)
+                print(createdCard.cover)
+                print(createdCard.username)
+                print(createdCard.title)
+                print(createdCard.content)
+                
+                print(documentReference.documentID)
+                print("&^^^^^^^^^^^^^")
+                
+                self.databaseController?.addPostIntoUser(postDocRef: documentReference)
+                
+                // process the upload success content, such as go to the detail page
+                print("upload success")
+                
+               
+                
+                // Save the created card object
+    //            self.selectedCard = createdCard
+                self.databaseController!.getCardModel(cardRef: documentReference){ card in
+                    self.timer?.invalidate()
+                    
+                    self.selectedCard = card
+                    
+                    // Navigate to DetailViewController
+                    self.navigateToDetailViewController()
+                }
+                
             }
-            
-            
         }
+        
+//        databaseController?.uploadCurrentImagesForCard(title: titleTextField.text!, content: contentTextView.text, selectedTags: selectedTags, weatherInfo: self.pushInfo) { (documentReference, createdCard) in
+//
+//            print("&^^^^^^^^^^^^^")
+//            print(createdCard.id)
+//            print(createdCard.picture)
+//            print(createdCard.cover)
+//            print(createdCard.username)
+//            print(createdCard.title)
+//            print(createdCard.content)
+//
+//            print(documentReference.documentID)
+//            print("&^^^^^^^^^^^^^")
+//
+//            self.databaseController?.addPostIntoUser(postDocRef: documentReference)
+//
+//            // process the upload success content, such as go to the detail page
+//            print("upload success")
+//            // Save the created card object
+////            self.selectedCard = createdCard
+//            self.databaseController!.getCardModel(cardRef: documentReference){ card in
+//                self.selectedCard = card
+//
+//                // Navigate to DetailViewController
+//                self.navigateToDetailViewController()
+//            }
+//
+//
+//        }
     }
     
     
