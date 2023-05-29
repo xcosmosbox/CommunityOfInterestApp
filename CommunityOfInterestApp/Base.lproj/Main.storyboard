@@ -208,7 +208,9 @@
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <color key="tintColor" systemColor="systemGreenColor"/>
                                 <state key="normal" title="Button"/>
-                                <buttonConfiguration key="configuration" style="gray" title="Cafe"/>
+                                <buttonConfiguration key="configuration" style="gray" title="Cafe">
+                                    <fontDescription key="titleFontDescription" style="UICTFontTextStyleBody"/>
+                                </buttonConfiguration>
                                 <connections>
                                     <action selector="selectTagAction:" destination="8Ji-NK-AiG" eventType="touchUpInside" id="SOc-yC-Ifx"/>
                                 </connections>
