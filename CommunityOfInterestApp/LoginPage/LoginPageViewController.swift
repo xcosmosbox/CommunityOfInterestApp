@@ -13,6 +13,8 @@ class LoginPageViewController: UIViewController, DatabaseListener {
     
     weak var databaseController: DatabaseProtocol?
     
+    let activityIndicator = UIActivityIndicatorView(style: .large)
+    
     
     
     @IBOutlet weak var emailTextField: UITextField!
@@ -75,11 +77,21 @@ class LoginPageViewController: UIViewController, DatabaseListener {
         databaseController = appDelegate?.databaseController
         
         
+
+        activityIndicator.color = .gray
+        activityIndicator.center = view.center
+        activityIndicator.hidesWhenStopped = true
+        view.addSubview(activityIndicator)
+
+        
         // Do any additional setup after loading the view.
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
+        
+        activityIndicator.startAnimating()
+
         databaseController?.addListener(listener: self)
         
         let defaults = UserDefaults.standard
@@ -93,10 +105,14 @@ class LoginPageViewController: UIViewController, DatabaseListener {
             let email = defaults.string(forKey: "email")
             let password = defaults.string(forKey: "password")
             databaseController?.login(email: email!, password: password!)
-            DispatchQueue.main.async {
-                self.performSegue(withIdentifier: "showAppPage", sender: nil)
-            }
+//            DispatchQueue.main.async {
+//
+//                self.performSegue(withIdentifier: "showAppPage", sender: nil)
+//            }
+        } else{
+            self.activityIndicator.stopAnimating()
         }
+
     }
     
     override func viewWillDisappear(_ animated: Bool) {
@@ -136,6 +152,7 @@ class LoginPageViewController: UIViewController, DatabaseListener {
     func onAuthChange(change: DatabaseChange, userIsLoggedIn: Bool, error: String) {
         if userIsLoggedIn == true{
             DispatchQueue.main.async {
+                self.activityIndicator.stopAnimating()
                 self.performSegue(withIdentifier: "showAppPage", sender: nil)
             }
             
