@@ -428,10 +428,44 @@
         <!--About-->
         <scene sceneID="eFd-Kf-alI">
             <objects>
-                <viewController id="LND-b9-vsU" sceneMemberID="viewController">
+                <viewController id="LND-b9-vsU" customClass="AboutAndThanksViewController" customModule="CommunityOfInterestApp" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="XuP-9Y-8k6">
                         <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" fixedFrame="YES" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="gCk-X0-c8B">
+                                <rect key="frame" x="16" y="103" width="361" height="715"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                                <mutableString key="text">About &amp; Acknowledgments
+====================
+
+1. Unit Professor &amp; Tutor
+-------------------------
+Thanks to the following course teachers for their hard work and guidance:
+
+- [Michael Wybrow] - Thank you for 12 weeks of teaching, each of which is based on the latest best practices. This is extremely effective for the teaching of this course.
+- [ Adrian Price ] - Thank you for your weekly interview suggestions.
+
+2. Third party library
+---------------------
+We are especially grateful to the following third-party libraries, which provide great functionality and support for my software:
+
+- [ Firebase ] - Provides the use of Firebase and Firebase Auth.
+- [ Firebase Storage ] - Provides powerful object storage capabilities.
+
+3. Apple Native Technology Library
+------------------------------------
+Thanks to Apple for providing developers with native technology libraries and frameworks, which provided a stable and efficient basic framework and tools for my software development.
+
+4. ChatGPT
+------------
+I try to use ChatGPT for background checks when I have many questions that I am completely unknown to. Thanks to ChatGPT and OpenAI.</mutableString>
+                                <color key="textColor" systemColor="labelColor"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
+                            </textView>
+                        </subviews>
                         <viewLayoutGuide key="safeArea" id="vmk-On-U79"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                     </view>
@@ -439,7 +473,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="xCh-ab-yC6" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1981" y="11"/>
+            <point key="canvasLocation" x="1980.916030534351" y="10.563380281690142"/>
         </scene>
         <!--Profile Image Edit View Controller-->
         <scene sceneID="vln-Y0-hSp">
@@ -501,6 +535,9 @@
         <image name="person.circle.fill" catalog="system" width="128" height="123"/>
         <image name="person.crop.circle.badge.xmark" catalog="system" width="128" height="114"/>
         <image name="square.and.arrow.up" catalog="system" width="115" height="128"/>
+        <systemColor name="labelColor">
+            <color red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </systemColor>
         <systemColor name="quaternarySystemFillColor">
             <color red="0.45490196078431372" green="0.45490196078431372" blue="0.50196078431372548" alpha="0.080000000000000002" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>
