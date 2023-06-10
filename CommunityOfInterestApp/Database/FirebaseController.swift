@@ -1426,63 +1426,41 @@ class FirebaseController: NSObject, DatabaseProtocol {
     
     // search posts
     func fetchPostsForSearch(serachType:String, searchText:String, completion: @escaping ([Card]) -> Void) {
-        var query: Query?
         var cards: [Card] = []
-        
-        // set the query
-        switch serachType{
-        case "Tag":
-            query = database.collection("post").whereField("tags", arrayContains: searchText)
-        case "Title":
-            query = database.collection("post").whereField("title", isEqualTo: searchText)
-//        case "Username":
-//            query = database.collection("post").whereField("username", isEqualTo: searchText)
-        default:
-            print("unexpected search type")
-            return
-        }
-        
-        // set start point
-//        if currentDocument != nil{
-//            query = query?.start(afterDocument: currentDocument!)
-//        }
-        
-        // set limit number
-//        query = query?.limit(to: pageSize)
-        
-        // to search
-        query?.getDocuments{ (querySnapshot, err) in
-            if let err = err{
-                print("fetchPostsForSearch error: \(err)")
-            } else {
-                // mark last document
-                querySnapshot?.documents.last?.reference.getDocument{ (documentSnapshot, error) in
-                    if let error = error{
-                        print("fetchPostsForSearch newCurrentDocument error: \(error)")
-                    }
-                    
-//                    newCurrentDocument = documentSnapshot!
-                    
-//                    print("newnewnew: \(newCurrentDocument)")
-                    
-                    querySnapshot?.documents.forEach{ doc in
-                        if let card = try? doc.data(as: Card.self){
+            
+        // get all documents from post collection
+        database.collection("post").getDocuments { (querySnapshot, error) in
+            if let error = error {
+                print("fetchPostsForSearch error: \(error)")
+                return
+            }
+            
+            // fuzzy search
+            querySnapshot?.documents.forEach { document in
+                switch serachType {
+                case "Tag":
+                    // according tag
+                    guard let tags = document.data()["tags"] as? [String] else { return }
+                    if tags.contains(where: { $0.range(of: searchText, options: .caseInsensitive) != nil }) {
+                        if let card = try? document.data(as: Card.self) {
                             cards.append(card)
                         }
                     }
-                    
-                    if cards.count == querySnapshot?.documents.count{
-                        completion(cards)
+                case "Title":
+                    // according title
+                    guard let title = document.data()["title"] as? String else { return }
+                    if title.range(of: searchText, options: .caseInsensitive) != nil {
+                        if let card = try? document.data(as: Card.self) {
+                            cards.append(card)
+                        }
                     }
-                    
+                default:
+                    print("unexpected search type")
+                    return
                 }
-                
-               
-            
-                
             }
-                
             
+            completion(cards)
         }
         
         

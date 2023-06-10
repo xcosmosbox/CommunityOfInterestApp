@@ -26,6 +26,11 @@ class SearchCardPageViewController: UIViewController, UIScrollViewDelegate {
     
 
     
+    @IBAction func optionsSegmentedAction(_ sender: Any) {
+        clearScrollViewComponent(initialScrollComponentContentSize: initialScrollComponentContentSize!, initialLeftCardStackFrame: initialLeftCardStackFrame!, initialRightCardStackFrame: initialRightCardStackFrame!)
+        serachBar.text = ""
+        serachBar.placeholder = "Enter search content"
+    }
     
     
     
@@ -75,6 +80,11 @@ class SearchCardPageViewController: UIViewController, UIScrollViewDelegate {
     
     // connection for database
     weak var databaseController: DatabaseProtocol?
+    
+    // record the frame data
+    var initialScrollComponentContentSize: CGSize?
+    var initialLeftCardStackFrame: CGRect?
+    var initialRightCardStackFrame: CGRect?
 
     
     override func viewDidLoad() {
@@ -89,6 +99,11 @@ class SearchCardPageViewController: UIViewController, UIScrollViewDelegate {
         
         scrollViewComponent.delegate = self
         
+        initialScrollComponentContentSize = scrollViewComponent.contentSize
+        initialLeftCardStackFrame = leftStack.frame
+        initialRightCardStackFrame = rightStack.frame
+        
+        serachBar.placeholder = "Enter search content"
     }
     
 
@@ -119,6 +134,30 @@ class SearchCardPageViewController: UIViewController, UIScrollViewDelegate {
         scrollViewComponent.alwaysBounceVertical = true
     }
     
+    
+    func clearScrollViewComponent(initialScrollComponentContentSize: CGSize, initialLeftCardStackFrame: CGRect, initialRightCardStackFrame: CGRect){
+        
+        left_card_list = []
+        right_card_list = []
+        
+        // remove all subview from the stack
+        for view in leftStack.subviews{
+            view.removeFromSuperview()
+        }
+        for view in rightStack.subviews{
+            view.removeFromSuperview()
+        }
+        
+        // restore default frame
+        leftStack.frame = initialLeftCardStackFrame
+        rightStack.frame = initialRightCardStackFrame
+        scrollViewComponent.contentSize = initialScrollComponentContentSize
+        
+        
+        
+        
+        
+    }
     
 
     
