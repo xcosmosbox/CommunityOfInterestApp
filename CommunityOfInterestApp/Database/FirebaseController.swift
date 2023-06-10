@@ -176,7 +176,7 @@ class FirebaseController: NSObject, DatabaseProtocol {
         currentCards = []
         
         if tagNmae == " Explore "{
-            postRef?.limit(to: 15).getDocuments{ (querySnapshot, error) in
+            postRef?.getDocuments{ (querySnapshot, error) in
                 
                 guard let querySnapshot = querySnapshot else{
                     print("Failed to get documents with error on getCommunityContentByTag: \(String(describing: error))")
@@ -190,7 +190,7 @@ class FirebaseController: NSObject, DatabaseProtocol {
         } else {
             let name = tagNmae.trimmingCharacters(in: .whitespacesAndNewlines)
             // get new cards
-            postRef?.whereField("tags", arrayContains: name).limit(to: 10).getDocuments{ (querySnapshot, error) in
+            postRef?.whereField("tags", arrayContains: name).getDocuments{ (querySnapshot, error) in
                 if let error = error{
                     print("error::::\(error)")
                 } else {
@@ -212,7 +212,7 @@ class FirebaseController: NSObject, DatabaseProtocol {
     func setupCurrentCards() {
         
         postRef = database.collection("post")
-        postRef?.limit(to: 15).getDocuments{ (querySnapshot, error) in
+        postRef?.getDocuments{ (querySnapshot, error) in
             
             guard let querySnapshot = querySnapshot else{
                 print("Failed to get documents with error: \(String(describing: error))")
