@@ -28,6 +28,7 @@
 		2712F1C62A0A947900428F7A /* ProfileImageEditViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2712F1C52A0A947900428F7A /* ProfileImageEditViewController.swift */; };
 		2712F1C82A0AA9E500428F7A /* UsernameEditViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2712F1C72A0AA9E500428F7A /* UsernameEditViewController.swift */; };
 		2712F1CA2A0AAD8900428F7A /* EditProfileContentPageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2712F1C92A0AAD8900428F7A /* EditProfileContentPageViewController.swift */; };
+		27255D2F2A347744006BB619 /* SettingPageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27255D2E2A347744006BB619 /* SettingPageViewController.swift */; };
 		272C806229E44B8C004924F7 /* AddTagPageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 272C806129E44B8C004924F7 /* AddTagPageViewController.swift */; };
 		274C2EA52A0E0A8500325F9F /* UserTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 274C2EA42A0E0A8500325F9F /* UserTableViewCell.swift */; };
 		274C2EA72A0E17D300325F9F /* FollowingFollowerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 274C2EA62A0E17D300325F9F /* FollowingFollowerViewController.swift */; };
@@ -86,6 +87,7 @@
 		2712F1C52A0A947900428F7A /* ProfileImageEditViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileImageEditViewController.swift; sourceTree = "<group>"; };
 		2712F1C72A0AA9E500428F7A /* UsernameEditViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UsernameEditViewController.swift; sourceTree = "<group>"; };
 		2712F1C92A0AAD8900428F7A /* EditProfileContentPageViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditProfileContentPageViewController.swift; sourceTree = "<group>"; };
+		27255D2E2A347744006BB619 /* SettingPageViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingPageViewController.swift; sourceTree = "<group>"; };
 		272C806129E44B8C004924F7 /* AddTagPageViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddTagPageViewController.swift; sourceTree = "<group>"; };
 		274C2EA42A0E0A8500325F9F /* UserTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserTableViewCell.swift; sourceTree = "<group>"; };
 		274C2EA62A0E17D300325F9F /* FollowingFollowerViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FollowingFollowerViewController.swift; sourceTree = "<group>"; };
@@ -201,6 +203,7 @@
 				2712F1C42A0A945600428F7A /* EditProfile */,
 				270BFF1A29E3B34C00850009 /* PersonPageMain.storyboard */,
 				27B63E542A01168800BCE0CA /* PersonPageViewController.swift */,
+				27255D2E2A347744006BB619 /* SettingPageViewController.swift */,
 			);
 			path = PersonPage;
 			sourceTree = "<group>";
@@ -417,6 +420,7 @@
 				27B979702A13417000844D7A /* SearchCardPageViewController.swift in Sources */,
 				274DF89F2A00AB670030A1B2 /* LoginPageViewController.swift in Sources */,
 				270BFF2F29E42C7700850009 /* TagBean.swift in Sources */,
+				27255D2F2A347744006BB619 /* SettingPageViewController.swift in Sources */,
 				274F9D4929E57FBC000E174D /* ExploreComponent.swift in Sources */,
 				27BC74E72A05FCAB009550B2 /* MultiSelectImagePageViewController.swift in Sources */,
 				276ECF8429F6CF9E005101B9 /* DatabaseProtocol.swift in Sources */,

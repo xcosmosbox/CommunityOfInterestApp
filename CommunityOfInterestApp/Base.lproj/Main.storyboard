@@ -303,7 +303,7 @@
         <!--Navigation Controller-->
         <scene sceneID="D9b-9X-qfJ">
             <objects>
-                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="ZNP-ne-A0A" sceneMemberID="viewController">
+                <navigationController storyboardIdentifier="LoginNavigationController" automaticallyAdjustsScrollViewInsets="NO" id="ZNP-ne-A0A" sceneMemberID="viewController">
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="Szc-UI-3wz">
                         <rect key="frame" x="0.0" y="59" width="393" height="44"/>
@@ -320,7 +320,7 @@
         </scene>
     </scenes>
     <inferredMetricsTieBreakers>
-        <segue reference="4Sa-dt-w2Q"/>
+        <segue reference="l4A-fr-mfL"/>
     </inferredMetricsTieBreakers>
     <resources>
         <systemColor name="quaternarySystemFillColor">

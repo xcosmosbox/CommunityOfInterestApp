@@ -35,6 +35,9 @@ protocol DatabaseListener: AnyObject{
 }
 
 protocol DatabaseProtocol: AnyObject{
+    
+    var userLoginState: Bool {get set}
+    
     //
     func cleanup()
     func addListener(listener: DatabaseListener)

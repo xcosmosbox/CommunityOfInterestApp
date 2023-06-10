@@ -81,6 +81,22 @@ class LoginPageViewController: UIViewController, DatabaseListener {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         databaseController?.addListener(listener: self)
+        
+        let defaults = UserDefaults.standard
+        var isLogin = defaults.bool(forKey: "isLogin")
+        
+        print("isLogin == true")
+        print(isLogin)
+        print("isLogin == true")
+        
+        if isLogin == true{
+            let email = defaults.string(forKey: "email")
+            let password = defaults.string(forKey: "password")
+            databaseController?.login(email: email!, password: password!)
+            DispatchQueue.main.async {
+                self.performSegue(withIdentifier: "showAppPage", sender: nil)
+            }
+        }
     }
     
     override func viewWillDisappear(_ animated: Bool) {

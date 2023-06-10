@@ -400,6 +400,11 @@ class FirebaseController: NSObject, DatabaseProtocol {
                 currentUser = authDataResult.user
                 userLoginState = true
                 
+                let defaults = UserDefaults.standard
+                defaults.set(true, forKey: "isLogin")
+                defaults.set(email, forKey: "email")
+                defaults.set(password, forKey: "password")
+                
                 let userDocRef = database.collection("user").document(currentUser!.uid)
                 userDocRef.getDocument{ (document, error) in
                     if let document = document, document.exists{
@@ -460,6 +465,11 @@ class FirebaseController: NSObject, DatabaseProtocol {
                 
                 // get user data
                 currentUser = authDataResult.user
+                
+                let defaults = UserDefaults.standard
+                defaults.set(true, forKey: "isLogin")
+                defaults.set(newEmail, forKey: "email")
+                defaults.set(newPassword, forKey: "password")
                 
                 // using user id to create the user document
                 // we need to set the document ID == user id
