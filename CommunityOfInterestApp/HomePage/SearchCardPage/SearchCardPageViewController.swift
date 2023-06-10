@@ -31,7 +31,7 @@ class SearchCardPageViewController: UIViewController, UIScrollViewDelegate {
     
     
     @IBAction func buttonSearchAction(_ sender: Any) {
-        databaseController?.fetchPostsForSearch(serachType: optionsSegment.titleForSegment(at: optionsSegment.selectedSegmentIndex)!, searchText: serachBar.text!, pageSize: self.pageSize, currentDocument: currentDocument){ (searchResult, newCurrentDocument) in
+        databaseController?.fetchPostsForSearch(serachType: optionsSegment.titleForSegment(at: optionsSegment.selectedSegmentIndex)!, searchText: serachBar.text!){ searchResult in
             
             var counter = 0
             if self.left_card_list.count > self.right_card_list.count{
@@ -55,7 +55,6 @@ class SearchCardPageViewController: UIViewController, UIScrollViewDelegate {
                 }
             }
             
-            self.currentDocument = newCurrentDocument
             
             self.refresh()
             
@@ -65,9 +64,8 @@ class SearchCardPageViewController: UIViewController, UIScrollViewDelegate {
     
     
     var posts: [Card] = []
-    var currentDocument: DocumentSnapshot?
+
     
-    let pageSize:Int = 10
     
     var searchType: String = "Tag"
     var serachText: String = ""
@@ -121,42 +119,6 @@ class SearchCardPageViewController: UIViewController, UIScrollViewDelegate {
         scrollViewComponent.alwaysBounceVertical = true
     }
     
-    func scrollViewDidScroll(_ scrollView: UIScrollView) {
-        let offsetY = scrollView.contentOffset.y
-        let contentHeight = scrollView.contentSize.height
-        let height = scrollView.frame.height
-        
-        if offsetY > contentHeight - height {
-            databaseController?.fetchPostsForSearch(serachType: optionsSegment.titleForSegment(at: optionsSegment.selectedSegmentIndex)!, searchText: serachBar.text!, pageSize: self.pageSize, currentDocument: currentDocument){ (searchResult, newCurrentDocument) in
-                
-                var counter = 0
-                if self.left_card_list.count > self.right_card_list.count{
-                    counter = 1
-                } else{
-                    counter = 0
-                }
-                
-                for card in searchResult{
-                    if counter == 0{
-                        let aCardView = CardFactory().buildACardView(username: card.username!, title: card.title!, imagePath: card.cover!, homepageViewControl: self, card: card)
-                        self.left_card_list.append(aCardView)
-                        self.leftStack.addArrangedSubview(aCardView)
-                        counter = 1
-                    } else{
-                        let aCardView = CardFactory().buildACardView(username: card.username!, title: card.title!, imagePath: card.cover!, homepageViewControl: self, card: card)
-                        self.right_card_list.append(aCardView)
-                        self.rightStack.addArrangedSubview(aCardView)
-                        counter = 0
-                    }
-                }
-                
-                self.currentDocument = newCurrentDocument
-                
-                self.refresh()
-                
-            }
-        }
-    }
     
 
     

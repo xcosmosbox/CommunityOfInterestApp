@@ -1425,10 +1425,9 @@ class FirebaseController: NSObject, DatabaseProtocol {
     
     
     // search posts
-    func fetchPostsForSearch(serachType: String, searchText: String, pageSize: Int, currentDocument: DocumentSnapshot?, completion: @escaping ([Card], DocumentSnapshot?) -> Void) {
+    func fetchPostsForSearch(serachType:String, searchText:String, completion: @escaping ([Card]) -> Void) {
         var query: Query?
         var cards: [Card] = []
-        var newCurrentDocument: DocumentSnapshot? = currentDocument
         
         // set the query
         switch serachType{
@@ -1444,12 +1443,12 @@ class FirebaseController: NSObject, DatabaseProtocol {
         }
         
         // set start point
-        if currentDocument != nil{
-            query = query?.start(afterDocument: currentDocument!)
-        }
+//        if currentDocument != nil{
+//            query = query?.start(afterDocument: currentDocument!)
+//        }
         
         // set limit number
-        query = query?.limit(to: pageSize)
+//        query = query?.limit(to: pageSize)
         
         // to search
         query?.getDocuments{ (querySnapshot, err) in
@@ -1462,9 +1461,9 @@ class FirebaseController: NSObject, DatabaseProtocol {
                         print("fetchPostsForSearch newCurrentDocument error: \(error)")
                     }
                     
-                    newCurrentDocument = documentSnapshot!
+//                    newCurrentDocument = documentSnapshot!
                     
-                    print("newnewnew: \(newCurrentDocument)")
+//                    print("newnewnew: \(newCurrentDocument)")
                     
                     querySnapshot?.documents.forEach{ doc in
                         if let card = try? doc.data(as: Card.self){
@@ -1473,7 +1472,7 @@ class FirebaseController: NSObject, DatabaseProtocol {
                     }
                     
                     if cards.count == querySnapshot?.documents.count{
-                        completion(cards, newCurrentDocument)
+                        completion(cards)
                     }
                     
                 }
