@@ -14,35 +14,6 @@ import AVFoundation
 class FirebaseController: NSObject, DatabaseProtocol {
     
     
-    
-    
-
-    
-    
-
-    
-
-
-    
-
-
-    
-
-    
-    
-
-    
- 
-    
-
-    
-
-
-    
-
-    
-
-    
    
     
     var defaultTags: [Tag] = []
@@ -99,8 +70,6 @@ class FirebaseController: NSObject, DatabaseProtocol {
         listeners.addDelegate(listener)
         
         if listener.listenerType == .tag || listener.listenerType == .all || listener.listenerType == .tagAndExp{
-            print("appear HOME")
-            print(defaultTags)
             listener.onTagChange(change: .update, tags: self.defaultTags)
         }
         
@@ -245,7 +214,6 @@ class FirebaseController: NSObject, DatabaseProtocol {
             
             do {
                 parsedTag = try change.document.data(as: Tag.self)
-                print(parsedTag?.name)
             } catch {
                 print("Unable to decode tag. Is the tag malformed?")
                 return
@@ -257,7 +225,6 @@ class FirebaseController: NSObject, DatabaseProtocol {
             }
             
             if change.type == .added{
-                print(defaultTags)
                 defaultTags.insert(tag, at: Int(change.newIndex))
             } else if change.type == .modified{
                 defaultTags[Int(change.oldIndex)] = tag
@@ -307,15 +274,6 @@ class FirebaseController: NSObject, DatabaseProtocol {
             } else if change.type == .removed {
                 currentCards.remove(at: Int(change.oldIndex))
             }
-            
-//            listeners.invoke{ (listener) in
-//                if listener.listenerType == ListenerType.explore || listener.listenerType == ListenerType.all || listener.listenerType == .tagAndExp{
-//                    listener.onExploreChange(change: .update, cards: self.currentCards)
-//                }
-//
-//            }
-            
-            
         }
         
         listeners.invoke{ (listener) in
@@ -329,10 +287,7 @@ class FirebaseController: NSObject, DatabaseProtocol {
     
     
     func parseCardsSnapshotFromNewTag(snapshot: QuerySnapshot){
-        print("hduaishdi!!!!!!!!!1duaishdi!!!!!!")
-        print(snapshot.documentChanges.count)
         snapshot.documentChanges.forEach{ (change) in
-            
             var parsedCard: Card?
             
             do{
@@ -349,7 +304,6 @@ class FirebaseController: NSObject, DatabaseProtocol {
             }
             
             if change.type == .added{
-                print(currentCards)
                 currentCards.insert(card, at: Int(change.newIndex))
             } else if change.type == .modified{
                 currentCards[Int(change.oldIndex)] = card
@@ -368,26 +322,6 @@ class FirebaseController: NSObject, DatabaseProtocol {
         
         
     }
-    
-    
-    
-//    func downloadImage(path: String) -> Data {
-//        let gsReference = Storage.storage().reference(forURL: path)
-//
-//        gsReference.getData(maxSize: 10 * 1024 * 1024){ data, error in
-//
-//            print(type(of: data))
-//            if let error = error{
-//                print("error!: \(error)")
-//            } else {
-////                image = UIImage(data: data!)
-//            }
-//
-//        }
-//
-////        return image
-//
-//    }
     
     
     func setOneCardCache(card: Card) {
@@ -450,10 +384,6 @@ class FirebaseController: NSObject, DatabaseProtocol {
                     }
                     
                 }
-
-                
-                
-                
                 
             } catch{
                 // login failed
@@ -480,26 +410,8 @@ class FirebaseController: NSObject, DatabaseProtocol {
                 defaults.set(newEmail, forKey: "email")
                 defaults.set(newPassword, forKey: "password")
                 
-                // using user id to create the user document
-                // we need to set the document ID == user id
-                print("doahduoahsduoad")
-                print("\(currentUser?.uid)")
-//                try await database.collection("user").document(currentUser!.uid).setData([
-//                    "name": "username",
-//                    "profile":"everything you love is here",
-//                    "profile_image":"gs://fit3178-final-ci-app.appspot.com/WechatIMG88.jpeg"
-//                ])
-//                let name = "usernmae"
-//                try await database.collection("user").document(currentUser!.uid).setData([
-//                    "name": name,
-//                ])
-                
-                // init
-                
                 // set user login state
                 userLoginState = true
-                
-                
             } catch {
                 print("set user tags failed with error: \(error)")
             }
@@ -521,12 +433,8 @@ class FirebaseController: NSObject, DatabaseProtocol {
             ])
             
             userLoginState = true
-            
-            print("set user tag success")
-            
             let userDocRef = database.collection("user").document(currentUser!.uid).addSnapshotListener{
                 (querySnapshot, error) in
-                print("dhoashdoasuhduaoshdouashdouashd")
                 
                 guard let querySnapshot = querySnapshot else {
                     print("Failed to get documet for this user --> \(error!)")
@@ -539,26 +447,17 @@ class FirebaseController: NSObject, DatabaseProtocol {
                 }
                 
                 if let userTagsFromDatabase = querySnapshot.data()!["tags"] as? [String]{
-                    print("hihiiiiiiaisdiasidasidais")
                     for userOneTag in userTagsFromDatabase{
                         let oneTag = Tag()
                         oneTag.name = userOneTag
                         self.defaultTags.append(oneTag)
-                        print(userOneTag)
-                        print(oneTag)
                     }
-                    
-                    print("=========================================================================")
-                    print(self.defaultTags)
-                    print("=========================================================================")
                     self.listeners.invoke{ (listener) in
                         if listener.listenerType == ListenerType.tag || listener.listenerType == ListenerType.all || listener.listenerType == .tagAndExp{
-                            print("test for tag change on signup")
                             listener.onTagChange(change: .update, tags: self.defaultTags)
                         }
                         
                     }
-                    
                     
                     if self.postRef == nil{
                         self.setupCurrentCards()
@@ -568,13 +467,7 @@ class FirebaseController: NSObject, DatabaseProtocol {
                 }else{
                     print("Document does not exist: setupUserSelectedTags")
                 }
-                
-                
-                
             }
-
-            
-            
             return true
             
         } catch {
@@ -859,9 +752,6 @@ class FirebaseController: NSObject, DatabaseProtocol {
                             if card == nil{
                                 print("Failed to parse card")
                             }else{
-//                                print("=================(((((((^^^^^^^^^^^")
-//                                print(card)
-//                                print("=================(((((((^^^^^^^^^^^")
                                 self.currentUserPostsList.append(card)
                             }
                             
@@ -894,9 +784,6 @@ class FirebaseController: NSObject, DatabaseProtocol {
                             if card == nil{
                                 print("Failed to parse card")
                             }else{
-//                                print("=================(((((((^^^^^^^^^^^")
-//                                print(card)
-//                                print("=================(((((((^^^^^^^^^^^")
                                 self.currentUserLikesList.append(card)
                             }
                             
@@ -904,9 +791,7 @@ class FirebaseController: NSObject, DatabaseProtocol {
                                 if listener.listenerType == ListenerType.person || listener.listenerType == ListenerType.all{
                                     listener.onPersonChange(change: .update, postsCards: self.currentUserPostsList, likesCards: self.currentUserLikesList, collectionsCards: self.currentUserCollectionsList)
                                 }
-                                
                             }
-                            
                         }catch{
                             print("error parsePostsList catch:\(error)")
                         }
@@ -936,9 +821,7 @@ class FirebaseController: NSObject, DatabaseProtocol {
                                 if listener.listenerType == ListenerType.person || listener.listenerType == ListenerType.all{
                                     listener.onPersonChange(change: .update, postsCards: self.currentUserPostsList, likesCards: self.currentUserLikesList, collectionsCards: self.currentUserCollectionsList)
                                 }
-                                
                             }
-                            
                         }catch{
                             print("error parsePostsList catch:\(error)")
                         }
@@ -983,14 +866,11 @@ class FirebaseController: NSObject, DatabaseProtocol {
                 if let loc = weatherInfo?.location, let p_time = weatherInfo?.pushTime, let temp_c = weatherInfo?.temp_c{
                     newContent = content + "\n\nCity: \(loc)  \nTime: \(p_time)  \nTemperature: \(temp_c)"
                 }
-//                let newContent = content + "\n\nCity:\((weatherInfo?.location)!)  Time:\((weatherInfo?.pushTime!)!)  Temperature:\(weatherInfo?.temp_c!)"
                 let folderPath = "images/\(self.currentUser?.uid ?? "hFeuyISsXUWxdOUV5LynsgIH4lC2")/"
                 do{
                     self.createPostCardForFirebase(title: title, content: newContent, selectedTags: selectedTags){ (createdPostCardRef, createdCard) in
                         for image in self.currentImages{
-//                            DispatchQueue.main.async {
                                 self.uploadImageToStorage(folderPath: folderPath, image: image){ storageLocationStr in
-//                                    DispatchQueue.main.async {
                                         if self.currentImagesCounter == 0{
                                             createdPostCardRef.updateData([
                                                 "cover":"gs://fit3178-final-ci-app.appspot.com/\(storageLocationStr)"
@@ -1006,20 +886,8 @@ class FirebaseController: NSObject, DatabaseProtocol {
                                                 completion(createdPostCardRef, createdCard)
                                             }
                                         }
-                                        
-                                        
-                                        
-                                        
-//                                    }
-                                    
-                                    
-                                   
                                 }
-//                            }
-                            
                         }
-                        
-                        
                     }
                 }
             }
@@ -1047,28 +915,15 @@ class FirebaseController: NSObject, DatabaseProtocol {
                                                 completion(createdPostCardRef, createdCard)
                                             }
                                         }
-                                        
-                                        
-                                        
-                                        
                                     }
-                                    
-                                    
-                                   
                                 }
                             }
                             
                         }
-                        
-                        
                     }
                 }
             }
         }
-        
-
-        
-        
     }
     
     func createPostCardForFirebase(title: String, content: String, selectedTags: [String], completion: @escaping (DocumentReference, Card) -> Void){
@@ -1102,16 +957,9 @@ class FirebaseController: NSObject, DatabaseProtocol {
                         ])
                         postedCard.id = documentRef.documentID
                         
-                        print("test createPostCardForFirebase")
-                        
                         completion(documentRef, postedCard)
                     }
-                    
-                    
-                    
                 }
-                
-               
             }catch{
                 print("can not get the usermodel in firebase\(error)")
             }
@@ -1142,20 +990,13 @@ class FirebaseController: NSObject, DatabaseProtocol {
                     
                     let percentComplete = 100.0 * Double(progress!.completedUnitCount) / Double(progress!.totalUnitCount)
                     
-                    
-//                    print("progress: \(percentComplete)")
-                    
                     if percentComplete == 100.0{
                         // check and get storage location
                         if storageTaskSnapshot.reference.fullPath != nil{
                             completion(storageTaskSnapshot.reference.fullPath)
                         }
-                        
                     }
-                    
-                    
                 }
-                
                 
             } catch{
                 print("error for upload task: error")
@@ -1165,10 +1006,6 @@ class FirebaseController: NSObject, DatabaseProtocol {
     }
     
     func addPostIntoUser(postDocRef: DocumentReference) {
-//        let postPath = "/post/\(postDocRef.documentID)"
-//        database.collection("user").document(currentUser!.uid).updateData([
-//            "posts": FieldValue.arrayUnion([postPath])
-//        ])
         database.collection("user").document(currentUser!.uid).updateData([
             "posts": FieldValue.arrayUnion([postDocRef])
         ])
@@ -1201,7 +1038,6 @@ class FirebaseController: NSObject, DatabaseProtocol {
                     if let updateError = updateError {
                         print("update error addUserToFollowingList: \(updateError)")
                     }
-                    print("follow success")
                     completion()
                 }
             }
@@ -1297,23 +1133,6 @@ class FirebaseController: NSObject, DatabaseProtocol {
     }
     
     func clearCache(){
-//        let qery = database.collection("post").whereField("likes_number", isEqualTo: 0)
-//        qery.getDocuments(){ (snapshot, error) in
-//            if let error = error{
-//                print("error!")
-//                return
-//            }
-//            snapshot?.documents.forEach{ doc in
-//                doc.reference.delete(){ delError in
-//                    if let delError = delError{
-//                        print("delError\(delError)")
-//                        return
-//                    }
-//                    print("delete success")
-//                }
-//            }
-//        }
-        
         let qery2 = database.collection("post").whereField("cover", isEqualTo: "")
         qery2.getDocuments(){ (snapshot, error) in
             if let error = error{
@@ -1358,8 +1177,6 @@ class FirebaseController: NSObject, DatabaseProtocol {
                     
                     let percentComplete = 100.0 * Double(progress!.completedUnitCount) / Double(progress!.totalUnitCount)
                     
-                    print("progress: \(percentComplete)")
-                    
                     if percentComplete == 100.0{
                         // check and get storage location
                         if storageTaskSnapshot.reference.fullPath != nil{
@@ -1369,13 +1186,8 @@ class FirebaseController: NSObject, DatabaseProtocol {
                                 completion()
                             }
                         }
-                        
                     }
-                    
-                    
                 }
-                
-                
             } catch{
                 print("error for upload task: error")
             }

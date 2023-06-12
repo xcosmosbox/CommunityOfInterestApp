@@ -15,11 +15,14 @@ class SettingPageViewController: UIViewController {
     
     
     @IBAction func LogoutAction(_ sender: Any) {
+        // remove the user default for login
         let defaults = UserDefaults.standard
         defaults.set(false, forKey: "isLogin")
         
+        // set the userLoginState
         databaseController?.userLoginState = false
         
+        // jump to the login page
         let storyboard = UIStoryboard(name: "Main", bundle: nil)
         if let loginNavController = storyboard.instantiateViewController(withIdentifier: "LoginNavigationController") as? UINavigationController {
             if let sceneDelegate = self.view.window?.windowScene?.delegate as? SceneDelegate {

@@ -39,8 +39,6 @@ class HorizontalMenuComponent: ObserverMenu {
         self.ScrollViewMenuBar.contentSize = CGSize(width: self.HStackViewMenu.frame.width + 50, height: self.ScrollViewMenuBar .frame.height)
         self.ScrollViewMenuBar.showsHorizontalScrollIndicator = false
         self.ScrollViewMenuBar.addSubview(self.HStackViewMenu)
-        
-//        buildComponent()
     }
     
     
@@ -67,39 +65,10 @@ class HorizontalMenuComponent: ObserverMenu {
         
         // Resize two views according to the number of Buttons
         refreshComponent()
-        
-        
     }
     
     
-    
-//
-////    func setupHorizontalMenuBar(){
-////
-////    }
-//
-//
-//    public func TEST_setupHorizontalMenuBar(HorizontalMenuManager:[HorizontalMenuButton] ){
-//
-//        self.HorizontalMenuManager = HorizontalMenuManager
-//
-//        var counter = 1
-//        self.HorizontalMenuManager.forEach{ oneButton in
-//            self.VStackViewMenu.addArrangedSubview(oneButton)
-//            if counter == 1{
-//                oneButton.updateButtonState(state: .selected)
-//            }
-//            counter += 1
-//        }
-//
-//        refreshComponent()
-//
-//    }
-//
-    
-    
-    
-    
+    // refresh this component
     func refreshComponent(){
         // init variable
         var totalLength: CGFloat = 0.0
@@ -111,13 +80,12 @@ class HorizontalMenuComponent: ObserverMenu {
             subviewconter += 1
         }
         
-        // fix the frame
+        // fix the HStackViewMenu frame
         self.HStackViewMenu.frame.size.width = totalLength + CGFloat(ButtonSpacingNumer * (subviewconter-1))
         
-        // fix the frame
+        // fix the ScrollViewMenuBar frame
         self.ScrollViewMenuBar.contentSize = CGSize(width: self.HStackViewMenu.frame.width + 50, height: self.ScrollViewMenuBar.frame.height)
     }
-    
     
     // when a Button is selected, cancel the previously selected Button
     func buttonSelected(button: ObservableButton) {
@@ -130,10 +98,6 @@ class HorizontalMenuComponent: ObserverMenu {
             
         }
     }
-    
-    
-    
-    
     
 }
 

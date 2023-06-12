@@ -10,9 +10,10 @@ import AVKit
 import AVFoundation
 import FirebaseStorage
 
+// video class to implements the video player
 class VideoViewController: MediaViewController {
     
-    
+    // set the firebase storage and video url
     let videoURL: String
     let storage = Storage.storage()
 
@@ -63,9 +64,6 @@ class VideoViewController: MediaViewController {
                         self.view.addSubview(playerViewController.view)
                         playerViewController.view.frame = self.view.frame
                         playerViewController.didMove(toParent: self)
-                        
-                        // play
-//                        playerViewController.player?.play()
                         
                     } catch {
                         // error

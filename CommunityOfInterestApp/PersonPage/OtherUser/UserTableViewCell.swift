@@ -27,8 +27,6 @@ class UserTableViewCell: UITableViewCell {
     
     override func awakeFromNib() {
         super.awakeFromNib()
-        // Initialization code
-        print("2222+*+*+*+*+*+*+*+**+*+*+*+*+")
     }
 
     override func setSelected(_ selected: Bool, animated: Bool) {
@@ -39,13 +37,7 @@ class UserTableViewCell: UITableViewCell {
     
     
     func setupWithUser(userDocRef: DocumentReference, showFollowButton: Bool) {
-        print("Setting up cell with user \(userDocRef)")
-//        awakeFromNib()
-        
         self.userDocRef = userDocRef
-        
-        
-        
         Task{
             do{
                 await print(try userDocRef.getDocument().data() ?? "!!!!!!")
@@ -94,6 +86,8 @@ class UserTableViewCell: UITableViewCell {
                         self.followButton.setTitle("Follow", for: .normal)
                         self.followButton.backgroundColor = .red
                     }
+                } catch{
+                    print(error)
                 }
             }
         } else{
@@ -103,6 +97,8 @@ class UserTableViewCell: UITableViewCell {
                         self.followButton.setTitle("Following", for: .normal)
                         self.followButton.backgroundColor = .gray
                     }
+                } catch {
+                    print(error)
                 }
             }
         }

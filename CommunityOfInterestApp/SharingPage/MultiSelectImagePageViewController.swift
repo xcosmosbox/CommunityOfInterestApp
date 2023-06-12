@@ -10,12 +10,10 @@ import PhotosUI
 
 class MultiSelectImagePageViewController: UIViewController,  PHPickerViewControllerDelegate  {
     
+    // property
     var configuration:PHPickerConfiguration?
     var pickerViewController: PHPickerViewController?
     weak var databaseController: DatabaseProtocol?
-    
-
-    
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -31,11 +29,10 @@ class MultiSelectImagePageViewController: UIViewController,  PHPickerViewControl
         databaseController?.clearCurrentImages()
         databaseController?.clearCurrentVideos()
         
+        // implements the PHPickerConfiguration and PHPickerViewControllerDelegate
         configuration = PHPickerConfiguration()
         configuration?.filter = .images
-//        configuration?.filter = .any(of: [.images, .videos])
         configuration?.selectionLimit = 9
-        
         pickerViewController = PHPickerViewController(configuration: configuration!)
         pickerViewController!.delegate = self
         present(pickerViewController!, animated: true, completion: nil)
@@ -59,16 +56,15 @@ class MultiSelectImagePageViewController: UIViewController,  PHPickerViewControl
     }
     */
     
+    // cancel button
     func handleCancelAction() {
-//        let storyboard = UIStoryboard(name: "HomePageMain", bundle: nil)
-//        let destinationViewController = storyboard.instantiateViewController(withIdentifier: "homePageStoryboardEntry")
-//        navigationController?.pushViewController(destinationViewController, animated: true)
         if let tabBarController = self.tabBarController {
                 tabBarController.selectedIndex = 0
         }
     }
 
-    
+    // when user select the media
+    // this function will be call
     func picker(_ picker: PHPickerViewController, didFinishPicking results: [PHPickerResult]) {
         picker.dismiss(animated: true, completion: nil)
         

@@ -8,6 +8,7 @@
 import UIKit
 import FirebaseFirestoreSwift
 
+// tag data model
 class Tag: NSObject, Codable {
     
     @DocumentID var id: String?

@@ -7,6 +7,7 @@
 
 import UIKit
 
+// a superclass to store the media url
 class MediaViewController: UIViewController {
     
     var mediaURL: String = ""

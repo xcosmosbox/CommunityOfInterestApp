@@ -52,6 +52,7 @@ class ProfileImageEditViewController: UIViewController, UIImagePickerControllerD
            return
         }
         
+        // user update the profile image
         databaseController?.updateUserProfileImage(image: selectedImage){ () in
             self.profileImageUIImageView.image = selectedImage
         }

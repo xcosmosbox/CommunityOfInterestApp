@@ -11,7 +11,6 @@ import FirebaseStorage
 class PicturesViewController: MediaViewController {
     
     let imageView = UIImageView()
-//    let image: UIImage
     let imagePath: String
     
     init(imagePath: String) {
@@ -28,7 +27,6 @@ class PicturesViewController: MediaViewController {
         super.viewDidLoad()
 
         // Do any additional setup after loading the view.
-//        var image: UIImage
         
         // download image from firebase Storage
         let gsReference = Storage.storage().reference(forURL: imagePath)
@@ -37,17 +35,11 @@ class PicturesViewController: MediaViewController {
                 print("error!: \(error)")
             } else{
                 let postImage = UIImage(data: data!)
-                // zoom in and out the image
-//                let scaledImage = postImage?.scaledImage(toSize: CGSize(width: CardView.cardWidth, height: 200))
                 // set the post image view's image
                 self.imageView.image = postImage
-                print("page load!!!! YEEEEEE")
-                print(postImage)
             }
         }
         
-        
-//        imageView.image = image
         imageView.contentMode = .scaleAspectFill
         view.addSubview(imageView)
         
@@ -58,7 +50,7 @@ class PicturesViewController: MediaViewController {
                     imageView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
                     imageView.topAnchor.constraint(equalTo: view.topAnchor),
                     imageView.bottomAnchor.constraint(equalTo: view.bottomAnchor),
-                ])
+        ])
     }
     
 

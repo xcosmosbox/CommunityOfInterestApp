@@ -57,7 +57,7 @@ class PersonPageViewController: UIViewController, DatabaseListener, DetailChange
         var name = showDifferCardSegmentedControl.titleForSegment(at: showDifferCardSegmentedControl.selectedSegmentIndex) ?? ""
         
         
-        
+        // show the different card
         if name == "Posts"{
             showPostsView()
         } else if name == "Collections"{
@@ -68,11 +68,6 @@ class PersonPageViewController: UIViewController, DatabaseListener, DetailChange
         
         
     }
-    
-    
-    
-    
-    
     
     
     override func viewDidLoad() {
@@ -91,23 +86,11 @@ class PersonPageViewController: UIViewController, DatabaseListener, DetailChange
         databaseController = appDelegate?.databaseController
         
         setupUserInteractionAndGesture()
-        
-        
-        
-
     }
     
     
-    
-
-    
-    
-    
+    // the three different to show the differ card view component view
     func showPostsView(){
-        print("showPostsViewshowPostsViewshowPostsView")
-        print(currentUserPostsList?.count)
-        print("showPostsViewshowPostsViewshowPostsView")
-        
         self.showCardViewComponent?.clearAll(initialScrollComponentContentSize: initialScrollComponentContentSize!, initialLeftCardStackFrame: initialLeftCardStackFrame!, initialRightCardStackFrame: initialRightCardStackFrame!)
         var cards:[CardView] = []
         self.currentUserPostsList?.forEach{ card in
@@ -115,11 +98,8 @@ class PersonPageViewController: UIViewController, DatabaseListener, DetailChange
             cards.append(cardView)
         }
         showCardViewComponent?.fillNewCards(cards: cards)
-        
     }
-    
     func showCollectionsView(){
-        
         self.showCardViewComponent?.clearAll(initialScrollComponentContentSize: initialScrollComponentContentSize!, initialLeftCardStackFrame: initialLeftCardStackFrame!, initialRightCardStackFrame: initialRightCardStackFrame!)
         var cards:[CardView] = []
         self.currentUserCollectionsList?.forEach{ card in
@@ -128,7 +108,6 @@ class PersonPageViewController: UIViewController, DatabaseListener, DetailChange
         }
         showCardViewComponent?.fillNewCards(cards: cards)
     }
-    
     func showLikesView(){
         
         self.showCardViewComponent?.clearAll(initialScrollComponentContentSize: initialScrollComponentContentSize!, initialLeftCardStackFrame: initialLeftCardStackFrame!, initialRightCardStackFrame: initialRightCardStackFrame!)
@@ -155,8 +134,6 @@ class PersonPageViewController: UIViewController, DatabaseListener, DetailChange
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         databaseController?.addListener(listener: self)
-        
-//        databaseController!.parseUserCardViewList()
         Task{
             do{
                 databaseController?.getUserModel{ userModel in
@@ -176,50 +153,25 @@ class PersonPageViewController: UIViewController, DatabaseListener, DetailChange
                         self.userFollowingNumber.text = "\(Int((self.currentUser?.following!.count)!))"
                         self.userFollowerLabel.text = "\(Int((self.currentUser?.follower!.count)!))"
                         
-//                        self.currentUserPostsList = []
-//                        self.currentUserLikesList = []
-//                        self.currentUserCollectionsList = []
-                        
                         self.showDifferCardSegmentedControl.selectedSegmentIndex = 0
                         self.showPostsView()
-                        
-                        
                     }
-                    
-                    
-                    
                 }
-                
-               
-                
             }catch{
                 print("error in PersonPageViewController\(error)")
             }
         }
-        
-        
-        
-//        self.currentUserPostsList = []
-//        self.currentUserLikesList = []
-//        self.currentUserCollectionsList = []
-//
-////        databaseController?.addListener(listener: self)
-//        self.showDifferCardSegmentedControl.selectedSegmentIndex = 0
-//        self.showPostsView()
     }
     
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
         databaseController?.removeListener(listener: self)
         
-        
         self.currentUserPostsList = []
         self.currentUserLikesList = []
         self.currentUserCollectionsList = []
         
-        
         self.showCardViewComponent?.clearAll(initialScrollComponentContentSize: initialScrollComponentContentSize!, initialLeftCardStackFrame: initialLeftCardStackFrame!, initialRightCardStackFrame: initialRightCardStackFrame!)
-//        databaseController?.removeListener(listener: self)
     }
     
     
@@ -364,22 +316,6 @@ class PersonPageViewController: UIViewController, DatabaseListener, DetailChange
             print("goToShowFollowingAndFollowerPage2: \(self.currentUser!.follower!)")
             destination?.followingUsers = self.currentUser!.following!
             destination?.followerUsers = self.currentUser!.follower!
-            
-//            Task{
-//                do{
-//                    DispatchQueue.main.async {
-//                        self.databaseController?.getUserModel(){ userModel in
-//                            print("goToShowFollowingAndFollowerPage1: \(userModel)")
-//                            print("goToShowFollowingAndFollowerPage2: \(userModel.following!)")
-//                            print("goToShowFollowingAndFollowerPage2: \(userModel.follower!)")
-//                            destination?.followingUsers = userModel.following!
-//                            destination?.followerUsers = userModel.follower!
-//
-//                        }
-//                    }
-//                }
-//            }
-            
         }
         
         

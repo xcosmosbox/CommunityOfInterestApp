@@ -15,7 +15,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         // Override point for customization after application launch.
+        // create instance of FirebaseController
         databaseController = FirebaseController()
+        // configuration for weather API
         setDefaultAPIInfo()
         return true
     }
@@ -34,6 +36,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         // Use this method to release any resources that were specific to the discarded scenes, as they will not return.
     }
     
+    // set weather API
     func setDefaultAPIInfo() {
         let APIELink = "https://api.weatherapi.com/v1/current.json?key=dab97fb14a374905b6a134741231605"
 
@@ -41,6 +44,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         defaults.set(APIELink, forKey: "apiLink")
     }
     
+    // get weather API
     func getAPIInfo() -> String {
         let defaults = UserDefaults.standard
         let apiLink = defaults.string(forKey: "apiLink")

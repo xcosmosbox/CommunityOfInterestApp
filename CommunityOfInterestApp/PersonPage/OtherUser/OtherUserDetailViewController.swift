@@ -10,6 +10,7 @@ import Firebase
 import FirebaseFirestoreSwift
 import FirebaseStorage
 
+// this class will show other user's detail
 class OtherUserDetailViewController: UIViewController, DetailChangeDelegate {
     
     

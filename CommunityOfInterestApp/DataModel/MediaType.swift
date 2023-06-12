@@ -8,7 +8,7 @@
 import Foundation
 
 
-
+// media type
 enum MediaType{
     case image
     case video

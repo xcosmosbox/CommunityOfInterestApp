@@ -57,7 +57,6 @@ class LoginPageViewController: UIViewController, DatabaseListener {
                 DispatchQueue.main.async {
                     self.performSegue(withIdentifier: "toSelectTagPage", sender: nil)
                 }
-//                performSegue(withIdentifier: "toSelectTagPage", sender: nil)
             } else{
                 displayMessage(title: "Error", message: "Invalid email or password")
             }
@@ -96,10 +95,6 @@ class LoginPageViewController: UIViewController, DatabaseListener {
 
         let defaults = UserDefaults.standard
         var isLogin = defaults.bool(forKey: "isLogin")
-
-        print("isLogin == true")
-        print(isLogin)
-        print("isLogin == true")
 
         if isLogin == true{
             let email = defaults.string(forKey: "email")

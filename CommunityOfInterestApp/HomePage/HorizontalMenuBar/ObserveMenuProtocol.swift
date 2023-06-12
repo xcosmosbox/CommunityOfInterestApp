@@ -7,11 +7,13 @@
 
 import Foundation
 
+// button state enum
 enum ButtonState{
     case unselected
     case selected
 }
 
+// design pattern for observer method
 protocol ObserverMenu: AnyObject{
     func buttonSelected(button:ObservableButton)
 }

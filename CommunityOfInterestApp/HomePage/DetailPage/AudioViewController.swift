@@ -10,11 +10,12 @@ import AVKit
 import AVFoundation
 import FirebaseStorage
 
+// audio class to play the audio file
 class AudioViewController: MediaViewController {
     
+    // set the url and firebase storage
     let audioURL: String
     let storage = Storage.storage()
-//    var audioPlayer: AVAudioPlayer?
     
     init(audioURL: String) {
         self.audioURL = audioURL
@@ -30,6 +31,7 @@ class AudioViewController: MediaViewController {
 
         // Do any additional setup after loading the view.
         
+        // using storage to download the audio file
         if let gsURL = URL(string: mediaURL){
             let gsReference = storage.reference(forURL: gsURL.absoluteString)
             // download
@@ -39,7 +41,9 @@ class AudioViewController: MediaViewController {
                     return
                 }
                 
+                // download success
                 if let data = data{
+                    // set the audio player
                     let temporaryDirectory = NSTemporaryDirectory()
                     let temporaryFileURL = URL(fileURLWithPath: temporaryDirectory).appendingPathComponent("temp_\(UUID().uuidString).mp3")
                     
@@ -58,14 +62,10 @@ class AudioViewController: MediaViewController {
                         playerViewController.player = player
                         
                         
-                        
                         self.addChild(playerViewController)
                         self.view.addSubview(playerViewController.view)
                         playerViewController.view.frame = self.view.frame
                         playerViewController.didMove(toParent: self)
-                        
-                        // play
-//                        playerViewController.player?.play()
                         
                     } catch {
                         // error
@@ -78,44 +78,6 @@ class AudioViewController: MediaViewController {
                 
             }
         }
-        
-//        if let gsURL = URL(string: audioURL) {
-//            let gsReference = storage.reference(forURL: gsURL.absoluteString)
-//
-//            gsReference.getData(maxSize: 100 * 1024 * 1024) { (data, error) in
-//                if let error = error {
-//                    print("Error downloading audio: \(error)")
-//                    return
-//                }
-//
-//                if let data = data {
-//                    print(data)
-//                    let temporaryDirectory = NSTemporaryDirectory()
-//                    let temporaryFileURL = URL(fileURLWithPath: temporaryDirectory).appendingPathComponent("temp_\(UUID().uuidString).mp3")
-//                    print("dhjouahwuoda\(temporaryFileURL)")
-//                    do {
-//                        print("1")
-//                        try data.write(to: temporaryFileURL)
-//                        print("temo\(temporaryFileURL)")
-//
-//                        print("2")
-//
-//                        let audioPlayer = try AVAudioPlayer(contentsOf: temporaryFileURL)
-//
-//                        print("audio:\(audioPlayer)")
-//
-//
-//                        audioPlayer.prepareToPlay()
-////                        audioPlayer.play()
-//
-//                    } catch {
-//                        print("Error writing or playing audio file: \(error)")
-//                    }
-//                } else {
-//                    print("No data received for audio file.")
-//                }
-//            }
-//        }
     }
     
 
@@ -128,9 +90,5 @@ class AudioViewController: MediaViewController {
         // Pass the selected object to the new view controller.
     }
     */
-//
-//    override func viewWillDisappear(_ animated: Bool) {
-//        self.audioPlayer?.stop()
-//    }
 
 }

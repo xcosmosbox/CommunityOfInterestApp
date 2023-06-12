@@ -8,13 +8,15 @@
 import Foundation
 
 
-
+// a static class to manage the global Tag Bean
 class TagManager{
     
+    // static instance of TagManager
     static let shared = TagManager()
     
     var TagList:[TagBean] = []
     
+    // add tag method
     func addTag(name: String) {
         if !TagList.contains(where: {$0.getName() == name}){
             TagList.append(TagBean(name: name))
@@ -22,6 +24,7 @@ class TagManager{
         
     }
     
+    // add tag instance
     func addTagInstance(tag: TagBean) {
         if !TagList.contains(where: {$0.getName() == tag.getName()}){
             TagList.append(tag)
@@ -29,22 +32,27 @@ class TagManager{
         
     }
     
+    // remove tag method
     func removeTag(name: String) -> TagBean {
         return TagList.remove(at: TagList.firstIndex(where: {$0.getContent() == (" "+name+" ")})!)
     }
     
+    // remove tag instance method
     func removeTagInstance(tag: TagBean) -> TagBean {
         return TagList.remove(at: TagList.firstIndex(where: {$0.getContent() == tag.getContent()})!)
     }
     
+    // remove all tags
     func removeAllTags(){
         TagList.removeAll(where: {$0.getName() != "Explore"})
     }
     
+    // get all tags
     func getAllTag() -> [TagBean] {
         return TagList
     }
     
+    // get all tags without explore tag
     func getAllTagsWithoutExplore() -> [TagBean]{
         // user can manage all tags without explore
         var tags:[TagBean] = []
@@ -58,26 +66,10 @@ class TagManager{
     }
     
     private init(){
-//        TEST_DATA_FUNCTION()
         // add default tag
         TagList.append(TagBean(name: "Explore"))
-        
     }
-    
-    
-    
-    
-    // ONLY LOCAL TEST
-    func TEST_DATA_FUNCTION(){
-        addTagInstance(tag: TagBean(name: "Title 1"))
-        addTagInstance(tag: TagBean(name: "Title 2"))
-        addTagInstance(tag: TagBean(name: "Food"))
-        addTagInstance(tag: TagBean(name: "Ball"))
-        addTagInstance(tag: TagBean(name: "Nature"))
-        addTagInstance(tag: TagBean(name: "djaisodjioas"))
-        addTagInstance(tag: TagBean(name: "Title"))
-        addTagInstance(tag: TagBean(name: "Tit"))
-    }
+
     
     
 }

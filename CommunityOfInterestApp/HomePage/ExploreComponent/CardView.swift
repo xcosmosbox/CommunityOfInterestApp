@@ -47,7 +47,6 @@ class CardView: UIStackView {
         
         self.homePageController = homepageViewControl
         self.card = card
-//        print(card.video)
         // set itself
         self.axis = .vertical
         self.alignment = .leading
@@ -68,34 +67,21 @@ class CardView: UIStackView {
             usernameStack.heightAnchor.constraint(equalToConstant: 20)
         ])
         
-        
-
         // build username label
         let name = UILabel()
         name.text = username
         name.sizeToFit()
-
-
-//        // create SymbolConfiguration
-//        let config = UIImage.SymbolConfiguration(pointSize: 20, weight: .regular, scale: .default)
-//        // build UIImage
-//        let image = UIImage(systemName: "heart", withConfiguration: config)
-//        // build UIImageView
-//        like = UIImageView(image: image)
-//        // setting UIImageView's contentMode
-//        like?.contentMode = .scaleAspectFit
-        print("Test for Like 3")
         
         // build title label
         titleLabel.text = title
         titleLabel.font = UIFont.boldSystemFont(ofSize: 16)
         titleLabel.numberOfLines = 0
         
-        
         // build post image
         postImageView = UIImageView(frame: CGRect(x: 0, y: 0, width: CardView.cardWidth, height: 200))
         postImageView?.contentMode = .scaleAspectFill
         postImageView?.clipsToBounds = true
+        
         // create the image obj
         // download image from firebase Storage
         let gsReference = Storage.storage().reference(forURL: imagePath)
@@ -110,11 +96,6 @@ class CardView: UIStackView {
                 self.postImageView?.image = scaledImage
             }
         }
-//        let postImage = databaseController?.downloadImage(path: imagePath)
-//        // zoom in and out the image
-//        let scaledImage = postImage?.scaledImage(toSize: CGSize(width: CardView.cardWidth, height: 200))
-//        // set the post image view's image
-//        postImageView?.image = scaledImage
         
         Task{
             do{
@@ -128,7 +109,6 @@ class CardView: UIStackView {
                             self.like = UIImageView(image: img)
                             // setting UIImageView's contentMode
                             self.like?.contentMode = .scaleAspectFit
-                            print("Test for Like 1")
                         } else {
                             // create SymbolConfiguration
                             let config = UIImage.SymbolConfiguration(pointSize: 20, weight: .regular, scale: .default)
@@ -138,7 +118,6 @@ class CardView: UIStackView {
                             self.like = UIImageView(image: image)
                             // setting UIImageView's contentMode
                             self.like?.contentMode = .scaleAspectFit
-                            print("Test for Like 2")
                         }
                         
                         // build up it self
@@ -149,41 +128,25 @@ class CardView: UIStackView {
                         self.addArrangedSubview(self.usernameStack)
                         
                         self.addTapGestureToStackView()
-                        
-//                        return self
                     }
-                    
-
                 }
             }
         }
-       
-//        // build up it self
-//        usernameStack.addArrangedSubview(name)
-//        usernameStack.addArrangedSubview(like)
-//        self.addArrangedSubview(postImageView)
-//        self.addArrangedSubview(titleLabel)
-//        self.addArrangedSubview(usernameStack)
-//
-//        addTapGestureToStackView()
-//
         return self
     }
     
     
-    
+    // add a tap gesture to stack view
+    // we allowed to click the card and jump to the detail page
     func addTapGestureToStackView(){
         let tapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(stackViewTapped))
         self.addGestureRecognizer(tapGestureRecognizer)
         self.isUserInteractionEnabled = true
     }
     
+    // selector
     @objc func stackViewTapped() {
-//        let detailViewController = DetailViewController()
-//        self.homePageController?.navigationController?.pushViewController(detailViewController, animated: true)
-//        self.homePageController?.performSegue(withIdentifier: "showCardDetailPage", sender: self)
         guard let homeController = homePageController as? DetailChangeDelegate else{
-            print("Card class: Error!!!!! NO CARD!!!!!")
             return
         }
         databaseController?.setOneCardCache(card: self.card!)

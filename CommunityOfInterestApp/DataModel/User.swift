@@ -9,6 +9,7 @@ import UIKit
 import FirebaseFirestoreSwift
 import Firebase
 
+// user data model
 class User: NSObject {
     @DocumentID var id:String?
     var name: String?

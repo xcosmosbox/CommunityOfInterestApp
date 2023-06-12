@@ -88,9 +88,6 @@ class ExploreComponent{
     // when we goto the new tag
     // we need to clean all cardview for now stack
     func clearAll(initialScrollComponentContentSize: CGSize, initialLeftCardStackFrame: CGRect, initialRightCardStackFrame: CGRect){
-//        var initialScrollComponentContentSize: CGSize?
-//        var initialLeftCardStackFrame: CGRect?
-//        var initialRightCardStackFrame: CGRect?
         
         // remove all cardview
         left_card_list = []

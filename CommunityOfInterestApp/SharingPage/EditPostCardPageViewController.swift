@@ -28,6 +28,7 @@ class EditPostCardPageViewController: UIViewController, UICollectionViewDataSour
     private var activityIndicator: UIActivityIndicatorView!
     private var timer: Timer?
     
+    // set the default tags
     let tags = ["Food", "Pet", "Travel", "Nature", "Game", "Sport", "Music"] // tags
     
     var selectedCard: Card?
@@ -37,48 +38,48 @@ class EditPostCardPageViewController: UIViewController, UICollectionViewDataSour
     override func viewDidLoad() {
         super.viewDidLoad()
 
-//        let locationManager = CLLocationManager()
+        // implements the CLLocationManagerDelegate
         locationManager.delegate = self
         let status = locationManager.authorizationStatus
         if status == .notDetermined{
             locationManager.requestWhenInUseAuthorization()
         }
-//        locationManager.requestWhenInUseAuthorization()
         locationManager.startUpdatingLocation()
         
         // Do any additional setup after loading the view.
         
+        // get the database controller instance
         let appDelegate = UIApplication.shared.delegate as? AppDelegate
         databaseController = appDelegate?.databaseController
         
+        // set the images Array
         imagesArray = databaseController!.currentImages
         
+        // setup
         setupCollectionView()
-        
         setupWeatherButton()
-        
         setupTextFieldsAndTagButtons()
         
+        // set the indicator
         activityIndicator = UIActivityIndicatorView(style: .medium)
         activityIndicator.center = view.center
         view.addSubview(activityIndicator)
-        
-        
     }
     
     func setupWeatherButton() {
         
+        // setup weather switch button
         var apiUseLabel = UILabel()
         apiUseLabel.text = "Add Weather Into Post"
         apiUseLabel.textColor = .systemGray2
-        
-
         weatherSwitch.layer.cornerRadius = 5
         weatherSwitch.addTarget(self, action: #selector(weatherButtonTapped), for: .touchUpInside)
         
+        // set the subview
         self.APIUseStack.addArrangedSubview(apiUseLabel)
         self.APIUseStack.addArrangedSubview(weatherSwitch)
 
+        // adjust the constraints
         view.addSubview(self.APIUseStack)
         self.APIUseStack.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
@@ -88,6 +89,7 @@ class EditPostCardPageViewController: UIViewController, UICollectionViewDataSour
         ])
     }
 
+    // selector
     @objc func weatherButtonTapped() {
         weatherSwitch.isSelected = !weatherSwitch.isSelected
         if weatherSwitch.isSelected {
@@ -98,32 +100,20 @@ class EditPostCardPageViewController: UIViewController, UICollectionViewDataSour
     }
 
     func fetchWeatherInfo() {
-//        print("hahaha")
-        // Request user's location
-//        let locationManager = CLLocationManager()
-//        locationManager.delegate = self
-//        locationManager.requestWhenInUseAuthorization()
-//        locationManager.startUpdatingLocation()
-        print("djoiasjdioa: \(self.weatherInfo)")
-        print("daoshdoua: \(self.weatherLocation)")
-        print("psuhtiem: \(self.pushTime)")
-        print("pushinfo: \(pushInfo)")
+        // nothing to do
     }
 
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
-        print("xixixixi")
-        
+        // using the weather API to get the weather info and push time and push location
         if let location = locations.first {
             let appDelegate = UIApplication.shared.delegate as? AppDelegate
             var apiLink = appDelegate?.getAPIInfo()
             var api = apiLink! + "&q=\(location.coordinate.latitude),\(location.coordinate.longitude)&aqi=no"
-//            let url = URL(string: "https://api.weatherapi.com/v1/current.json?key=dab97fb14a374905b6a134741231605&q=\(location.coordinate.latitude),\(location.coordinate.longitude)&aqi=no")!
             let url = URL(string: api)!
-            print("lat: \(location.coordinate.latitude)")
-            print("lon: \(location.coordinate.longitude)")
             let task = URLSession.shared.dataTask(with: url) { (data, response, error) in
                 if let data = data {
                     do {
+                        // get the result json
                         let json = try JSONSerialization.jsonObject(with: data, options: .mutableContainers) as! [String: Any]
                         let current = json["current"] as! [String: Any]
                         self.weatherInfo = current["temp_c"] as? Int
@@ -131,12 +121,8 @@ class EditPostCardPageViewController: UIViewController, UICollectionViewDataSour
                         self.weatherLocation = location["tz_id"] as? String
                         self.pushTime = location["localtime"] as? String
                         if let weather_c = self.weatherInfo, let currtLocation = self.weatherLocation, let time = self.pushTime{
-//                            (temp_c:Int, location:String, pushTime:String)
                             self.pushInfo = (temp_c:weather_c, location:currtLocation, pushTime:time)
                         }
-//                        print(current)
-//                        print(type(of: current["temp_c"]))
-//                        print("sweather: \(self.weatherInfo)")
                     } catch {
                         print(error)
                     }
@@ -150,7 +136,7 @@ class EditPostCardPageViewController: UIViewController, UICollectionViewDataSour
     
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        imagesArray.count
+        return imagesArray.count
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
@@ -197,7 +183,7 @@ class EditPostCardPageViewController: UIViewController, UICollectionViewDataSour
         ])
     }
     
-    
+    // setup the text fields and tag buttons
     func setupTextFieldsAndTagButtons() {
         titleTextField = UITextField()
         titleTextField.placeholder = "Please type the title"
@@ -282,18 +268,12 @@ class EditPostCardPageViewController: UIViewController, UICollectionViewDataSour
         
     }
     
+    // the title, content and tag must have at least content to publish the post
     func updateUploadButtonState() {
         let isTitleFilled = !(titleTextField.text?.isEmpty ?? true)
         let isContentFilled = !contentTextView.text.isEmpty
         let isTagSelected = tagButtons.contains(where: { $0.isSelected })
         let hasImages = collectionView.numberOfItems(inSection: 0) > 0
-        
-//        print("=========")
-//        print("isTitleFilled: \(isTitleFilled)")
-//        print("isContentFilled: \(isContentFilled)")
-//        print("isTagSelected: \(isTagSelected)")
-//        print("hasImages: \(hasImages)")
-//        print("=========")
 
         if isTitleFilled && isContentFilled && isTagSelected && hasImages {
             uploadButton.isEnabled = true
@@ -305,35 +285,19 @@ class EditPostCardPageViewController: UIViewController, UICollectionViewDataSour
     }
     
     @objc func uploadButtonTapped() {
-//        let selectedTags = tagButtons.filter { $0.isSelected }.map { $0.title(for: .normal)! }
-        
         activityIndicator.startAnimating()
         timer = Timer.scheduledTimer(withTimeInterval: 3.0, repeats: true){ _ in
             let selectedTags = self.tagButtons.filter { $0.isSelected }.map { $0.title(for: .normal)! }
+            // upload the post
             self.databaseController?.uploadCurrentImagesForCard(title: self.titleTextField.text!, content: self.contentTextView.text, selectedTags: selectedTags, weatherInfo: self.pushInfo) { (documentReference, createdCard) in
                 
-                print("&^^^^^^^^^^^^^")
-                print(createdCard.id)
-                print(createdCard.picture)
-                print(createdCard.cover)
-                print(createdCard.username)
-                print(createdCard.title)
-                print(createdCard.content)
-                
-                print(documentReference.documentID)
-                print("&^^^^^^^^^^^^^")
-                
+                // refresh the local cache
                 self.databaseController!.getCommunityContentByTag(tagNmae: " Explore ")
                 
+                // add post into user
                 self.databaseController?.addPostIntoUser(postDocRef: documentReference)
                 
-                // process the upload success content, such as go to the detail page
-                print("upload success")
-                
-               
-                
-                // Save the created card object
-    //            self.selectedCard = createdCard
+                // creat the card and jump to the home page
                 self.databaseController!.getCardModel(cardRef: documentReference){ card in
                     self.timer?.invalidate()
                     
@@ -345,62 +309,10 @@ class EditPostCardPageViewController: UIViewController, UICollectionViewDataSour
                 
             }
         }
-        
-//        databaseController?.uploadCurrentImagesForCard(title: titleTextField.text!, content: contentTextView.text, selectedTags: selectedTags, weatherInfo: self.pushInfo) { (documentReference, createdCard) in
-//
-//            print("&^^^^^^^^^^^^^")
-//            print(createdCard.id)
-//            print(createdCard.picture)
-//            print(createdCard.cover)
-//            print(createdCard.username)
-//            print(createdCard.title)
-//            print(createdCard.content)
-//
-//            print(documentReference.documentID)
-//            print("&^^^^^^^^^^^^^")
-//
-//            self.databaseController?.addPostIntoUser(postDocRef: documentReference)
-//
-//            // process the upload success content, such as go to the detail page
-//            print("upload success")
-//            // Save the created card object
-////            self.selectedCard = createdCard
-//            self.databaseController!.getCardModel(cardRef: documentReference){ card in
-//                self.selectedCard = card
-//
-//                // Navigate to DetailViewController
-//                self.navigateToDetailViewController()
-//            }
-//
-//
-//        }
     }
     
-    
+    // jump to the home page
     func navigateToDetailViewController() {
-//        if let detailViewController = UIStoryboard(name: "HomePageMain", bundle: nil).instantiateViewController(withIdentifier: "DetailViewController") as? DetailViewController {
-//
-//            // Call setOneCardCache(card: Card) from FirebaseController
-//            databaseController?.setOneCardCache(card: self.selectedCard!)
-//
-//            detailViewController.card = self.selectedCard
-//
-//
-//            // Find the tabBarController and navigate to the first tab
-//            if let tabBarController = self.navigationController?.tabBarController {
-//                tabBarController.selectedIndex = 0
-//
-//                // Get the HomePageViewController and its navigationController
-//                if let homePageNavigationController = tabBarController.viewControllers?.first as? UINavigationController,
-//                    let homePageViewController = homePageNavigationController.topViewController as? HomePageViewController {
-//                    self.navigationController?.popToRootViewController(animated: false)
-//
-//                    // Push the DetailViewController onto HomePageViewController's navigationController
-//                    homePageNavigationController.pushViewController(detailViewController, animated: true)
-//                }
-//            }
-//        }
-        
         let storyboard = UIStoryboard(name: "HomePageMain", bundle: nil)
         if let pageNavController = storyboard.instantiateViewController(withIdentifier: "HomePageMainNavigationC") as? UINavigationController {
             if let sceneDelegate = self.view.window?.windowScene?.delegate as? SceneDelegate {
@@ -410,7 +322,8 @@ class EditPostCardPageViewController: UIViewController, UICollectionViewDataSour
         
     }
 
-    
+
+    // should change characters in range
     func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
         DispatchQueue.main.async {
             self.updateUploadButtonState()
@@ -418,29 +331,28 @@ class EditPostCardPageViewController: UIViewController, UICollectionViewDataSour
         return true
     }
     
+    // update the upload button state
     func textViewDidChange(_ textView: UITextView) {
         updateUploadButtonState()
     }
-
-
     
+    // begin editing
     func textViewDidBeginEditing(_ textView: UITextView) {
         if textView.text == "Please type the content" {
             textView.text = ""
-//            textView.textColor = .black
             textView.textColor = UIColor(named: "TextViewColor")
         }
     }
 
+    // end editing
     func textViewDidEndEditing(_ textView: UITextView) {
         if textView.text.isEmpty {
             textView.text = "Please type the content"
-//            textView.textColor = .lightGray
             textView.textColor = UIColor(named: "TextViewColor")
         }
     }
 
-    
+    // select the tag button
     @objc func tagButtonTapped(_ sender: UIButton) {
         if sender.backgroundColor == .gray {
             sender.backgroundColor = .systemBlue
@@ -455,7 +367,7 @@ class EditPostCardPageViewController: UIViewController, UICollectionViewDataSour
     }
 
 
-    
+    // create the "Add New Tag" button
     @objc func addTagButtonTapped() {
         let alertController = UIAlertController(title: "Add New Tag", message: "Please type new tag", preferredStyle: .alert)
         
@@ -480,7 +392,7 @@ class EditPostCardPageViewController: UIViewController, UICollectionViewDataSour
         updateUploadButtonState()
     }
 
- 
+    // user can add new tag
     func addNewTag(tag: String) {
         
         let button = UIButton()

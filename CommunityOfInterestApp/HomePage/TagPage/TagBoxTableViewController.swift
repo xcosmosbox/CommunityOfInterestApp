@@ -9,6 +9,7 @@ import UIKit
 
 class TagBoxTableViewController: UITableViewController {
     
+    // TAG_CELL
     let TAG_CELL = "tagCell"
     
     var tags = TagManager.shared.getAllTag()
@@ -18,13 +19,6 @@ class TagBoxTableViewController: UITableViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-
-        // Uncomment the following line to preserve selection between presentations
-        // self.clearsSelectionOnViewWillAppear = false
-
-        // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
-        // self.navigationItem.rightBarButtonItem = self.editButtonItem
-        
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -34,7 +28,7 @@ class TagBoxTableViewController: UITableViewController {
         let appDelegate = UIApplication.shared.delegate as? AppDelegate
         databaseController = appDelegate?.databaseController
         
-//        tags = TagManager.shared.getAllTag()
+        // get all tags
         tags = TagManager.shared.getAllTagsWithoutExplore()
         tableView.reloadData()
     }
@@ -92,7 +86,6 @@ class TagBoxTableViewController: UITableViewController {
             tags.remove(at: indexPath.row)
             
             tableView.reloadData()
-//            refreshTags()
             
         }
     }
@@ -122,10 +115,5 @@ class TagBoxTableViewController: UITableViewController {
         // Pass the selected object to the new view controller.
     }
     */
-    
-//    func refreshTags() {
-//        tags = TagManager.shared.getAllTag()
-//        tableView.reloadData()
-//    }
 
 }

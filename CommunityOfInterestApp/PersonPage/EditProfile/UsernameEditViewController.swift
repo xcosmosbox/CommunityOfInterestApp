@@ -39,7 +39,7 @@ class UsernameEditViewController: UIViewController {
     }
     */
     @IBAction func modifyUsername(_ sender: Any) {
-        
+        // user update account name
         databaseController?.updateUserName(name: newNameTextField.text!){ () in
             print("modify success")
             self.displayMessage(title: "Modify Username", message: "Modify success")

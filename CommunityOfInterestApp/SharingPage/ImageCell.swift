@@ -8,15 +8,18 @@
 import UIKit
 
 class ImageCell: UICollectionViewCell {
+    // using UIImageView to set the image
     var imageView: UIImageView!
     
     override init(frame: CGRect) {
         super.init(frame: frame)
         
+        // set the content mode of the image view
         imageView = UIImageView()
         imageView.contentMode = .scaleAspectFill
         imageView.clipsToBounds = true
         
+        // set the constraint
         contentView.addSubview(imageView)
         imageView.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([

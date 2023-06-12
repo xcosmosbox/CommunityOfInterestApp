@@ -27,7 +27,9 @@ class SearchCardPageViewController: UIViewController, UIScrollViewDelegate {
 
     
     @IBAction func optionsSegmentedAction(_ sender: Any) {
+        // set the segmented bar
         clearScrollViewComponent(initialScrollComponentContentSize: initialScrollComponentContentSize!, initialLeftCardStackFrame: initialLeftCardStackFrame!, initialRightCardStackFrame: initialRightCardStackFrame!)
+        // init
         serachBar.text = ""
         serachBar.placeholder = "Enter search content"
     }
@@ -36,8 +38,10 @@ class SearchCardPageViewController: UIViewController, UIScrollViewDelegate {
     
     
     @IBAction func buttonSearchAction(_ sender: Any) {
+        // using database controller to get all result of the search
         databaseController?.fetchPostsForSearch(serachType: optionsSegment.titleForSegment(at: optionsSegment.selectedSegmentIndex)!, searchText: serachBar.text!){ searchResult in
             
+            // fill the explore scroll view component
             var counter = 0
             if self.left_card_list.count > self.right_card_list.count{
                 counter = 1
@@ -45,6 +49,7 @@ class SearchCardPageViewController: UIViewController, UIScrollViewDelegate {
                 counter = 0
             }
             
+            // fill the stack view
             for card in searchResult{
                 if counter == 0{
                     let aCardView = CardFactory().buildACardView(username: card.username!, title: card.title!, imagePath: card.cover!, homepageViewControl: self, card: card)
@@ -59,7 +64,6 @@ class SearchCardPageViewController: UIViewController, UIScrollViewDelegate {
                     
                 }
             }
-            
             
             self.refresh()
             
@@ -96,7 +100,7 @@ class SearchCardPageViewController: UIViewController, UIScrollViewDelegate {
         
         // Do any additional setup after loading the view.
         
-        
+        // init
         scrollViewComponent.delegate = self
         
         initialScrollComponentContentSize = scrollViewComponent.contentSize
@@ -152,10 +156,6 @@ class SearchCardPageViewController: UIViewController, UIScrollViewDelegate {
         leftStack.frame = initialLeftCardStackFrame
         rightStack.frame = initialRightCardStackFrame
         scrollViewComponent.contentSize = initialScrollComponentContentSize
-        
-        
-        
-        
         
     }
     

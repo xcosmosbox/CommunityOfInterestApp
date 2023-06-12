@@ -8,15 +8,8 @@
 import UIKit
 
 class HomePageViewController: UIViewController, DatabaseListener, DetailChangeDelegate{
-
-    
-
-    
-
     // init listener type
     var listenerType: ListenerType = .tagAndExp
-    
-
     
     // Variables for two important components
     var HorizontalMenuBarComponent:HorizontalMenuComponent?
@@ -24,8 +17,6 @@ class HomePageViewController: UIViewController, DatabaseListener, DetailChangeDe
     
     // connection for database
     weak var databaseController: DatabaseProtocol?
-    
-    
     
     
     @IBOutlet weak var HorizontalMenu: UIStackView!
@@ -50,7 +41,6 @@ class HomePageViewController: UIViewController, DatabaseListener, DetailChangeDe
     var initialLeftCardStackFrame: CGRect?
     var initialRightCardStackFrame: CGRect?
     
-
     
     @IBAction func gotoSearchPageAction(_ sender: Any) {
         performSegue(withIdentifier: "goToSearchPage", sender: self)
@@ -76,17 +66,12 @@ class HomePageViewController: UIViewController, DatabaseListener, DetailChangeDe
         
         // init ExploreComponent
         self.ExploreViewComponent = ExploreComponent(scrollComponent: scrollComponent, leftStack: leftCardStack, rightStack: rightCardStack)
-                
-//        self.ExploreViewComponent?.fillNewCards(cards: CardFactory().ONLY_TEST_BUILD_CARD())
 
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         databaseController?.addListener(listener: self)
-        
-        
-//        self.HorizontalMenuBarComponent?.buildComponent()
         
     }
     
@@ -109,19 +94,13 @@ class HomePageViewController: UIViewController, DatabaseListener, DetailChangeDe
     }
     */
     func onExploreChange(change: DatabaseChange, cards: [Card]) {
-        
-        print("onExploreChangeonExploreChangeonExploreChange")
-        print(cards.count)
-        print("onExploreChangeonExploreChangeonExploreChange")
-        
-        
         // clean list
         var list:[CardView] = []
         
         // load all card view
         cards.forEach{ card in
+            // build card obj
             let cardView = CardFactory().buildACardView(username: card.username!, title: card.title!, imagePath: card.cover!, homepageViewControl: self, card: card)
-            
             list.append(cardView)
         }
         
@@ -134,6 +113,7 @@ class HomePageViewController: UIViewController, DatabaseListener, DetailChangeDe
         // fill cards to ExploreViewComponent, it will fix the view length by numbers of cards
         self.ExploreViewComponent?.fillNewCards(cards: list)
         
+        // refresh view
         view.setNeedsLayout()
         view.layoutIfNeeded()
         
@@ -144,17 +124,12 @@ class HomePageViewController: UIViewController, DatabaseListener, DetailChangeDe
         let singleton = TagManager.shared
         // remove all without explore
         singleton.removeAllTags()
-        
         // create TagBean throuhg Tag, and store them to TagManager
         tags.forEach{ tag in
             singleton.addTag(name: tag.name!)
         }
-        
         // build HorizontalMenuBarComponent
         self.HorizontalMenuBarComponent?.buildComponent()
-        
-//        view.setNeedsLayout()
-//        view.layoutIfNeeded()
         
     }
     
@@ -165,8 +140,10 @@ class HomePageViewController: UIViewController, DatabaseListener, DetailChangeDe
     func onPersonChange(change: DatabaseChange, postsCards: [Card], likesCards: [Card], collectionsCards: [Card]) {
         // nothing to do
     }
-
     
+    // this function from DetailChangeDelegate
+    // when we want to look the detail about the CARDVIEW
+    // this method will be call
     func loadCardDetail(_ card: Card) {
         self.performSegue(withIdentifier: "showCardDetailPage", sender: card)
     }

@@ -31,6 +31,7 @@ class EditProfileContentPageViewController: UIViewController {
     }
     */
     @IBAction func updateProfileContent(_ sender: Any) {
+        // update the profile content
         databaseController?.updateUserProfileContent(content: newProfileContent.text!){
             self.displayMessage(title: "Update", message: "Update success")
         }

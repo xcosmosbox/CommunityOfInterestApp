@@ -7,9 +7,13 @@
 
 import UIKit
 
+// PageImageViewController implements the UIPage
 class PageImageViewController: UIPageViewController, UIPageViewControllerDataSource, UIPageViewControllerDelegate {
     
-//    var mediaLoader:[String]?
+    // media loader is an array of the tuple
+    // tuple has two attributes
+    // first is the media type
+    // second is the url
     var mediaLoader: [(type: MediaType, url: String)]? = []
     
     public var pageNumber = 0
@@ -20,23 +24,20 @@ class PageImageViewController: UIPageViewController, UIPageViewControllerDataSou
     var didChangePage: ((Int) -> Void)?
 
     override func viewDidLoad() {
-        print("1")
+        // set the database controller
         databaseController = appDelegate?.databaseController
         let cardCache = databaseController?.getOneCardCache()
         
-        
+        // set the mediaLoader
         cardCache?.picture?.forEach{ pic in
-            print("pic: \(pic)")
             mediaLoader?.append((MediaType.image, pic))
         }
         
         cardCache?.video?.forEach{ videoURL in
-            print("video: \(videoURL)")
             mediaLoader?.append((MediaType.video, videoURL))
         }
         
         cardCache?.audio?.forEach{ audioURL in
-            print("audor: \(audioURL)")
             mediaLoader?.append((MediaType.audio, audioURL))
         }
         
@@ -44,26 +45,17 @@ class PageImageViewController: UIPageViewController, UIPageViewControllerDataSou
         
         super.viewDidLoad()
 
-        print("2")
         // Do any additional setup after loading the view.
         
-        
+        // implements the dataSource and delegate
         dataSource = self
         delegate = self
+
         
-        print("+++****+++++********")
-        print(mediaLoader)
-        mediaLoader?.forEach{ context in
-            print(context.url)
-            
-        }
-//        print((mediaLoader?.first)!)
-        print("+++****+++++********")
-        
-//        let initialViewImageController = PicturesViewController(imagePath: (mediaLoader?.first)!)
+        // produce the first media
         let initialViewImageController = produceMediaView(for: mediaLoader?.first)
         
-        
+        // set the page
         self.setViewControllers([initialViewImageController], direction: .forward, animated: false, completion: nil)
         
         self.pageNumber = mediaLoader!.count
@@ -85,9 +77,6 @@ class PageImageViewController: UIPageViewController, UIPageViewControllerDataSou
     
     
     func pageViewController(_ pageViewController: UIPageViewController, viewControllerBefore viewController: UIViewController) -> UIViewController? {
-//        guard let currentIndex = mediaLoader!.firstIndex(of: (viewController as? PicturesViewController)!.imagePath) else {
-//            return nil
-//        }
         guard let currentIndex = mediaLoader?.firstIndex(where: {$0.url == (viewController as? MediaViewController)?.mediaURL}) else{
             return nil
         }
@@ -96,21 +85,12 @@ class PageImageViewController: UIPageViewController, UIPageViewControllerDataSou
             return nil
         } else {
             let newIndex = currentIndex - 1
-            
-//            didChangePage?(newIndex)
-            
-//            print("before \(newIndex)")
-//            let page = PicturesViewController(imagePath: mediaLoader![newIndex])
-//            updateImagePageNumer(viewController: page)
             let page = produceMediaView(for: mediaLoader![newIndex])
             return page
         }
     }
     
     func pageViewController(_ pageViewController: UIPageViewController, viewControllerAfter viewController: UIViewController) -> UIViewController? {
-//        guard let currentIndex = mediaLoader!.firstIndex(of: (viewController as? PicturesViewController)!.imagePath) else {
-//            return nil
-//        }
         guard let currentIndex = mediaLoader?.firstIndex(where: {$0.url == (viewController as? MediaViewController)?.mediaURL}) else{
             return nil
         }
@@ -119,34 +99,26 @@ class PageImageViewController: UIPageViewController, UIPageViewControllerDataSou
             return nil
         } else {
             let newIndex = currentIndex + 1
-            
-//            didChangePage?(newIndex)
-            
-//            databaseController?.updateCurrentImagePageNumber(pageNumber: newIndex)
-//            let page = PicturesViewController(imagePath: mediaLoader![newIndex])
             let page = produceMediaView(for: mediaLoader![newIndex])
             return page
         }
     }
     
+    // using these two method to chage the page control bar
     func pageViewController(_ pageViewController: UIPageViewController, willTransitionTo pendingViewControllers: [UIViewController]) {
-//        guard let viewController = pendingViewControllers.first as? PicturesViewController else { return }
-//        guard let newIndex = mediaLoader?.firstIndex(of: viewController.imagePath) else { return }
         guard let viewController = pendingViewControllers.first as? MediaViewController else { return }
         guard let newIndex = mediaLoader?.firstIndex(where: { $0.url == viewController.mediaURL }) else { return }
         didChangePage?(newIndex)
     }
-    
     func pageViewController(_ pageViewController: UIPageViewController, didFinishAnimating finished: Bool, previousViewControllers: [UIViewController], transitionCompleted completed: Bool) {
         if !completed {
-//            guard let viewController = previousViewControllers.first as? PicturesViewController else { return }
-//            guard let newIndex = mediaLoader?.firstIndex(of: viewController.imagePath) else { return }
             guard let viewController = previousViewControllers.first as? MediaViewController else { return }
             guard let newIndex = mediaLoader?.firstIndex(where: { $0.url == viewController.mediaURL }) else { return }
             didChangePage?(newIndex)
         }
     }
     
+    // according to the different media type to return the page
     func produceMediaView(for media:(type: MediaType, url: String)?) -> UIViewController{
         switch media?.type{
         case .image:

@@ -10,9 +10,6 @@ import UIKit
 class DetailViewController: UIViewController{
     
     weak var databaseController: DatabaseProtocol?
-
-    
-    
     
     
     @IBOutlet weak var PageScrollController: UIScrollView!
@@ -61,6 +58,7 @@ class DetailViewController: UIViewController{
         }
         alertController.addAction(option2Action)
         
+        // set the cancel option
         let cancelAction = UIAlertAction(title: "Cancel", style: .cancel)
         alertController.addAction(cancelAction)
 
@@ -70,38 +68,15 @@ class DetailViewController: UIViewController{
     }
     
     
-    
-    
-    
-    
     var card:Card? = nil
     
-    
-
     override func viewDidLoad() {
-        
-        print("3")
-        
         super.viewDidLoad()
         
         let appDelegate = UIApplication.shared.delegate as? AppDelegate
         databaseController = appDelegate?.databaseController
         
-        print("4")
-        
-        print("=====")
-        print(card)
-        print(card?.id)
-        print(card?.username)
-        print(card?.content)
-        print(card?.title)
-        print(card?.cover)
-        print(card?.picture)
-        print(card?.video)
-//        print(card.publisher)
-        print("+++++")
-        
-        
+        // set the number of pages
         var pageCounter = 0
         card?.picture?.forEach{ _ in
             pageCounter += 1
@@ -114,18 +89,15 @@ class DetailViewController: UIViewController{
         }
         pageControlBar.numberOfPages = pageCounter
         
-        
-//        TitleTextLabel.numberOfLines = 0
+        // set the text of title and content
         TitleTextLabel.text = card?.title
-//        ContentTextLabel.numberOfLines = 0
         ContentTextLabel.text = card?.content
         
+        // resize the view
         var counter = 0.0
         counter += PageContainer.frame.height
         counter += TitleTextLabel.frame.height
         counter += ContentTextLabel.frame.height
-        
-        
         PageScrollController.contentSize = CGSize(width: 393, height: counter + 100.0)
         PageScrollController.showsVerticalScrollIndicator = false
         PageScrollController.addSubview(PageContainer)
@@ -145,7 +117,6 @@ class DetailViewController: UIViewController{
             }
         }
         
-//        pageControlBar.tintColor = .systemGray2
         pageControlBar.currentPageIndicatorTintColor = .systemBlue
         
     }

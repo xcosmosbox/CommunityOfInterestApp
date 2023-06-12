@@ -9,6 +9,7 @@ import UIKit
 import FirebaseFirestoreSwift
 import Firebase
 
+// card data model
 class Card: NSObject, Codable {
     @DocumentID var id: String?
     var title: String?

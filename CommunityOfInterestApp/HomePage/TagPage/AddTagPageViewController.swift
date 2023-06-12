@@ -9,14 +9,15 @@ import UIKit
 
 class AddTagPageViewController: UIViewController {
     
+    // import database controller
     weak var databaseController: DatabaseProtocol?
     
     
     @IBOutlet weak var TagName: UITextField!
     
     
-    
     @IBAction func addTagAction(_ sender: Any) {
+        // using add tag method to add new tag at local and firebase
         TagManager.shared.addTag(name: TagName.text!)
         databaseController?.addTag(name: TagName.text!)
         self.navigationController?.popViewController(animated: true)
