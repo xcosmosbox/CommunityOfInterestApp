@@ -109,6 +109,12 @@ class HomePageViewController: UIViewController, DatabaseListener, DetailChangeDe
     }
     */
     func onExploreChange(change: DatabaseChange, cards: [Card]) {
+        
+        print("onExploreChangeonExploreChangeonExploreChange")
+        print(cards.count)
+        print("onExploreChangeonExploreChangeonExploreChange")
+        
+        
         // clean list
         var list:[CardView] = []
         

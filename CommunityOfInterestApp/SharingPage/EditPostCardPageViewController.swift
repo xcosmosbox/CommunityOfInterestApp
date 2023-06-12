@@ -323,6 +323,8 @@ class EditPostCardPageViewController: UIViewController, UICollectionViewDataSour
                 print(documentReference.documentID)
                 print("&^^^^^^^^^^^^^")
                 
+                self.databaseController!.getCommunityContentByTag(tagNmae: " Explore ")
+                
                 self.databaseController?.addPostIntoUser(postDocRef: documentReference)
                 
                 // process the upload success content, such as go to the detail page
@@ -376,28 +378,36 @@ class EditPostCardPageViewController: UIViewController, UICollectionViewDataSour
     
     
     func navigateToDetailViewController() {
-        if let detailViewController = UIStoryboard(name: "HomePageMain", bundle: nil).instantiateViewController(withIdentifier: "DetailViewController") as? DetailViewController {
-            
-            // Call setOneCardCache(card: Card) from FirebaseController
-            databaseController?.setOneCardCache(card: self.selectedCard!)
-            
-            detailViewController.card = self.selectedCard
-
-            
-            // Find the tabBarController and navigate to the first tab
-            if let tabBarController = self.navigationController?.tabBarController {
-                tabBarController.selectedIndex = 0
-
-                // Get the HomePageViewController and its navigationController
-                if let homePageNavigationController = tabBarController.viewControllers?.first as? UINavigationController,
-                    let homePageViewController = homePageNavigationController.topViewController as? HomePageViewController {
-                    self.navigationController?.popToRootViewController(animated: false)
-
-                    // Push the DetailViewController onto HomePageViewController's navigationController
-                    homePageNavigationController.pushViewController(detailViewController, animated: true)
-                }
+//        if let detailViewController = UIStoryboard(name: "HomePageMain", bundle: nil).instantiateViewController(withIdentifier: "DetailViewController") as? DetailViewController {
+//
+//            // Call setOneCardCache(card: Card) from FirebaseController
+//            databaseController?.setOneCardCache(card: self.selectedCard!)
+//
+//            detailViewController.card = self.selectedCard
+//
+//
+//            // Find the tabBarController and navigate to the first tab
+//            if let tabBarController = self.navigationController?.tabBarController {
+//                tabBarController.selectedIndex = 0
+//
+//                // Get the HomePageViewController and its navigationController
+//                if let homePageNavigationController = tabBarController.viewControllers?.first as? UINavigationController,
+//                    let homePageViewController = homePageNavigationController.topViewController as? HomePageViewController {
+//                    self.navigationController?.popToRootViewController(animated: false)
+//
+//                    // Push the DetailViewController onto HomePageViewController's navigationController
+//                    homePageNavigationController.pushViewController(detailViewController, animated: true)
+//                }
+//            }
+//        }
+        
+        let storyboard = UIStoryboard(name: "HomePageMain", bundle: nil)
+        if let pageNavController = storyboard.instantiateViewController(withIdentifier: "HomePageMainNavigationC") as? UINavigationController {
+            if let sceneDelegate = self.view.window?.windowScene?.delegate as? SceneDelegate {
+                sceneDelegate.window?.rootViewController = pageNavController
             }
         }
+        
     }
 
     
