@@ -9,8 +9,15 @@ import UIKit
 import Firebase
 import FirebaseFirestoreSwift
 import FirebaseStorage
+import AVFoundation
 
 class FirebaseController: NSObject, DatabaseProtocol {
+    
+    
+    
+    
+
+    
     
 
     
@@ -63,6 +70,8 @@ class FirebaseController: NSObject, DatabaseProtocol {
     // edit and push post
     var currentImages: [UIImage] = []
     var currentImagesCounter: Int = 0
+    var currentVideos: [AVAsset] = []
+    var currentVideosCounter: Int = 0
     
     
     override init() {
@@ -952,6 +961,17 @@ class FirebaseController: NSObject, DatabaseProtocol {
     
     func clearCurrentImages() {
         self.currentImages.removeAll()
+    }
+    
+    func saveCurrentVideosAsDraft(videos: [AVAsset]){
+        for video in videos {
+            print("save video!11")
+            self.currentVideos.append(video)
+        }
+    }
+    
+    func clearCurrentVideos(){
+        self.currentVideos.removeAll()
     }
     
     func uploadCurrentImagesForCard(title: String, content: String, selectedTags: [String], weatherInfo:(temp_c:Int, location:String, pushTime:String)?, completion: @escaping (DocumentReference, Card) -> Void) {

@@ -29,9 +29,11 @@ class MultiSelectImagePageViewController: UIViewController,  PHPickerViewControl
     
     override func viewWillAppear(_ animated: Bool) {
         databaseController?.clearCurrentImages()
+        databaseController?.clearCurrentVideos()
         
         configuration = PHPickerConfiguration()
-        configuration?.filter = .images
+//        configuration?.filter = .images
+        configuration?.filter = .any(of: [.images, .videos])
         configuration?.selectionLimit = 9
         
         pickerViewController = PHPickerViewController(configuration: configuration!)
@@ -77,36 +79,53 @@ class MultiSelectImagePageViewController: UIViewController,  PHPickerViewControl
         }
         
         var imagesArray:[UIImage] = []
+        var videosArray: [AVAsset] = []
         
-        var loadImageConter = 0
+        var loadMediaCounter = 0
         
         for result in results {
-            result.itemProvider.loadObject(ofClass: UIImage.self) { (object, error) in
-                
-                DispatchQueue.main.async {
-                    if let error = error {
-                        print("load photo error: \(error.localizedDescription)")
-                        loadImageConter += 1
-                    } else if let image = object as? UIImage {
-                        // process selected image
-                        print("select photo: \(image)")
-                        imagesArray.append(image)
-                        
-                        loadImageConter += 1
-                        
-                        if loadImageConter == results.count{
-//                            self.JUSTTOTESTFUNCTION(imagesArray)
+            if result.itemProvider.canLoadObject(ofClass: UIImage.self){
+                result.itemProvider.loadObject(ofClass: UIImage.self) { (object, error) in
+                    
+                    DispatchQueue.main.async {
+                        if let error = error {
+                            print("load photo error: \(error.localizedDescription)")
+                            loadMediaCounter += 1
+                        } else if let image = object as? UIImage {
+                            // process selected image
+                            print("select photo: \(image)")
+                            imagesArray.append(image)
                             
-                            // save image to the draft box
-                            self.databaseController?.saveCurrentImagesAsDraft(images: imagesArray)
-
-                            self.performSegue(withIdentifier: "toEditPostCardPage", sender: self)
+                            loadMediaCounter += 1
+                            
+                            self.checkMediaLoadCompletion(totalCount: results.count, counter: loadMediaCounter, images: imagesArray, videos: videosArray)
+                            
                         }
-                        
                     }
+                    
                 }
                 
+            } else{
+                result.itemProvider.loadFileRepresentation(forTypeIdentifier: UTType.movie.identifier){ (url, error) in
+                    DispatchQueue.main.async {
+                        if let error = error {
+                            print("load video error: \(error.localizedDescription)")
+                        } else if let url = url {
+                            let asset = AVAsset(url: url)
+                            videosArray.append(asset)
+                            
+                            loadMediaCounter += 1
+                            self.checkMediaLoadCompletion(totalCount: results.count, counter: loadMediaCounter, images: imagesArray, videos: videosArray)
+                        }
+                    }
+                    
+                    
+                }
             }
+            
+            
+            
+            
         }
      
 //        databaseController?.saveCurrentImagesAsDraft(images: imagesArray)
@@ -114,6 +133,15 @@ class MultiSelectImagePageViewController: UIViewController,  PHPickerViewControl
 //        self.JUSTTOTESTFUNCTION(imagesArray)
 //
 //        performSegue(withIdentifier: "toEditPostCardPage", sender: self)
+    }
+    
+    
+    func checkMediaLoadCompletion(totalCount: Int, counter: Int, images:[UIImage], videos:[AVAsset]){
+        if totalCount == counter{
+            self.databaseController?.saveCurrentImagesAsDraft(images: images)
+            self.databaseController?.saveCurrentVideosAsDraft(videos: videos)
+            self.performSegue(withIdentifier: "toEditPostCardPage", sender: self)
+        }
     }
     
 //    func JUSTTOTESTFUNCTION(_ images: [UIImage]){

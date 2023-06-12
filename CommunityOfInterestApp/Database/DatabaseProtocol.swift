@@ -8,6 +8,8 @@
 import Foundation
 import UIKit
 import Firebase
+import AVFoundation
+
 
 enum DatabaseChange {
     case add
@@ -84,8 +86,12 @@ protocol DatabaseProtocol: AnyObject{
     // image
     var currentImages:[UIImage] {get}
     var currentImagesCounter:Int {get}
+    var currentVideos:[AVAsset] {get}
+    var currentVideosCounter:Int {get}
     func saveCurrentImagesAsDraft(images:[UIImage])
+    func saveCurrentVideosAsDraft(videos: [AVAsset])
     func clearCurrentImages()
+    func clearCurrentVideos()
     func uploadCurrentImagesForCard(title: String, content: String, selectedTags: [String], weatherInfo:(temp_c:Int, location:String, pushTime:String)?, completion: @escaping (DocumentReference, Card) -> Void)
     func addPostIntoUser(postDocRef: DocumentReference)
     
