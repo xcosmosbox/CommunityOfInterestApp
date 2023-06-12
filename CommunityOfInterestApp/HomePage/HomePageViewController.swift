@@ -128,8 +128,8 @@ class HomePageViewController: UIViewController, DatabaseListener, DetailChangeDe
         // fill cards to ExploreViewComponent, it will fix the view length by numbers of cards
         self.ExploreViewComponent?.fillNewCards(cards: list)
         
-//        view.setNeedsLayout()
-//        view.layoutIfNeeded()
+        view.setNeedsLayout()
+        view.layoutIfNeeded()
         
     }
     

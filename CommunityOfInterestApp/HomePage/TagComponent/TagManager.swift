@@ -16,11 +16,17 @@ class TagManager{
     var TagList:[TagBean] = []
     
     func addTag(name: String) {
-        TagList.append(TagBean(name: name))
+        if !TagList.contains(where: {$0.getName() == name}){
+            TagList.append(TagBean(name: name))
+        }
+        
     }
     
     func addTagInstance(tag: TagBean) {
-        TagList.append(tag)
+        if !TagList.contains(where: {$0.getName() == tag.getName()}){
+            TagList.append(tag)
+        }
+        
     }
     
     func removeTag(name: String) -> TagBean {
