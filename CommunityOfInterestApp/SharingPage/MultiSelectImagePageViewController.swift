@@ -32,8 +32,8 @@ class MultiSelectImagePageViewController: UIViewController,  PHPickerViewControl
         databaseController?.clearCurrentVideos()
         
         configuration = PHPickerConfiguration()
-//        configuration?.filter = .images
-        configuration?.filter = .any(of: [.images, .videos])
+        configuration?.filter = .images
+//        configuration?.filter = .any(of: [.images, .videos])
         configuration?.selectionLimit = 9
         
         pickerViewController = PHPickerViewController(configuration: configuration!)
@@ -123,16 +123,8 @@ class MultiSelectImagePageViewController: UIViewController,  PHPickerViewControl
                 }
             }
             
-            
-            
-            
         }
      
-//        databaseController?.saveCurrentImagesAsDraft(images: imagesArray)
-        
-//        self.JUSTTOTESTFUNCTION(imagesArray)
-//
-//        performSegue(withIdentifier: "toEditPostCardPage", sender: self)
     }
     
     
@@ -144,24 +136,6 @@ class MultiSelectImagePageViewController: UIViewController,  PHPickerViewControl
         }
     }
     
-//    func JUSTTOTESTFUNCTION(_ images: [UIImage]){
-////        var temp:[UIImage] = []
-////        temp.append(UIImage(named: "food_0.pic")!)
-////        temp.append(UIImage(named: "food_3.pic")!)
-////        databaseController?.saveCurrentImagesAsDraft(images: temp)
-//        databaseController?.saveCurrentImagesAsDraft(images: images)
-//        print("lengthImage: \(images.count)")
-//        print(images)
-//        Task{
-//            do{
-//                databaseController?.uploadCurrentImagesForCard(title: "title_title", content: "this is contentcontentcontentcontentcontentcontentcontentcontentcontentcontentcontentcontentcontentcontent", selectedTags: ["Food","Pet"]){ result in
-//                    DispatchQueue.main.async {
-//                        print("TEST SUCCESS")
-//                    }
-//                }
-//            }
-//        }
-//    }
     
     
     
