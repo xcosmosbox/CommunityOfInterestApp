@@ -56,6 +56,8 @@ class PersonPageViewController: UIViewController, DatabaseListener, DetailChange
         
         var name = showDifferCardSegmentedControl.titleForSegment(at: showDifferCardSegmentedControl.selectedSegmentIndex) ?? ""
         
+        
+        
         if name == "Posts"{
             showPostsView()
         } else if name == "Collections"{
@@ -102,6 +104,10 @@ class PersonPageViewController: UIViewController, DatabaseListener, DetailChange
     
     
     func showPostsView(){
+        print("showPostsViewshowPostsViewshowPostsView")
+        print(currentUserPostsList?.count)
+        print("showPostsViewshowPostsViewshowPostsView")
+        
         self.showCardViewComponent?.clearAll(initialScrollComponentContentSize: initialScrollComponentContentSize!, initialLeftCardStackFrame: initialLeftCardStackFrame!, initialRightCardStackFrame: initialRightCardStackFrame!)
         var cards:[CardView] = []
         self.currentUserPostsList?.forEach{ card in
@@ -148,7 +154,9 @@ class PersonPageViewController: UIViewController, DatabaseListener, DetailChange
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        databaseController!.parseUserCardViewList()
+        databaseController?.addListener(listener: self)
+        
+//        databaseController!.parseUserCardViewList()
         Task{
             do{
                 databaseController?.getUserModel{ userModel in
@@ -168,6 +176,14 @@ class PersonPageViewController: UIViewController, DatabaseListener, DetailChange
                         self.userFollowingNumber.text = "\(Int((self.currentUser?.following!.count)!))"
                         self.userFollowerLabel.text = "\(Int((self.currentUser?.follower!.count)!))"
                         
+//                        self.currentUserPostsList = []
+//                        self.currentUserLikesList = []
+//                        self.currentUserCollectionsList = []
+                        
+                        self.showDifferCardSegmentedControl.selectedSegmentIndex = 0
+                        self.showPostsView()
+                        
+                        
                     }
                     
                     
@@ -181,17 +197,21 @@ class PersonPageViewController: UIViewController, DatabaseListener, DetailChange
             }
         }
         
-        self.currentUserPostsList = []
-        self.currentUserLikesList = []
-        self.currentUserCollectionsList = []
         
-        databaseController?.addListener(listener: self)
-        self.showDifferCardSegmentedControl.selectedSegmentIndex = 0
-        self.showPostsView()
+        
+//        self.currentUserPostsList = []
+//        self.currentUserLikesList = []
+//        self.currentUserCollectionsList = []
+//
+////        databaseController?.addListener(listener: self)
+//        self.showDifferCardSegmentedControl.selectedSegmentIndex = 0
+//        self.showPostsView()
     }
     
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
+        databaseController?.removeListener(listener: self)
+        
         
         self.currentUserPostsList = []
         self.currentUserLikesList = []
@@ -199,7 +219,7 @@ class PersonPageViewController: UIViewController, DatabaseListener, DetailChange
         
         
         self.showCardViewComponent?.clearAll(initialScrollComponentContentSize: initialScrollComponentContentSize!, initialLeftCardStackFrame: initialLeftCardStackFrame!, initialRightCardStackFrame: initialRightCardStackFrame!)
-        databaseController?.removeListener(listener: self)
+//        databaseController?.removeListener(listener: self)
     }
     
     
@@ -217,12 +237,38 @@ class PersonPageViewController: UIViewController, DatabaseListener, DetailChange
     }
     
     func onPersonChange(change: DatabaseChange, postsCards: [Card], likesCards: [Card], collectionsCards: [Card]) {
-//        print("&(*&*(&*(&*(&*(")
-//        print(likesCards)
-//        print("&(*&*(&*(&*(&*(")
+        
         self.currentUserPostsList = postsCards
         self.currentUserLikesList = likesCards
         self.currentUserCollectionsList = collectionsCards
+        
+        var temp_post:[Card] = []
+        var temp_like:[Card] = []
+        var temp_coll:[Card] = []
+        
+        for card in self.currentUserPostsList!{
+            if !temp_post.contains(where: {$0.id == card.id}){
+                temp_post.append(card)
+            }
+        }
+        
+        for card in self.currentUserLikesList!{
+            if !temp_like.contains(where: {$0.id == card.id}){
+                temp_like.append(card)
+            }
+        }
+        
+        for card in self.currentUserCollectionsList!{
+            if !temp_coll.contains(where: {$0.id == card.id}){
+                temp_coll.append(card)
+            }
+        }
+        
+        self.currentUserPostsList = temp_post
+        self.currentUserLikesList = temp_like
+        self.currentUserCollectionsList = temp_coll
+        
+      
     }
     
     func loadCardDetail(_ card: Card) {
