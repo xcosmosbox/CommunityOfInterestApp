@@ -89,7 +89,8 @@ protocol DatabaseProtocol: AnyObject{
     func uploadCurrentImagesForCard(title: String, content: String, selectedTags: [String], weatherInfo:(temp_c:Int, location:String, pushTime:String)?, completion: @escaping (DocumentReference, Card) -> Void)
     func addPostIntoUser(postDocRef: DocumentReference)
     
-    // likes & collections operations
+    // follow & likes & collections operations
+    func addUserToFollowingList(followingUser: DocumentReference, completion: @escaping () -> Void)
     func addPostToUserLikesField(id: String, completion: @escaping () -> Void)
     func addPostToUserCollectionsField(id: String, completion: @escaping () -> Void)
     

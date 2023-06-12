@@ -1155,6 +1155,39 @@ class FirebaseController: NSObject, DatabaseProtocol {
     }
         
     
+    func addUserToFollowingList(followingUser: DocumentReference, completion: @escaping () -> Void){
+        let userDocRef = database.collection("user").document(currentUser!.uid)
+        userDocRef.getDocument(){ (snapshot, error) in
+            if let error = error{
+                print("get user doc error: addUserToFollowingList \(error)")
+                return
+            }
+            
+            guard let snapshot = snapshot, let arrayField = snapshot.data()?["following"] as? [DocumentReference] else{
+                print("get following array error: addUserToFollowingList")
+                return
+            }
+            
+            if arrayField.contains(followingUser){
+                // do nothing
+                completion()
+            } else{
+                userDocRef.updateData([
+                    "following": FieldValue.arrayUnion([followingUser])
+                ])
+                followingUser.updateData([
+                    "follower": FieldValue.arrayUnion([userDocRef])
+                ]) { (updateError) in
+                    if let updateError = updateError {
+                        print("update error addUserToFollowingList: \(updateError)")
+                    }
+                    print("follow success")
+                    completion()
+                }
+            }
+        }
+        
+    }
     
     
     func addPostToUserLikesField(id: String, completion: @escaping () -> Void) {

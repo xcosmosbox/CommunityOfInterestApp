@@ -31,8 +31,17 @@ class DetailViewController: UIViewController{
     @IBAction func MenuToSelectLikesAndCollections(_ sender: UIBarButtonItem) {
         // create the alert controller
         let alertController = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
+        
+        // set the follow button
+        let followAction = UIAlertAction(title: "Follow", style: .default){ _ in
+            // add the publisher into the user's following list
+            self.databaseController?.addUserToFollowingList(followingUser: (self.card?.publisher)!){ () in
+                print("add user to following list success")
+            }
+        }
+        alertController.addAction(followAction)
 
-        // set the first menu
+        // set the like button
         let option1Action = UIAlertAction(title: "Like", style: .default) { _ in
             // add this post to user's likes field
             self.databaseController?.addPostToUserLikesField(id: (self.card?.id)!){ () in
@@ -42,7 +51,7 @@ class DetailViewController: UIViewController{
         }
         alertController.addAction(option1Action)
 
-        // set the second menu
+        // set the collection button
         let option2Action = UIAlertAction(title: "Collect", style: .default) { _ in
             // add this post to user's collections field
             self.databaseController?.addPostToUserCollectionsField(id: (self.card?.id)!){ () in
