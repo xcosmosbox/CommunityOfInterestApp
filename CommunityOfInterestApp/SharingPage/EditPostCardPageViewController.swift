@@ -107,19 +107,29 @@ class EditPostCardPageViewController: UIViewController, UICollectionViewDataSour
         // using the weather API to get the weather info and push time and push location
         if let location = locations.first {
             let appDelegate = UIApplication.shared.delegate as? AppDelegate
-            var apiLink = appDelegate?.getAPIInfo()
-            var api = apiLink! + "&q=\(location.coordinate.latitude),\(location.coordinate.longitude)&aqi=no"
+            // get the api link
+            let apiLink = appDelegate?.getAPIInfo()
+            // fill the api info
+            let api = apiLink! + "&q=\(location.coordinate.latitude),\(location.coordinate.longitude)&aqi=no"
+            // build the url obj
             let url = URL(string: api)!
+            // create the data task
             let task = URLSession.shared.dataTask(with: url) { (data, response, error) in
                 if let data = data {
                     do {
                         // get the result json
                         let json = try JSONSerialization.jsonObject(with: data, options: .mutableContainers) as! [String: Any]
+                        // get the 'current' obj
                         let current = json["current"] as! [String: Any]
+                        // read the "temp_c"
                         self.weatherInfo = current["temp_c"] as? Int
+                        // get the "location" obj
                         let location = json["location"] as! [String : Any]
+                        // get the tz_id from the "location" obj
                         self.weatherLocation = location["tz_id"] as? String
+                        // get the localtime from the "location" obj
                         self.pushTime = location["localtime"] as? String
+                        // build the push info
                         if let weather_c = self.weatherInfo, let currtLocation = self.weatherLocation, let time = self.pushTime{
                             self.pushInfo = (temp_c:weather_c, location:currtLocation, pushTime:time)
                         }
@@ -286,35 +296,59 @@ class EditPostCardPageViewController: UIViewController, UICollectionViewDataSour
     
     @objc func uploadButtonTapped() {
         activityIndicator.startAnimating()
-        timer = Timer.scheduledTimer(withTimeInterval: 3.0, repeats: true){ _ in
+        timer = Timer.scheduledTimer(withTimeInterval: 4.0, repeats: true){ _ in
             let selectedTags = self.tagButtons.filter { $0.isSelected }.map { $0.title(for: .normal)! }
-            // upload the post
-            self.databaseController?.uploadCurrentImagesForCard(title: self.titleTextField.text!, content: self.contentTextView.text, selectedTags: selectedTags, weatherInfo: self.pushInfo) { (documentReference, createdCard) in
-                
-                // refresh the local cache
-                self.databaseController!.getCommunityContentByTag(tagNmae: " Explore ")
-                
-                // add post into user
-                self.databaseController?.addPostIntoUser(postDocRef: documentReference)
-                
-                // creat the card and jump to the home page
-                self.databaseController!.getCardModel(cardRef: documentReference){ card in
-                    self.timer?.invalidate()
+            if self.weatherSwitch.isOn{
+                // upload the post
+                self.databaseController?.uploadCurrentImagesForCard(title: self.titleTextField.text!, content: self.contentTextView.text, selectedTags: selectedTags, weatherInfo: self.pushInfo) { (documentReference, createdCard) in
                     
-                    self.selectedCard = card
+                    // refresh the local cache
+                    self.databaseController!.getCommunityContentByTag(tagNmae: " Explore ")
                     
-                    // Navigate to DetailViewController
-                    self.navigateToDetailViewController()
+                    // add post into user
+                    self.databaseController?.addPostIntoUser(postDocRef: documentReference)
+                    
+                    // creat the card and jump to the home page
+                    self.databaseController!.getCardModel(cardRef: documentReference){ card in
+                        self.timer?.invalidate()
+                        
+                        self.selectedCard = card
+                        
+                        // Navigate to DetailViewController
+                        self.navigateToDetailViewController()
+                    }
+                    
                 }
-                
+            } else{
+                // upload the post
+                self.databaseController?.uploadCurrentImagesForCard(title: self.titleTextField.text!, content: self.contentTextView.text, selectedTags: selectedTags, weatherInfo: nil) { (documentReference, createdCard) in
+                    
+                    // refresh the local cache
+                    self.databaseController!.getCommunityContentByTag(tagNmae: " Explore ")
+                    
+                    // add post into user
+                    self.databaseController?.addPostIntoUser(postDocRef: documentReference)
+                    
+                    // creat the card and jump to the home page
+                    self.databaseController!.getCardModel(cardRef: documentReference){ card in
+                        self.timer?.invalidate()
+                        
+                        self.selectedCard = card
+                        
+                        // Navigate to DetailViewController
+                        self.navigateToDetailViewController()
+                    }
+                    
+                }
             }
+            
         }
     }
     
     // jump to the home page
     func navigateToDetailViewController() {
-        let storyboard = UIStoryboard(name: "HomePageMain", bundle: nil)
-        if let pageNavController = storyboard.instantiateViewController(withIdentifier: "HomePageMainNavigationC") as? UINavigationController {
+        let storyboard = UIStoryboard(name: "Main", bundle: nil)
+        if let pageNavController = storyboard.instantiateViewController(withIdentifier: "TabBarControllerMainStoryboard") as? UITabBarController {
             if let sceneDelegate = self.view.window?.windowScene?.delegate as? SceneDelegate {
                 sceneDelegate.window?.rootViewController = pageNavController
             }

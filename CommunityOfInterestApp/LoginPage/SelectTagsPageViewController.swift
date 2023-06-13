@@ -60,6 +60,7 @@ class SelectTagsPageViewController: UIViewController {
             }
         }
         
+        // set the user's tags field
         var flag = databaseController?.setupUserSelectedTags(tags: selectedTags)
         
         if flag == true{

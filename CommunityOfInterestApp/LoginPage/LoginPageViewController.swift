@@ -51,8 +51,10 @@ class LoginPageViewController: UIViewController, DatabaseListener {
         let eamil = emailTextField.text
         let password = passwordTextField.text
         
+        // check the eamil and passwor is valid
         if let email = eamil, let password = password{
             if checkPassword(password: password){
+                // using firebase to sign up
                 databaseController?.signup(newEmail: email, newPassword: password)
                 DispatchQueue.main.async {
                     self.performSegue(withIdentifier: "toSelectTagPage", sender: nil)
@@ -93,12 +95,15 @@ class LoginPageViewController: UIViewController, DatabaseListener {
 
         databaseController?.addListener(listener: self)
 
+        // check the value of 'isLogin'
         let defaults = UserDefaults.standard
         var isLogin = defaults.bool(forKey: "isLogin")
 
+        // if true, means we can auto-complete the email and password
         if isLogin == true{
             let email = defaults.string(forKey: "email")
             let password = defaults.string(forKey: "password")
+            // auto-call the login function
             databaseController?.login(email: email!, password: password!)
         } else{
             self.activityIndicator.stopAnimating()

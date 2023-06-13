@@ -17,6 +17,7 @@ class CouldSelectedButton: UIButton {
     }
     */
     
+    // style for selected tag which used as to init the new person
     var isSelectedSate = false
     var unselectedColor: UIColor = .systemGray5
     var selectedColor: UIColor = .systemBlue

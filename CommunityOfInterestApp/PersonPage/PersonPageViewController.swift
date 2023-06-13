@@ -252,23 +252,23 @@ class PersonPageViewController: UIViewController, DatabaseListener, DetailChange
     
     func setupUserInteractionAndGesture(){
         self.userProfileImageView.isUserInteractionEnabled = true
-        var uiimageViewGesture = UITapGestureRecognizer(target: self, action: #selector(toEditProfileImage))
+        let uiimageViewGesture = UITapGestureRecognizer(target: self, action: #selector(toEditProfileImage))
         self.userProfileImageView.addGestureRecognizer(uiimageViewGesture)
         
         self.userNameLabel.isUserInteractionEnabled = true
-        var userNameLabelGesture = UITapGestureRecognizer(target: self, action: #selector(toEditUsername))
+        let userNameLabelGesture = UITapGestureRecognizer(target: self, action: #selector(toEditUsername))
         self.userNameLabel.addGestureRecognizer(userNameLabelGesture)
         
         self.userProfileLabel.isUserInteractionEnabled = true
-        var userProfileLabelGesture = UITapGestureRecognizer(target: self, action: #selector(toEditUserProfileContent))
+        let userProfileLabelGesture = UITapGestureRecognizer(target: self, action: #selector(toEditUserProfileContent))
         self.userProfileLabel.addGestureRecognizer(userProfileLabelGesture)
         
         self.userFollowingNumber.isUserInteractionEnabled = true
-        var userFollowingNumberGesture = UITapGestureRecognizer(target: self, action: #selector(toShowFollowingAndFollower))
+        let userFollowingNumberGesture = UITapGestureRecognizer(target: self, action: #selector(toShowFollowingAndFollower))
         self.userFollowingNumber.addGestureRecognizer(userFollowingNumberGesture)
         
         self.userFollowerLabel.isUserInteractionEnabled = true
-        var userFollowerLabelGesture = UITapGestureRecognizer(target: self, action: #selector(toShowFollowingAndFollower))
+        let userFollowerLabelGesture = UITapGestureRecognizer(target: self, action: #selector(toShowFollowingAndFollower))
         self.userFollowerLabel.addGestureRecognizer(userFollowerLabelGesture)
         
         
@@ -311,9 +311,6 @@ class PersonPageViewController: UIViewController, DatabaseListener, DetailChange
         
         if segue.identifier == "goToShowFollowingAndFollowerPage"{
             let destination = segue.destination as? FollowingFollowerViewController
-            print("goToShowFollowingAndFollowerPage1: \(self.currentUser)")
-            print("goToShowFollowingAndFollowerPage2: \(self.currentUser!.following!)")
-            print("goToShowFollowingAndFollowerPage2: \(self.currentUser!.follower!)")
             destination?.followingUsers = self.currentUser!.following!
             destination?.followerUsers = self.currentUser!.follower!
         }

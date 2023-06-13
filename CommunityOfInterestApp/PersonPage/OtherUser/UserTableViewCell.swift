@@ -77,7 +77,7 @@ class UserTableViewCell: UITableViewCell {
     
     
     
-    
+    // switch the button color
     @IBAction func followButtonTapped(_ sender: Any) {
         if followButton.titleLabel?.text == "Following"{
             Task{

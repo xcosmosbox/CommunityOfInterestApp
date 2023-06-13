@@ -51,13 +51,8 @@ class FirebaseController: NSObject, DatabaseProtocol {
         database = Firestore.firestore()
         fireStorage = Storage.storage()
         userLoginState = false
-        
         super.init()
-        
-        
         clearCache()
-        
-
     }
 
     
@@ -92,7 +87,7 @@ class FirebaseController: NSObject, DatabaseProtocol {
     }
     
     
-    
+    // add tag into user's field
     func addTag(name: String) -> Tag {
         let tag = Tag()
         tag.name = name
@@ -110,15 +105,12 @@ class FirebaseController: NSObject, DatabaseProtocol {
                 print("add new tag successfully")
             }
         }
-        
         // add one tag on local
         self.defaultTags.append(tag)
-        
         return tag
-        
     }
     
-    
+    // delete a tag from the user's field
     func deleteTag(tag: Tag) {
         // delete one tag for firestore
         database.collection("user").document(currentUser!.uid).updateData([
@@ -133,9 +125,7 @@ class FirebaseController: NSObject, DatabaseProtocol {
         
         // delete one tag on local
         self.defaultTags.removeAll(where: {$0.name == tag.name})
-        
     }
-    
     
     
     func addCard(card: Card) -> Card {
@@ -149,10 +139,10 @@ class FirebaseController: NSObject, DatabaseProtocol {
     }
     
     func getCommunityContentByTag(tagNmae: String) {
-        
         // remove all cards
         currentCards = []
         
+        // 'Explore' means  all post
         if tagNmae == " Explore "{
             postRef?.getDocuments{ (querySnapshot, error) in
                 
@@ -160,11 +150,9 @@ class FirebaseController: NSObject, DatabaseProtocol {
                     print("Failed to get documents with error on getCommunityContentByTag: \(String(describing: error))")
                     return
                 }
-                
+                // parse post
                 self.parseCardsSnapshotFromNewTag(snapshot: querySnapshot)
-                
             }
-            
         } else {
             let name = tagNmae.trimmingCharacters(in: .whitespacesAndNewlines)
             // get new cards
@@ -177,18 +165,16 @@ class FirebaseController: NSObject, DatabaseProtocol {
                         print("Failed to get documents by tag name with error: \(String(describing: error))")
                         return
                     }
+                    // parse post
                     self.parseCardsSnapshotFromNewTag(snapshot: querySnapshot)
                 }
             }
         }
-        
     }
-    
-
     
     
     func setupCurrentCards() {
-        
+        // create the post reference
         postRef = database.collection("post")
         postRef?.getDocuments{ (querySnapshot, error) in
             
@@ -196,22 +182,15 @@ class FirebaseController: NSObject, DatabaseProtocol {
                 print("Failed to get documents with error: \(String(describing: error))")
                 return
             }
-            
             self.parseCardsSnapshot(snapshot: querySnapshot)
-            
         }
-        
-        
-        
-        
     }
     
     
+    // parse tag method like lab
     func parseTagsSnapshot(snapshot: QuerySnapshot){
         snapshot.documentChanges.forEach{ (change) in
-            
             var parsedTag: Tag?
-            
             do {
                 parsedTag = try change.document.data(as: Tag.self)
             } catch {
@@ -323,7 +302,7 @@ class FirebaseController: NSObject, DatabaseProtocol {
         
     }
     
-    
+    // set card cache
     func setOneCardCache(card: Card) {
         self.oneCardCache = card
     }
@@ -331,8 +310,6 @@ class FirebaseController: NSObject, DatabaseProtocol {
     func getOneCardCache() -> Card {
         return self.oneCardCache!
     }
-
-    
     
     func login(email: String, password: String) {
         Task{
@@ -343,11 +320,13 @@ class FirebaseController: NSObject, DatabaseProtocol {
                 currentUser = authDataResult.user
                 userLoginState = true
                 
+                // set the user default data
                 let defaults = UserDefaults.standard
                 defaults.set(true, forKey: "isLogin")
                 defaults.set(email, forKey: "email")
                 defaults.set(password, forKey: "password")
                 
+                // read the user document and set the user tags
                 let userDocRef = database.collection("user").document(currentUser!.uid)
                 userDocRef.getDocument{ (document, error) in
                     if let document = document, document.exists{
@@ -405,6 +384,7 @@ class FirebaseController: NSObject, DatabaseProtocol {
                 // get user data
                 currentUser = authDataResult.user
                 
+                // set the userDefaults data
                 let defaults = UserDefaults.standard
                 defaults.set(true, forKey: "isLogin")
                 defaults.set(newEmail, forKey: "email")
@@ -418,8 +398,10 @@ class FirebaseController: NSObject, DatabaseProtocol {
         }
     }
     
+    // create new user document to firebase and set done the tags field
     func setupUserSelectedTags(tags: [String]) -> Bool {
         do{
+            // create new user document to firebase and set done the tags field
             database.collection("user").document(currentUser!.uid).setData([
                 "name": "username",
                 "profile":"everything you love is here",
@@ -432,6 +414,7 @@ class FirebaseController: NSObject, DatabaseProtocol {
                 "tags":tags
             ])
             
+            // set the userLoginState and set the defaultTags
             userLoginState = true
             let userDocRef = database.collection("user").document(currentUser!.uid).addSnapshotListener{
                 (querySnapshot, error) in
@@ -456,14 +439,11 @@ class FirebaseController: NSObject, DatabaseProtocol {
                         if listener.listenerType == ListenerType.tag || listener.listenerType == ListenerType.all || listener.listenerType == .tagAndExp{
                             listener.onTagChange(change: .update, tags: self.defaultTags)
                         }
-                        
                     }
                     
                     if self.postRef == nil{
                         self.setupCurrentCards()
                     }
-                    
-                    
                 }else{
                     print("Document does not exist: setupUserSelectedTags")
                 }
@@ -476,7 +456,7 @@ class FirebaseController: NSObject, DatabaseProtocol {
         }
     }
     
-    
+    // parse current user
     func getUserModel(completion: @escaping (User) -> Void) {
         var userModel = User()
         let userDocRef = database.collection("user").document(currentUser!.uid).addSnapshotListener {
@@ -536,10 +516,12 @@ class FirebaseController: NSObject, DatabaseProtocol {
         }
     }
     
+    // return UID of current user
     func getCurrentUserUID() -> String{
         return currentUser!.uid
     }
     
+    // get following list by firebase
     func getCurrentUserFollowing(completion: @escaping ([DocumentReference]) -> Void) async{
         Task{
             do{
@@ -550,6 +532,7 @@ class FirebaseController: NSObject, DatabaseProtocol {
         }
     }
     
+    // get follower list by firebase
     func getCurrentUserFollower(completion: @escaping ([DocumentReference]) -> Void) async {
         Task{
             do{
@@ -560,6 +543,7 @@ class FirebaseController: NSObject, DatabaseProtocol {
         }
     }
     
+    // parse card document to CARD model
     func getCardModel(cardRef: DocumentReference, completion: @escaping (Card) -> Void){
         var card = Card()
         let cardDocRef = database.collection("post").document(cardRef.documentID).addSnapshotListener {
@@ -609,6 +593,7 @@ class FirebaseController: NSObject, DatabaseProtocol {
         
     }
     
+    // using document reference to parse a user document
     func getUserModelByDocRef(userDocRef: DocumentReference, completion: @escaping (User) -> Void) {
         var userModel = User()
         userDocRef.addSnapshotListener {
@@ -668,6 +653,7 @@ class FirebaseController: NSObject, DatabaseProtocol {
         }
     }
     
+    // get posts list
     func getUserPostsListByDocRefArray(postsRefArray:[DocumentReference], completion: @escaping ([Card]) -> Void){
         var resultPostList:[Card] = []
         do{
@@ -701,9 +687,9 @@ class FirebaseController: NSObject, DatabaseProtocol {
     
 
     
-    
+    // using others function to parse the posts lise, likes list and collection list
     func parseUserCardViewList(){
-        
+        // init empty array
         self.currentUserPostsList = []
         self.currentUserLikesList = []
         self.currentUserCollectionsList = []
@@ -718,6 +704,7 @@ class FirebaseController: NSObject, DatabaseProtocol {
         Task{
             do{
                 getUserModel{ userModel in
+                    // parse
                     self.parsePostsList(referencesList: userModel.posts!)
                     self.parseLikesList(referencesList: userModel.likes!)
                     self.parseCollectionsList(referencesList: userModel.collections!)
@@ -727,6 +714,7 @@ class FirebaseController: NSObject, DatabaseProtocol {
         
     }
     
+    // using this method to check card is liked
     func checkIsLikeCard(card: Card, completion: @escaping (Bool) -> Void){
         Task {
             do {
@@ -740,6 +728,7 @@ class FirebaseController: NSObject, DatabaseProtocol {
 
     }
     
+    // parse array of document reference
     func parsePostsList(referencesList: [DocumentReference]){
         do{
             referencesList.forEach{ referenceDoc in
@@ -842,41 +831,51 @@ class FirebaseController: NSObject, DatabaseProtocol {
         }
     }
     
+    // clear
     func clearCurrentImages() {
         self.currentImages.removeAll()
     }
     
+    // save videos array draft
     func saveCurrentVideosAsDraft(videos: [AVAsset]){
         for video in videos {
             print("save video!11")
             self.currentVideos.append(video)
         }
     }
-    
+    // clear
     func clearCurrentVideos(){
         self.currentVideos.removeAll()
     }
     
+    // push a post to firebase and upload corresponding image
     func uploadCurrentImagesForCard(title: String, content: String, selectedTags: [String], weatherInfo:(temp_c:Int, location:String, pushTime:String)?, completion: @escaping (DocumentReference, Card) -> Void) {
         self.currentImagesCounter = 0
         
         if weatherInfo != nil{
             Task{
                 var newContent = ""
+                // read the weather info
                 if let loc = weatherInfo?.location, let p_time = weatherInfo?.pushTime, let temp_c = weatherInfo?.temp_c{
                     newContent = content + "\n\nCity: \(loc)  \nTime: \(p_time)  \nTemperature: \(temp_c)"
                 }
+                // build the folder path
                 let folderPath = "images/\(self.currentUser?.uid ?? "hFeuyISsXUWxdOUV5LynsgIH4lC2")/"
                 do{
+                    // create the post document
                     self.createPostCardForFirebase(title: title, content: newContent, selectedTags: selectedTags){ (createdPostCardRef, createdCard) in
+                        // upload each images
                         for image in self.currentImages{
                                 self.uploadImageToStorage(folderPath: folderPath, image: image){ storageLocationStr in
+                                        // store the image link
+                                        // choose the first image as the cover page
                                         if self.currentImagesCounter == 0{
                                             createdPostCardRef.updateData([
                                                 "cover":"gs://fit3178-final-ci-app.appspot.com/\(storageLocationStr)"
                                             ])
                                             createdCard.cover = "gs://fit3178-final-ci-app.appspot.com/\(storageLocationStr)"
                                         }
+                                        // update the post document
                                         createdPostCardRef.updateData([
                                             "picture": FieldValue.arrayUnion(["gs://fit3178-final-ci-app.appspot.com/\(storageLocationStr)"])
                                         ]){_ in
@@ -895,17 +894,22 @@ class FirebaseController: NSObject, DatabaseProtocol {
             Task{
                 let folderPath = "images/\(self.currentUser?.uid ?? "hFeuyISsXUWxdOUV5LynsgIH4lC2")/"
                 do{
+                    // create the post document
                     self.createPostCardForFirebase(title: title, content: content, selectedTags: selectedTags){ (createdPostCardRef, createdCard) in
+                        // upload each images
                         for image in self.currentImages{
                             DispatchQueue.main.async {
                                 self.uploadImageToStorage(folderPath: folderPath, image: image){ storageLocationStr in
                                     DispatchQueue.main.async {
+                                        // store the image link
+                                        // choose the first image as the cover page
                                         if self.currentImagesCounter == 0{
                                             createdPostCardRef.updateData([
                                                 "cover":"gs://fit3178-final-ci-app.appspot.com/\(storageLocationStr)"
                                             ])
                                             createdCard.cover = "gs://fit3178-final-ci-app.appspot.com/\(storageLocationStr)"
                                         }
+                                        // update the post document
                                         createdPostCardRef.updateData([
                                             "picture": FieldValue.arrayUnion(["gs://fit3178-final-ci-app.appspot.com/\(storageLocationStr)"])
                                         ]){_ in
@@ -930,11 +934,13 @@ class FirebaseController: NSObject, DatabaseProtocol {
         
         Task{
             do{
+                // create a new document to firebase
                 database.collection("user").document(currentUser!.uid).getDocument{ (snapshot, error) in
                     if let error = error{
                         print("createPostCardForFirebase error: \(error)")
                         return
                     }
+                    // init some info
                     if let user_name = snapshot?.data()!["name"] as? String{
                         var postedCard = Card()
                         postedCard.title = title
@@ -942,6 +948,7 @@ class FirebaseController: NSObject, DatabaseProtocol {
                         postedCard.likes_number = 0
                         postedCard.username = user_name
                         
+                        // create the document
                         let documentRef = self.database.collection("post").document()
                         documentRef.setData([
                             "audio":[],
@@ -967,6 +974,7 @@ class FirebaseController: NSObject, DatabaseProtocol {
         
     }
     
+    // upload image to Storage
     func uploadImageToStorage(folderPath: String, image:UIImage, completion: @escaping (String) -> Void){
         Task{
             // build the storage reference
@@ -1005,13 +1013,14 @@ class FirebaseController: NSObject, DatabaseProtocol {
         }
     }
     
+    // add one post document reference to user's field
     func addPostIntoUser(postDocRef: DocumentReference) {
         database.collection("user").document(currentUser!.uid).updateData([
             "posts": FieldValue.arrayUnion([postDocRef])
         ])
     }
         
-    
+    // add one people into the following list
     func addUserToFollowingList(followingUser: DocumentReference, completion: @escaping () -> Void){
         let userDocRef = database.collection("user").document(currentUser!.uid)
         userDocRef.getDocument(){ (snapshot, error) in
@@ -1045,7 +1054,7 @@ class FirebaseController: NSObject, DatabaseProtocol {
         
     }
     
-    
+    // add one post into likes list
     func addPostToUserLikesField(id: String, completion: @escaping () -> Void) {
         let postCardDocRef = database.collection("post").document(id)
         let userDocRef = database.collection("user").document(currentUser!.uid)
@@ -1088,6 +1097,7 @@ class FirebaseController: NSObject, DatabaseProtocol {
         }
     }
     
+    // add one post into collection list
     func addPostToUserCollectionsField(id: String, completion: @escaping () -> Void) {
         let postCardDocRef = database.collection("post").document(id)
         let userDocRef = database.collection("user").document(currentUser!.uid)
@@ -1194,7 +1204,7 @@ class FirebaseController: NSObject, DatabaseProtocol {
             
         }
     }
-    
+    // update user name
     func updateUserName(name: String, completion: @escaping () -> Void) {
         Task{
             do{
@@ -1206,7 +1216,7 @@ class FirebaseController: NSObject, DatabaseProtocol {
             }
         }
     }
-    
+    // update user profile content
     func updateUserProfileContent(content: String, completion: @escaping () -> Void) {
         Task{
             do{
@@ -1220,7 +1230,7 @@ class FirebaseController: NSObject, DatabaseProtocol {
     }
     
     
-    
+    // add user into following list
     func addUserIntoFollowing(otherUserDocRef: DocumentReference, completion: @escaping () -> Void) async {
         let userDocRef = database.collection("user").document(currentUser!.uid)
         try await userDocRef.getDocument(){ (snapshot, error) in
@@ -1258,7 +1268,7 @@ class FirebaseController: NSObject, DatabaseProtocol {
             
         }
     }
-    
+    // when user follow a people, then the people will increase a new follower
     func addMeIntoSomeoneFollower(otherUserDocRef: DocumentReference, completion: @escaping () -> Void) async {
         let userDocRef = database.collection("user").document(currentUser!.uid)
         try await otherUserDocRef.getDocument(){ (snapshot, error) in

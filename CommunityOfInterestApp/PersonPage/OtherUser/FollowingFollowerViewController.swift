@@ -112,7 +112,6 @@ class FollowingFollowerViewController: UIViewController, UITableViewDelegate, UI
             .document((databaseController?.getCurrentUserUID())!)
             .collection("following")
             .order(by: "name")
-            .limit(to: 10)
         if let lastDocument = lastFollowingDocument {
             query = query.start(afterDocument: lastDocument)
         }
@@ -141,7 +140,6 @@ class FollowingFollowerViewController: UIViewController, UITableViewDelegate, UI
             .document((databaseController?.getCurrentUserUID())!)
             .collection("followers")
             .order(by: "name")
-            .limit(to: 10)
         if let lastDocument = lastFollowerDocument {
             query = query.start(afterDocument: lastDocument)
         }
@@ -194,7 +192,7 @@ class FollowingFollowerViewController: UIViewController, UITableViewDelegate, UI
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        //
+        // go to 'showOtherUserDetail'
         performSegue(withIdentifier: "showOtherUserDetail", sender: self)
     }
     
