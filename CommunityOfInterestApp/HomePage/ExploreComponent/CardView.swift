@@ -47,7 +47,7 @@ class CardView: UIStackView {
         
         self.homePageController = homepageViewControl
         self.card = card
-        
+//        print(card.video)
         // set itself
         self.axis = .vertical
         self.alignment = .leading
@@ -68,21 +68,23 @@ class CardView: UIStackView {
             usernameStack.heightAnchor.constraint(equalToConstant: 20)
         ])
         
+        
+
         // build username label
         let name = UILabel()
         name.text = username
         name.sizeToFit()
-        
-        // build like symbol
-        // create SymbolConfiguration
-        let config = UIImage.SymbolConfiguration(pointSize: 20, weight: .regular, scale: .default)
-        // build UIImage
-        let image = UIImage(systemName: "heart", withConfiguration: config)
-        // build UIImageView
-        like = UIImageView(image: image)
-        // setting UIImageView's contentMode
-        like?.contentMode = .scaleAspectFit
-        
+
+
+//        // create SymbolConfiguration
+//        let config = UIImage.SymbolConfiguration(pointSize: 20, weight: .regular, scale: .default)
+//        // build UIImage
+//        let image = UIImage(systemName: "heart", withConfiguration: config)
+//        // build UIImageView
+//        like = UIImageView(image: image)
+//        // setting UIImageView's contentMode
+//        like?.contentMode = .scaleAspectFit
+        print("Test for Like 3")
         
         // build title label
         titleLabel.text = title
@@ -114,16 +116,57 @@ class CardView: UIStackView {
 //        // set the post image view's image
 //        postImageView?.image = scaledImage
         
-        
-        // build up it self
-        usernameStack.addArrangedSubview(name)
-        usernameStack.addArrangedSubview(like)
-        self.addArrangedSubview(postImageView)
-        self.addArrangedSubview(titleLabel)
-        self.addArrangedSubview(usernameStack)
-        
-        addTapGestureToStackView()
-        
+        Task{
+            do{
+                // build like symbol
+                databaseController!.checkIsLikeCard(card: self.card!) { isLiked in
+                    DispatchQueue.main.async {
+                        if isLiked {
+                            let con = UIImage.SymbolConfiguration(hierarchicalColor: .red)
+                            var img = UIImage(systemName: "heart.fill", withConfiguration: con)?.withTintColor(.red)
+                            // build UIImageView
+                            self.like = UIImageView(image: img)
+                            // setting UIImageView's contentMode
+                            self.like?.contentMode = .scaleAspectFit
+                            print("Test for Like 1")
+                        } else {
+                            // create SymbolConfiguration
+                            let config = UIImage.SymbolConfiguration(pointSize: 20, weight: .regular, scale: .default)
+                            // build UIImage
+                            let image = UIImage(systemName: "heart", withConfiguration: config)
+                            // build UIImageView
+                            self.like = UIImageView(image: image)
+                            // setting UIImageView's contentMode
+                            self.like?.contentMode = .scaleAspectFit
+                            print("Test for Like 2")
+                        }
+                        
+                        // build up it self
+                        self.usernameStack.addArrangedSubview(name)
+                        self.usernameStack.addArrangedSubview(self.like)
+                        self.addArrangedSubview(self.postImageView)
+                        self.addArrangedSubview(self.titleLabel)
+                        self.addArrangedSubview(self.usernameStack)
+                        
+                        self.addTapGestureToStackView()
+                        
+//                        return self
+                    }
+                    
+
+                }
+            }
+        }
+       
+//        // build up it self
+//        usernameStack.addArrangedSubview(name)
+//        usernameStack.addArrangedSubview(like)
+//        self.addArrangedSubview(postImageView)
+//        self.addArrangedSubview(titleLabel)
+//        self.addArrangedSubview(usernameStack)
+//
+//        addTapGestureToStackView()
+//
         return self
     }
     
@@ -139,7 +182,7 @@ class CardView: UIStackView {
 //        let detailViewController = DetailViewController()
 //        self.homePageController?.navigationController?.pushViewController(detailViewController, animated: true)
 //        self.homePageController?.performSegue(withIdentifier: "showCardDetailPage", sender: self)
-        guard let homeController = homePageController as? HomePageViewController else{
+        guard let homeController = homePageController as? DetailChangeDelegate else{
             print("Card class: Error!!!!! NO CARD!!!!!")
             return
         }

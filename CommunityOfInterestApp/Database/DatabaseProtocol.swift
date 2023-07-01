@@ -64,10 +64,43 @@ protocol DatabaseProtocol: AnyObject{
     func login(email:String, password:String)
     func signup(newEmail:String, newPassword:String)
     func setupUserSelectedTags(tags: [String]) -> Bool
+    func parseUserCardViewList()
+    func checkIsLikeCard(card: Card, completion: @escaping (Bool) -> Void)
+    func getCurrentUserUID() -> String
+    func getCurrentUserFollowing(completion: @escaping ([DocumentReference]) -> Void) async
+    func getCurrentUserFollower(completion: @escaping ([DocumentReference]) -> Void) async
     
     // person page data init
 //    func getUserModel() -> User
     func getUserModel(completion: @escaping (User) -> Void)
+    func getCardModel(cardRef: DocumentReference, completion: @escaping (Card) -> Void)
+    func getUserModelByDocRef(userDocRef: DocumentReference, completion: @escaping (User) -> Void)
+    func getUserPostsListByDocRefArray(postsRefArray:[DocumentReference], completion: @escaping ([Card]) -> Void)
+    
+    
+    // image
+    var currentImages:[UIImage] {get}
+    var currentImagesCounter:Int {get}
+    func saveCurrentImagesAsDraft(images:[UIImage])
+    func clearCurrentImages()
+    func uploadCurrentImagesForCard(title: String, content: String, selectedTags: [String], weatherInfo:(temp_c:Int, location:String, pushTime:String)?, completion: @escaping (DocumentReference, Card) -> Void)
+    func addPostIntoUser(postDocRef: DocumentReference)
+    
+    // likes & collections operations
+    func addPostToUserLikesField(id: String, completion: @escaping () -> Void)
+    func addPostToUserCollectionsField(id: String, completion: @escaping () -> Void)
+    
+    // update user info
+    func updateUserProfileImage(image: UIImage, completion: @escaping () -> Void)
+    func updateUserName(name: String, completion: @escaping () -> Void)
+    func updateUserProfileContent(content: String, completion: @escaping () -> Void)
+    
+    // others user page
+    func addUserIntoFollowing(otherUserDocRef: DocumentReference, completion: @escaping () -> Void) async
+    func addMeIntoSomeoneFollower(otherUserDocRef: DocumentReference, completion: @escaping () -> Void) async
+    
+    // search page
+    func fetchPostsForSearch(serachType:String, searchText:String, pageSize:Int, currentDocument: DocumentSnapshot?, completion: @escaping ([Card], DocumentSnapshot?) -> Void)
     
     
     
