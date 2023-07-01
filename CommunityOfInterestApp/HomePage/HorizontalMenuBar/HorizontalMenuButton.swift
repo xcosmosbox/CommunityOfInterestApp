@@ -12,12 +12,18 @@ class HorizontalMenuButton: UIButton, ObservableButton {
     
     var buttonLisenter:ObserverMenu?
     var selectedState:ButtonState?
+    weak var databaseController: DatabaseProtocol?
+    var title: String?
     
     
     init(buttonLisenter: ObserverMenu?, title: String) {
         super.init(frame: .infinite)
         self.buttonLisenter = buttonLisenter
+        self.title = title
         setupButton(title:title)
+        
+        let appDelegate = UIApplication.shared.delegate as? AppDelegate
+        databaseController = appDelegate?.databaseController
     }
     
     required init?(coder: NSCoder) {
@@ -36,7 +42,7 @@ class HorizontalMenuButton: UIButton, ObservableButton {
         // set the button's corner radius
         self.layer.cornerRadius = CGFloat(10)
         
-        // set height?
+        // set height
         
         // disable button title's line wrapping
 //        self.titleLabel?.lineBreakMode = .byClipping
@@ -67,16 +73,30 @@ class HorizontalMenuButton: UIButton, ObservableButton {
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         super.touchesBegan(touches, with: event)
         
+        // change the button menu
         buttonLisenter?.buttonSelected(button: self)
+        
+        // change the explore component content
+//        if self.title != " Explore " {
+//
+//        } else {
+//
+//        }
+        print("!!!!!!Click!!!!!!")
+        // reload new cards by tag
+        databaseController?.getCommunityContentByTag(tagNmae: self.title!)
+        
+        
+        
     }
     
     
     func updateButtonState(state:ButtonState){
         self.selectedState = state
         if self.selectedState == .unselected{
-            self.backgroundColor = .gray
+            self.backgroundColor = UIColor(named: "unselectedColor")
         } else {
-            self.backgroundColor = .blue
+            self.backgroundColor = UIColor(named: "selectedColor")
         }
     }
     

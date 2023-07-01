@@ -34,7 +34,8 @@ class TagBoxTableViewController: UITableViewController {
         let appDelegate = UIApplication.shared.delegate as? AppDelegate
         databaseController = appDelegate?.databaseController
         
-        tags = TagManager.shared.getAllTag()
+//        tags = TagManager.shared.getAllTag()
+        tags = TagManager.shared.getAllTagsWithoutExplore()
         tableView.reloadData()
     }
 
@@ -87,8 +88,11 @@ class TagBoxTableViewController: UITableViewController {
             tagForDatabase.name = tag.getName();
             databaseController?.deleteTag(tag: tagForDatabase)
             
+            // remove this tag from table view page
+            tags.remove(at: indexPath.row)
             
-            refreshTags()
+            tableView.reloadData()
+//            refreshTags()
             
         }
     }
@@ -119,9 +123,9 @@ class TagBoxTableViewController: UITableViewController {
     }
     */
     
-    func refreshTags() {
-        tags = TagManager.shared.getAllTag()
-        tableView.reloadData()
-    }
+//    func refreshTags() {
+//        tags = TagManager.shared.getAllTag()
+//        tableView.reloadData()
+//    }
 
 }

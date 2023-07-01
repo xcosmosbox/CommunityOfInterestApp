@@ -32,15 +32,30 @@ class TagManager{
     }
     
     func removeAllTags(){
-        TagList = []
+        TagList.removeAll(where: {$0.getName() != "Explore"})
     }
     
     func getAllTag() -> [TagBean] {
         return TagList
     }
     
+    func getAllTagsWithoutExplore() -> [TagBean]{
+        // user can manage all tags without explore
+        var tags:[TagBean] = []
+        TagList.forEach{ tag in
+            if tag.getName() != "Explore"{
+                tags.append(tag)
+            }
+            
+        }
+        return tags
+    }
+    
     private init(){
 //        TEST_DATA_FUNCTION()
+        // add default tag
+        TagList.append(TagBean(name: "Explore"))
+        
     }
     
     
