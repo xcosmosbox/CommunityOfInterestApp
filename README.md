@@ -21,6 +21,6 @@ Through the app, users can post about content that interests them and interact w
 
 ## Demo
 
+![Simulator Screen Recording - iPhone 14 Pro - 2023-11-10 at 00 59 44](https://github.com/xcosmosbox/CommunityOfInterestApp/assets/56502269/01bd4eb8-7c52-4a59-adfa-0df586e3d6d1)
 
-https://github.com/xcosmosbox/CommunityOfInterestApp/assets/56502269/ffcc5e93-c78e-4b34-88bc-0733daa8c40c
 
