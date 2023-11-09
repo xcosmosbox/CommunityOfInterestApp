@@ -1,7 +1,5 @@
 # CommunityOfInterestApp
 
-## Introduce
-
 Interest Community is an interest-based social and recording application that aims to provide a platform for iOS users to share and record their interests and hobbies. 
 Through the app, users can post about content that interests them and interact with users who are also interested in those interests.
 
@@ -22,3 +20,7 @@ Through the app, users can post about content that interests them and interact w
    - `Firebase/Storage` - used to store media content such as images and videos uploaded by users.
 
 ## Demo
+
+
+https://github.com/xcosmosbox/CommunityOfInterestApp/assets/56502269/ffcc5e93-c78e-4b34-88bc-0733daa8c40c
+
