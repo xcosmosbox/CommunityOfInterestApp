@@ -21,6 +21,6 @@ Through the app, users can post about content that interests them and interact w
 
 ## Demo
 
-<iframe src="https://www.youtube.com/embed/eceuRTpburk?si=99wLDc3cZ4MWsIbi" width="560" height="315" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+Demo Video: https://youtu.be/eceuRTpburk?si=xY0cwTfX228TVjQz
 
 
