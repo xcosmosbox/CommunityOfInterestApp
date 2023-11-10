@@ -27,3 +27,15 @@ https://github.com/xcosmosbox/CommunityOfInterestApp/assets/56502269/6a6ab5b4-52
 
 
 
+https://github.com/xcosmosbox/CommunityOfInterestApp/assets/56502269/8ff67d42-ddd1-4cc4-bc24-62ebbd7b5035
+
+
+
+https://github.com/xcosmosbox/CommunityOfInterestApp/assets/56502269/8fe3c42c-6368-4265-b2b2-49a9fdc19d8e
+
+
+
+https://github.com/xcosmosbox/CommunityOfInterestApp/assets/56502269/a7e3295c-c6eb-49cd-b775-ceced54cbd1c
+
+
+
