@@ -21,6 +21,9 @@ Through the app, users can post about content that interests them and interact w
 
 ## Demo
 
-Demo Video: https://youtu.be/eceuRTpburk?si=xY0cwTfX228TVjQz
+
+
+https://github.com/xcosmosbox/CommunityOfInterestApp/assets/56502269/6a6ab5b4-5213-4acd-a76a-558709238cf9
+
 
 
