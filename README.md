@@ -1,3 +1,4 @@
+[![Ask DeepWiki](https://deepwiki.com/badge.svg)](https://deepwiki.com/xcosmosbox/CommunityOfInterestApp)
 # CommunityOfInterestApp
 
 Interest Community is an interest-based social and recording application that aims to provide a platform for iOS users to share and record their interests and hobbies. 
